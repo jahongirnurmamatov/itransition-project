@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
+import { generatTokenAndSetCookie } from "../utils/generateToken.js";
 
 
 export const signup = async(req, res) => {
@@ -11,13 +12,13 @@ export const signup = async(req, res) => {
         .json({ success: false, message: "All fields are required" });
     }
     const hashedPassword = bcrypt.hashSync(password, 10);
-
     const user = new User({
       username,
       email,
       password: hashedPassword,
     });
     await user.save();
+    generatTokenAndSetCookie(res,user._id); 
     return res.status(200).json({ success: true, message: "User created" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
