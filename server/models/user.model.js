@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, 
     },
-    passwordHash: {
+    password: {
       type: String,
       required: true,
     },

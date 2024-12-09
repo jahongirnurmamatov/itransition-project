@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 
 
-export const signup = (req, res) => {
+export const signup = async(req, res) => {
   try {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
@@ -17,7 +17,7 @@ export const signup = (req, res) => {
       email,
       password: hashedPassword,
     });
-    user.save();
+    await user.save();
     return res.status(200).json({ success: true, message: "User created" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
