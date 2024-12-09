@@ -2,8 +2,7 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import { generatTokenAndSetCookie } from "../utils/generateToken.js";
 
-
-export const signup = async(req, res) => {
+export const signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
@@ -18,14 +17,14 @@ export const signup = async(req, res) => {
       password: hashedPassword,
     });
     await user.save();
-    generatTokenAndSetCookie(res,user._id); 
+    generatTokenAndSetCookie(res, user._id);
     return res.status(200).json({ success: true, message: "User created" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
 
-export const login = async(req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -45,14 +44,29 @@ export const login = async(req, res) => {
         .status(401)
         .json({ success: false, message: "Invalid credentials" });
     }
-    generatTokenAndSetCookie(res,user._id); 
-    return res.status(200).json({ success: true, message: "User logged in" });    
+    generatTokenAndSetCookie(res, user._id);
+    return res.status(200).json({ success: true, message: "User logged in" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
-}
+};
 
-export const logout = async(req,res)=>{
-    res.clearCookie("token");
-    res.status(200).json({ success: true, message: "User logged out" });
-}
+export const logout = async (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({ success: true, message: "User logged out" });
+};
+
+export const checkAuth = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("-password");
+    console.log(req.userId)
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, message: "User not authenticated" });
+    }
+    return res.status(200).json({ success: true, user });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
