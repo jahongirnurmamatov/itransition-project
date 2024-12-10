@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
-import User from "../models/user.model.js";
 import { generatTokenAndSetCookie } from "../utils/generateToken.js";
+import prisma from "../db/prisma.js";
 
 export const signup = async (req, res) => {
   try {
@@ -11,14 +11,19 @@ export const signup = async (req, res) => {
         .json({ success: false, message: "All fields are required" });
     }
     const hashedPassword = bcrypt.hashSync(password, 10);
-    const user = new User({
-      username,
-      email,
-      password: hashedPassword,
+    const user = await prisma.user.create({
+      data: {
+        username,
+        email,
+        password: hashedPassword,
+      },
     });
-    await user.save();
-    generatTokenAndSetCookie(res, user._id);
-    return res.status(200).json({ success: true, message: "User created" });
+    if (user) {
+      generatTokenAndSetCookie(res, user.id);
+      return res.status(200).json({ success: true, message: "User created" });
+    }else{
+      return res.status(500).json({ success: false, message: "Invalid user data" });
+    }
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
@@ -32,7 +37,7 @@ export const login = async (req, res) => {
         .status(400)
         .json({ success: false, message: "All fields are required" });
     }
-    const user = await User.findOne({ email });
+    const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
       return res
         .status(404)
@@ -44,7 +49,7 @@ export const login = async (req, res) => {
         .status(401)
         .json({ success: false, message: "Invalid credentials" });
     }
-    generatTokenAndSetCookie(res, user._id);
+    generatTokenAndSetCookie(res, user.id);
     return res.status(200).json({ success: true, message: "User logged in" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -58,8 +63,15 @@ export const logout = async (req, res) => {
 
 export const checkAuth = async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select("-password");
-    console.log(req.userId)
+    const user = await prisma.user.findUnique({
+        where: { id: req.userId },
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          password: false,
+        },
+      });
     if (!user) {
       return res
         .status(401)

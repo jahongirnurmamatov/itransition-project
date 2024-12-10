@@ -13,8 +13,7 @@ model User {
   id       String   @id @default(cuid())
   username String   @unique
   email    String   @unique
-  password String
-  profilePic String
+  password String 
   role     Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
