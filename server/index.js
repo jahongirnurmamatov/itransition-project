@@ -1,6 +1,5 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { connectDB } from './db/connectDB.js';
 import authRoute from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
 dotenv.config();
@@ -21,5 +20,4 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-    connectDB();
 });
