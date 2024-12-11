@@ -9,7 +9,10 @@ import LayersIcon from "@mui/icons-material/Layers";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { useDemoRouter } from "@toolpad/core/internal";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 const NAVIGATION = [
   {
@@ -17,14 +20,14 @@ const NAVIGATION = [
     title: "Main items",
   },
   {
-    segment: "dashboard",
+    segment: "my-templates",
     title: "My Templates",
     icon: <DashboardIcon />,
   },
   {
-    segment: "create",
+    segment: "create/123",
     title: "Create",
-    icon: <LuCirclePlus size={26}  />,
+    icon: <LuCirclePlus size={26} />
   },
   {
     kind: "divider",
@@ -44,9 +47,9 @@ const NAVIGATION = [
         icon: <DescriptionIcon />,
       },
       {
-        segment: "traffic",
+        segment: "reports",
         title: "Statistics",
-        icon: <FaChartPie  size={26}  />,
+        icon: <FaChartPie size={26} />,
       },
     ],
   },
@@ -57,6 +60,30 @@ const NAVIGATION = [
   },
 ];
 
+function DemoPageContent({ pathname }) {
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (pathname) {
+      navigate(pathname);
+    }
+  }, [pathname, navigate]);
+  return (
+    <Box
+      sx={{
+        py: 4,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+      }}
+    >
+      <Outlet/>
+    </Box>
+  );
+}
+DemoPageContent.propTypes = {
+  pathname: PropTypes.string.isRequired,
+};
 const demoTheme = createTheme({
   cssVariables: {
     colorSchemeSelector: "data-toolpad-color-scheme",
@@ -76,11 +103,10 @@ const demoTheme = createTheme({
 function Layout(props) {
   const { window } = props;
 
-  const router = useDemoRouter("/dashboard");
+  const router = useDemoRouter("/my-templates");
   const demoWindow = window !== undefined ? window() : undefined;
 
   return (
-    // preview-start
     <AppProvider
       navigation={NAVIGATION}
       router={router}
@@ -88,10 +114,15 @@ function Layout(props) {
       window={demoWindow}
     >
       <DashboardLayout>
-        <Outlet />
+      <DemoPageContent pathname={router.pathname} />
       </DashboardLayout>
     </AppProvider>
   );
 }
+
+
+Layout.propTypes = {
+  window: PropTypes.func,
+};
 
 export default Layout;
