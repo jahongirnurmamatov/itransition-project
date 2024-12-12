@@ -8,7 +8,7 @@ function Navbar() {
         <div className="flex-col flex">
           <div className="w-full border-b-2 border-gray-200">
             <div className="bg-white h-16 justify-between items-center mx-auto px-4 flex">
-              <div>
+              <div className="ml-60">
                 <p className="text-3xl text-blue-600 font-semibold">My<span className="text-blue-900 text-3xl font-extrabold">Forms</span></p>
               </div>
               <div className="lg:block mr-auto ml-40 hidden relative max-w-xs">
