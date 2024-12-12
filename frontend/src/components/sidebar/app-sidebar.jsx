@@ -1,5 +1,3 @@
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
@@ -16,6 +14,8 @@ import {
 import { data } from "@/assets/data"
 import { Label, Separator } from "@radix-ui/react-dropdown-menu"
 import { Search } from "lucide-react"
+import { NavUser } from "./nav-user";
+import { NavMain } from "./nav-main";
 
 export function AppSidebar({
   ...props
