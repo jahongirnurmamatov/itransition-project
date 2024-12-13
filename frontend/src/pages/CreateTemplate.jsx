@@ -43,17 +43,18 @@ const CreateTemplate = () => {
       allforms[index].description = description;
       setForms(allforms);
     }
-  }
+  } 
+  
 
   return (
     <div className="w-full bg-slate-100 min-h-screen flex items-start justify-center">
       <div className="mx-auto w-4/5 my-6">
-        <h1 className='text-2xl font-bold text-center'>Untitled Form</h1>
+        <h1 className='text-2xl font-bold text-center text-slate-800'>Create Your Form</h1>
         <div className="flex flex-col gap-4 my-5">
           {
             forms.map((form,index)=>(
               <div key={index} className="w-full bg-white rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md">
-                {form.type !=='header' && <> 
+                {form.type !=='header'&&form.type !=='paragraph' && <> 
                   { editing ? (
                   <Input onBlur={()=>setEditing(false)}  type="text" value={form.label} onChange={(e) => editLabel(form.id, e.target.value)} className="w-2/3 p-2" />
                 ) : (
@@ -65,14 +66,13 @@ const CreateTemplate = () => {
                   <p onClick={()=>setEditing(true)}   className='text-sm font-light text-gray-500'>{form.description}</p>
                 )}
                  </>}
-
                  {
                    (() => {
                     switch (form.type) {
                       case 'header':
                         return <>
                         { editing ? <Input onBlur={()=>setEditing(false)}  type="text" value={form.label} onChange={(e) => editLabel(form.id, e.target.value)} className="w-2/3 p-2" />
-                          :  <h1 className='font-bold text-2xl'>{form.label}</h1>
+                          :  <h1 onClick={()=>setEditing(true)} className='font-bold text-center text-2xl'>{form.label}</h1>
                         }
                         </> 
                       case 'number':
@@ -84,13 +84,18 @@ const CreateTemplate = () => {
                           <RadioForm id={form.id} forms={forms} setForms={setForms} editing={editing} setEditing={setEditing} />
                         );
                       case 'textarea':
-                        return <textarea placeholder="Type your text here" className="w-1/2 p-2" rows="4" />;
+                        return <Textarea placeholder="Type your text here" className="w-1/2 p-2" rows="4" />;
                       case 'select':
                         return <SelectForm />
                       case 'image':
                         return <ImageUpload/>
+                      case 'paragraph':
+                        return <>{editing ?  <Textarea 
+                          value={form.label} onChange={(e) => editLabel(form.id, e.target.value)}
+                          onBlur={()=>setEditing(false)} placeholder="Type form description here" className="w-1/2 p-2" rows="4" /> : 
+                        <p onClick={()=>setEditing(true)} className='text-sm font-light text-gray-500'>{form.label}</p> }</>
                       default:
-                       return <p>Unknown question type.</p>;
+                       return null;
                     }
                   })()
                  }
