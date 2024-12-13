@@ -13,16 +13,21 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-import { useEffect } from "react"
 
-export function DialogDemo({setQuestionType, questionType}) {
-   
+export function DialogDemo({setFormType, addForm,formType}) {
+
+    const handleAddForm = () => {
+        if (formType!='') {
+          addForm(formType);
+        } else {
+          alert("Please select a question type.");
+        }
+      };
   return (
-    <Dialog>
+    <Dialog >
       <DialogTrigger asChild>
         <Button className='bg-slate-900 text-white' variant="outline">Add Question</Button>
       </DialogTrigger>
@@ -33,7 +38,7 @@ export function DialogDemo({setQuestionType, questionType}) {
             Here you can select one type of question only
           </DialogDescription>
         </DialogHeader>
-        <Select onValueChange={(value)=>setQuestionType(value)}>
+        <Select onValueChange={(value)=>setFormType(value)}>
             <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select a Question type" />
             </SelectTrigger>
@@ -48,7 +53,7 @@ export function DialogDemo({setQuestionType, questionType}) {
         </SelectContent>
     </Select>
         <DialogFooter>
-          <Button type="submit">Add Question Type</Button>
+          <Button type="button" onClick={handleAddForm} >Add Question Type</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
