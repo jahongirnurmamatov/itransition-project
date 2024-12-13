@@ -1,4 +1,5 @@
 import { DialogDemo } from '@/components/createForm/AddQuestion'
+import ImageUpload from '@/components/createForm/ImageUpload'
 import {
   Select,
   SelectContent,
@@ -41,7 +42,7 @@ const CreateTemplate = () => {
                    (() => {
                     switch (form.type) {
                       case 'header':
-                        return <input type="text" placeholder="Type your header here" className="w-1/2 p-2" />;
+                        return <></>
                       case 'number':
                         return <input type="number" placeholder="Type a number here" className="w-1/2 p-2" />;
                       case 'checkbox':
@@ -78,6 +79,8 @@ const CreateTemplate = () => {
                                    </SelectGroup>
                                  </SelectContent>
                               </Select>
+                      case 'image':
+                        return <ImageUpload/>
                       default:
                        return <p>Unknown question type.</p>;
                     }
