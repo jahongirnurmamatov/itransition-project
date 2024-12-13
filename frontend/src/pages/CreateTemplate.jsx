@@ -1,10 +1,12 @@
+import { DialogDemo } from '@/components/createForm/AddQuestion'
+import { Button } from '@/components/ui/button'
 import { Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 import React from 'react'
 
 const CreateTemplate = () => {
   return (
     <div className="w-full bg-slate-100 flex items-start justify-center">
-      <div className="mx-auto w-4/5">
+      <div className="mx-auto w-4/5 my-6">
         <h1 className='text-2xl font-bold text-center'>Untitled Form</h1>
         <div className="flex flex-col gap-4 my-5">
           <div className="w-full bg-white rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md">
@@ -35,13 +37,18 @@ const CreateTemplate = () => {
           </div>
           <div className="w-full bg-white rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md">
             <p className='text-lg font-semibold font-sans'>Question 4. Select mutltiple options</p>
+            <div className="flex flex-col gap-1">
             <FormControlLabel  control={<Checkbox />} label="Option 1" />
             <FormControlLabel  control={<Checkbox />} label="Option 2" />
             <FormControlLabel  control={<Checkbox />} label="Option 3" />
+            </div>
           </div>
 
 
 
+        </div>
+        <div className="flex items-center justify-center">
+        <DialogDemo /> 
         </div>
       </div>
     </div>
