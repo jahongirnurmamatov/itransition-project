@@ -1,15 +1,10 @@
 import { DialogDemo } from '@/components/createForm/AddQuestion'
+import CheckboxForm from '@/components/createForm/CheckboxForm'
 import ImageUpload from '@/components/createForm/ImageUpload'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import RadioForm from '@/components/createForm/RadioFrom'
+import SelectForm from '@/components/createForm/SelectForm'
+import { Input } from '@/components/ui/input'
+import React, { useState } from 'react'
 
 const CreateTemplate = () => {
   const [formType,setFormType]=useState('');
@@ -44,41 +39,17 @@ const CreateTemplate = () => {
                       case 'header':
                         return <></>
                       case 'number':
-                        return <input type="number" placeholder="Type a number here" className="w-1/2 p-2" />;
+                        return <Input type="number" placeholder="Type a number here" className="w-1/3 p-2" />;
                       case 'checkbox':
-                        return  <div className="flex flex-col gap-1">
-                                  <FormControlLabel  control={<Checkbox />} label="Option 1" />
-                                  <FormControlLabel  control={<Checkbox />} label="Option 2" />
-                                  <FormControlLabel  control={<Checkbox />} label="Option 3" />
-                                </div>
-                      
+                        return <CheckboxForm />      
                       case 'radio-group':
                         return (
-                          <FormControl>
-                            <RadioGroup>
-                              <FormControlLabel value="option1" control={<Radio />} label="Option 1" />
-                              <FormControlLabel value="option2" control={<Radio />} label="Option 2" />
-                              <FormControlLabel value="option3" control={<Radio />} label="Option 3" />
-                            </RadioGroup>
-                          </FormControl>
+                          <RadioForm />
                         );
                       case 'textarea':
                         return <textarea placeholder="Type your text here" className="w-1/2 p-2" rows="4" />;
                       case 'select':
-                        return <Select onValueChange={(value)=>setQuestionType(value)}>
-                            <SelectTrigger className="w-[180px]">
-                              <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup  >
-                                     <SelectItem value="header" >Header</SelectItem>
-                                      <SelectItem value="paragraph">Paragraph</SelectItem>
-                                     <SelectItem value="number">Number</SelectItem>
-                                      <SelectItem value="radio-group">Radio-group</SelectItem>
-                                     <SelectItem value="textarea">Textarea</SelectItem>
-                                   </SelectGroup>
-                                 </SelectContent>
-                              </Select>
+                        return <SelectForm />
                       case 'image':
                         return <ImageUpload/>
                       default:

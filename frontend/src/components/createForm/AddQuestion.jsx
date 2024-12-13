@@ -51,6 +51,7 @@ export function DialogDemo({setFormType, addForm,formType}) {
                   <SelectItem value="textarea">Textarea</SelectItem>
                   <SelectItem value="checkbox">Checkbox</SelectItem>
                   <SelectItem value="image">Image</SelectItem>
+                  <SelectItem value="select">Select</SelectItem>
             </SelectGroup>
         </SelectContent>
     </Select>
