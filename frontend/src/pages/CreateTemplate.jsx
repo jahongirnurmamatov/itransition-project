@@ -4,6 +4,7 @@ import ImageUpload from '@/components/createForm/ImageUpload'
 import RadioForm from '@/components/createForm/RadioFrom'
 import SelectForm from '@/components/createForm/SelectForm'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -17,7 +18,7 @@ const CreateTemplate = () => {
       id: uuidv4(),
       type: formType,
       label : 'Untitled label',
-      options : [],
+      options : ['Option 1','Option 2','Option 3'],
       required : false,
       description : 'Write small description here...'
     }
@@ -49,26 +50,32 @@ const CreateTemplate = () => {
           {
             forms.map((form,index)=>(
               <div key={index} className="w-full bg-white rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md">
-                {editing ? (
+                {form.type !=='header' && <> 
+                  { editing ? (
                   <Input onBlur={()=>setEditing(false)}  type="text" value={form.label} onChange={(e) => editLabel(form.id, e.target.value)} className="w-2/3 p-2" />
                 ) : (
                  <p onClick={()=>setEditing(true)} onBlur={()=>setEditing(false)} className='text-lg font-semibold font-sans'>{form.label} </p>   
                 )}
-                {editing ? (
-                  <Input onBlur={()=>setEditing(false)}  type="text" value={form.description} onChange={(e) => editDescription(form.id, e.target.value)} className="w-2/3 p-2" />  
+                {  editing ? (
+                  <Textarea onBlur={()=>setEditing(false)}  type="text" value={form.description} onChange={(e) => editDescription(form.id, e.target.value)} className="w-2/3 p-2" />  
                 ) : (
                   <p onClick={()=>setEditing(true)}   className='text-sm font-light text-gray-500'>{form.description}</p>
                 )}
+                 </>}
 
                  {
                    (() => {
                     switch (form.type) {
                       case 'header':
-                        return <></>
+                        return <>
+                        { editing ? <Input onBlur={()=>setEditing(false)}  type="text" value={form.label} onChange={(e) => editLabel(form.id, e.target.value)} className="w-2/3 p-2" />
+                          :  <h1 className='font-bold text-2xl'>{form.label}</h1>
+                        }
+                        </> 
                       case 'number':
-                        return <Input type="number" placeholder="Type a number here" className="w-1/3 p-2" />;
+                        return <Input type="number" placeholder="Type a number here" className="w-2/3 p-2" />;
                       case 'checkbox':
-                        return <CheckboxForm />      
+                        return <CheckboxForm id={form.id} forms={forms} setForms={setForms} editing={editing} setEditing={setEditing}/>      
                       case 'radio-group':
                         return (
                           <RadioForm />
