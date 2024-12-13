@@ -5,7 +5,7 @@ import RadioForm from '@/components/createForm/RadioFrom'
 import SelectForm from '@/components/createForm/SelectForm'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
 const CreateTemplate = () => {
@@ -18,7 +18,7 @@ const CreateTemplate = () => {
       id: uuidv4(),
       type: formType,
       label : 'Untitled label',
-      options : ['Option 1','Option 2','Option 3'],
+      options : [],
       required : false,
       description : 'Write small description here...'
     }
@@ -32,6 +32,9 @@ const CreateTemplate = () => {
       setForms(allforms);
     }
   }
+  useEffect(()=>{
+    console.log(forms)
+  },[forms])
 
    const editDescription = (id, description) => {
     const allforms = [...forms];
@@ -78,7 +81,7 @@ const CreateTemplate = () => {
                         return <CheckboxForm id={form.id} forms={forms} setForms={setForms} editing={editing} setEditing={setEditing}/>      
                       case 'radio-group':
                         return (
-                          <RadioForm />
+                          <RadioForm id={form.id} forms={forms} setForms={setForms} editing={editing} setEditing={setEditing} />
                         );
                       case 'textarea':
                         return <textarea placeholder="Type your text here" className="w-1/2 p-2" rows="4" />;
