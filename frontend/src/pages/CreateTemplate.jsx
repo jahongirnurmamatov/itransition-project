@@ -32,10 +32,6 @@ const CreateTemplate = () => {
       setForms(allforms);
     }
   }
-  useEffect(()=>{
-    console.log(forms)
-  },[forms])
-
    const editDescription = (id, description) => {
     const allforms = [...forms];
     const index = forms.findIndex((form) => form.id === id);
@@ -86,7 +82,7 @@ const CreateTemplate = () => {
                       case 'textarea':
                         return <Textarea placeholder="Type your text here" className="w-1/2 p-2" rows="4" />;
                       case 'select':
-                        return <SelectForm />
+                        return <SelectForm id={form.id} forms={forms} setForms={setForms} editing={editing} setEditing={setEditing}/>
                       case 'image':
                         return <ImageUpload/>
                       case 'paragraph':

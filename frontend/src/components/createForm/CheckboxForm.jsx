@@ -1,5 +1,5 @@
 import { Checkbox, FormControlLabel, IconButton } from '@mui/material'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { MdDelete } from "react-icons/md";
 import { IoAddCircleSharp } from "react-icons/io5";
 const CheckboxForm = ({ id, forms, setForms,editing,setEditing}) => {
@@ -55,7 +55,7 @@ const CheckboxForm = ({ id, forms, setForms,editing,setEditing}) => {
             onChange={(e) => setNewOption(e.target.value)}
             placeholder="Add new option"
             className="p-2 border border-gray-300 rounded-md"
-          />
+          /> 
            <IconButton  size="small" onClick={handleAddOption}>
             <IoAddCircleSharp  className='text-slate-900 size-7'/> 
           </IconButton>
