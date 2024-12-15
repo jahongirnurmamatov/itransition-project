@@ -1,25 +1,30 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useAuthStore } from '@/store/authStore'
 import { Lock, MailCheck, UserRoundCheck } from 'lucide-react'
 import React, { useState } from 'react'
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom'
 const Login = () => {
+  const {signup, error} = useAuthStore();
+
   const [state, setState] = useState('Login');
-  const [error,setError] = useState('');
 
   const [email,setEmail] = useState('');
   const [username,setUsername] = useState('');
   const [password,setPassword] = useState('');
+  const navigate = useNavigate();
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
     if(state === 'Login'){
       // login logic
     }else{
-      // register logic
+      signup(email,username,password);
+      navigate("/");
     }
   }
 
@@ -33,7 +38,7 @@ const Login = () => {
           <div className="flex-1">
             <div className="w-full h-full flex flex-col items-center justify-center">
               <h1 className='text-2xl font-bold text-center text-slate-800 mb-5'>{state === 'Login' ? 'Login' : 'Register'}</h1>
-              <form className='flex flex-col gap-3 w-[70%]'>
+              <form onSubmit={handleSubmit} className='flex flex-col gap-3 w-[70%]'>
                 <div className="flex flex-col gap-2">
                   <Label className='text-sm text-slate-700'>Email</Label>
                   <div className="relative">
@@ -79,9 +84,9 @@ const Login = () => {
               </div>
               
               <div className="flex gap-3">
-                <Button  className='rounded-full p-2 hover:bg-slate-300 hover:scale-110' variant='outline'><FaGithub />
+                <Button  className='rounded-full p-2 ring-1 ring-slate-500 hover:bg-slate-300 hover:scale-110' variant='outline'><FaGithub />
                 </Button>
-                <Button className='rounded-full p-2 hover:bg-slate-300 hover:scale-110' variant='outline'><FaGoogle/></Button>
+                <Button className='rounded-full p-2 ring-1 ring-slate-500 hover:bg-slate-300 hover:scale-110' variant='outline'><FaGoogle/></Button>
               </div>
              </div>
           </div>

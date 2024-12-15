@@ -3,6 +3,7 @@ import { generatTokenAndSetCookie } from "../utils/generateToken.js";
 import prisma from "../db/prisma.js";
 
 export const signup = async (req, res) => {
+  console.log('here')
   try {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
