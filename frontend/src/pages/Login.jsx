@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useToast } from '@/hooks/use-toast'
 import { useAuthStore } from '@/store/authStore'
 import { Lock, MailCheck, UserRoundCheck } from 'lucide-react'
 import React, { useState } from 'react'
@@ -8,13 +9,14 @@ import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom'
 const Login = () => {
-  const {signup, error} = useAuthStore();
+  const {signup, error,isAuthenticated} = useAuthStore();
 
   const [state, setState] = useState('Login');
 
   const [email,setEmail] = useState('');
   const [username,setUsername] = useState('');
   const [password,setPassword] = useState('');
+  const {toast} = useToast();
   const navigate = useNavigate();
   
 
@@ -24,8 +26,13 @@ const Login = () => {
       // login logic
     }else{
       signup(email,username,password);
-      navigate("/");
-    }
+      if(isAuthenticated){
+      toast({
+        title: 'Success',
+        description :"You have successfully registered",
+      });
+      navigate('/my-templates')
+    }}
   }
 
   return (
