@@ -1,15 +1,22 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./layout/Layout";
 import MyTemplates from "./pages/MyTemplates";
 import CreateTemplate from "./pages/CreateTemplate";
 import Login from "./pages/Login";
 import LandingPage from "./pages/LandingPage";
+import { useAuthStore } from "./store/authStore";
 
 const App = () => {
+  const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
   return (
     <Routes>
-      <Route element={<Layout />}>
+      <Route element={ isAuthenticated ? <Layout /> : < Navigate to="/login" />}>
         <Route path="/my-templates" element={<MyTemplates />} />
         <Route path="/create/:templateId" element={<CreateTemplate />} />
       </Route>
