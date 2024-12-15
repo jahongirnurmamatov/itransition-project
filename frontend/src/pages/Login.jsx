@@ -8,11 +8,26 @@ import { FaGithub } from "react-icons/fa";
 const Login = () => {
   const [state, setState] = useState('Login');
   const [error,setError] = useState('');
+
+  const [email,setEmail] = useState('');
+  const [username,setUsername] = useState('');
+  const [password,setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError('');
+    if(state === 'Login'){
+      // login logic
+    }else{
+      // register logic
+    }
+  }
+
   return (
     <div className='w-screen h-screen bg-slate-200'>
       <div className="flex w-full h-full items-center justify-center">
-        <div className="w-[50%] h-3/4 bg-white flex gap-0 rounded-lg shadow-lg">
-          <div className="flex-1">
+        <div className="sm:w-[50%] sm:h-3/4 w-full h-full bg-white flex gap-0 rounded-lg shadow-lg">
+          <div className="flex-1 hidden lg:block">
             <img className='object-cover w-full h-full' src="https://images.pexels.com/photos/7307532/pexels-photo-7307532.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
           </div>
           <div className="flex-1">
@@ -23,7 +38,10 @@ const Login = () => {
                   <Label className='text-sm text-slate-700'>Email</Label>
                   <div className="relative">
                     <MailCheck className='absolute size-4 text-green-600 top-2.5 left-3'/>
-                    <Input className='px-10' type='email' placeholder='Enter your email' />
+                    <Input 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    value={email}  
+                    className='px-10' type='email' placeholder='Enter your email' />
                   </div>
                 </div>
                 {
@@ -31,7 +49,10 @@ const Login = () => {
                   <Label className='text-sm text-slate-700'>Username</Label>
                   <div className="relative">
                     <UserRoundCheck className='absolute size-4 text-green-600 top-2.5 left-3' />
-                    <Input className='px-10' type='text' placeholder='Enter your username' />
+                    <Input  
+                    onChange={(e) => setUsername(e.target.value)} 
+                    value={username}  
+                    className='px-10' type='text' placeholder='Enter your username' />
                   </div>
                 </div>
                 }
@@ -39,7 +60,10 @@ const Login = () => {
                   <Label className='text-sm text-slate-700'>Password</Label>
                   <div className="relative">
                     <Lock className='absolute size-4 text-green-600 top-2.5 left-3 '/>
-                    <Input className='px-10' type='password' placeholder='Enter password' />
+                    <Input  
+                    onChange={(e) => setPassword(e.target.value)} 
+                    value={password}  
+                    className='px-10' type='password' placeholder='Enter password' />
                   </div>
                 </div>
                 <Button className='w-full mt-5'>{state === 'Login' ? 'Login' : 'Register'}</Button>
