@@ -6,6 +6,7 @@ import CreateTemplate from "./pages/CreateTemplate";
 import Login from "./pages/Login";
 import LandingPage from "./pages/LandingPage";
 import { useAuthStore } from "./store/authStore";
+import Loading from "./components/loading/Loading";
 
 const App = () => {
   const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore();
@@ -13,6 +14,11 @@ const App = () => {
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  if (isCheckingAuth) {
+    console.log('checking')
+    return <Loading />;
+  }
 
   return (
     <Routes>
