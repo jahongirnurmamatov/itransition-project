@@ -11,8 +11,8 @@ const Login = () => {
   return (
     <div className='w-screen h-screen bg-slate-200'>
       <div className="flex w-full h-full items-center justify-center">
-        <div className="w-[50%] h-3/4 bg-white flex gap-0 rounded-lg shadow-lg">
-          <div className="flex-1">
+        <div className="sm:w-[60%] sm:h-3/4 w-full h-full bg-white flex gap-0 rounded-lg shadow-lg">
+          <div className="flex-1 lg:block hidden">
             <img className='object-cover w-full h-full' src="https://images.pexels.com/photos/7307532/pexels-photo-7307532.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
           </div>
           <div className="flex-1">
