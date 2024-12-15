@@ -17,7 +17,6 @@ export default function SelectForm({id, forms, setForms,editing,setEditing}) {
           setNewOption('');
         }
       };
-    
       const handleRemoveOption = (optionToRemove) => {
         const updatedForms = forms.map((form) => {
           if (form.id === id) {
