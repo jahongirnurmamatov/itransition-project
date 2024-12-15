@@ -9,7 +9,7 @@ import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom'
 const Login = () => {
-  const {signup, error,isAuthenticated} = useAuthStore();
+  const {signup, error,isAuthenticated,isLoading,login} = useAuthStore();
 
   const [state, setState] = useState('Login');
 
@@ -23,6 +23,14 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(state === 'Login'){
+      login(email,password);
+      if(isAuthenticated){
+        toast({
+          title: 'Success',
+          description :"You have successfully logged in",
+        });
+        navigate('/my-templates')
+      }
       // login logic
     }else{
       signup(email,username,password);
@@ -78,7 +86,7 @@ const Login = () => {
                     className='px-10' type='password' placeholder='Enter password' />
                   </div>
                 </div>
-                <Button className='w-full mt-5'>{state === 'Login' ? 'Login' : 'Register'}</Button>
+                <Button disabled={isLoading} className='w-full mt-5'>{state === 'Login' ? 'Login' : 'Register'}</Button>
                 {state === 'Login' ? <p onClick={() => setState('Register')} className='text-gray-500 text-xs'>Dont have an account? <span className='text-blue-600 hover:text-blue-800 cursor-pointer'>Register</span></p> 
                 : <p onClick={() => setState('Login')} className='text-gray-500 text-xs'>Already have an account? <span className='text-blue-600 hover:text-blue-800 cursor-pointer'>Login</span></p>  
               }
