@@ -41,11 +41,12 @@ const Login = () => {
   }
 
   return (
-    <div className='w-screen h-screen bg-slate-200'>
+    <div className='login w-screen h-screen '>
       <div className="flex w-full h-full items-center justify-center">
         <div className="sm:w-[50%] sm:h-3/4 w-full h-full bg-white flex gap-0 rounded-lg shadow-lg">
           <div className="flex-1 hidden lg:block">
-            <img className='object-cover w-full h-full' src="https://images.pexels.com/photos/7307532/pexels-photo-7307532.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+            <img className='object-cover w-full h-full'
+             src="https://media.licdn.com/dms/image/D5612AQHxNQ-nsSB6eg/article-cover_image-shrink_600_2000/0/1721172604107?e=2147483647&v=beta&t=gCa3gizo6ua-rVfgIKbXFCYBLWiEyJ2qqzbQ8HgYoNU" alt="" />
           </div>
           <div className="flex-1">
             <div className="w-full h-full flex flex-col items-center justify-center">

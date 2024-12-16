@@ -1,4 +1,5 @@
 import ScrollAwareHeader from '@/components/header/Header';
+import About from '@/components/landingPage/About';
 import Hero from '@/components/landingPage/Hero';
 import React from 'react';
 
@@ -10,7 +11,7 @@ const LandingPage = () => {
          <Hero />
       </section>
       <section id='about' className="w-full h-[100vh]">
-        About us
+        <About />
       </section>
       <section id='contacts' className="w-full h-[100vh]">
         Contacts
