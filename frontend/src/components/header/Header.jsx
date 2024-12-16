@@ -4,12 +4,13 @@ const ScrollAwareHeader = ({ initialBg, scrolledBg }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
+  console.log(activeSection)
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
 
       const sections = document.querySelectorAll("section");
-      const scrollPos = window.scrollY + 100; // Add offset for better accuracy
+      const scrollPos = window.scrollY + 200; 
       sections.forEach((section) => {
         if (
           section.offsetTop <= scrollPos &&
@@ -57,20 +58,20 @@ const ScrollAwareHeader = ({ initialBg, scrolledBg }) => {
               About
             </a>
             <a
-              href="#contacts"
+              href="#contact"
               className={`font-semibold px-4 py-2 rounded-md ${
-                activeSection === "contacts"
+                activeSection === "contact"
                   ? "text-white bg-blue-600"
                   : "text-gray-300 hover:text-white"
               }`}
             >
-              Contacts
+              Contact
             </a>
             <a
               href="/login"
               className={`font-semibold px-4 py-2 rounded-md ${
                 activeSection === "login"
-                  ? "text-white bg-blue-400"
+                  ? "text-white bg-blue-600"
                   : "text-gray-300 hover:text-white"
               }`}
             >
