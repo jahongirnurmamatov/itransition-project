@@ -20,27 +20,24 @@ const Login = () => {
   const navigate = useNavigate();
   
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if(state === 'Login'){
-      login(email,password);
-      if(isAuthenticated){
-        toast({
+      await login(email,password);
+      toast({
           title: 'Success',
           description :"You have successfully logged in",
         });
-        navigate('/my-templates')
-      }
-      // login logic
+      navigate('/my-templates')
+      
     }else{
-      signup(email,username,password);
-      if(isAuthenticated){
+      await signup(email,username,password);
       toast({
         title: 'Success',
         description :"You have successfully registered",
       });
       navigate('/my-templates')
-    }}
+    }
   }
 
   return (
