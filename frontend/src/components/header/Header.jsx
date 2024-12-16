@@ -15,7 +15,7 @@ const ScrollAwareHeader = ({ initialBg, scrolledBg }) => {
 
   return (
     <div
-      className={`w-full fixed top-0 left-0 z-50 transition-colors duration-300 ${
+      className={`w-full h-[72px] fixed top-0 left-0 z-50 transition-colors duration-300 ${
         isScrolled ? scrolledBg : initialBg
       }`}
     >
