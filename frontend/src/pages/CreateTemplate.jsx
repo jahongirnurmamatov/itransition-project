@@ -10,7 +10,8 @@ import SelectForm from '@/components/createForm/SelectForm';
 import { DialogDemo } from '@/components/createForm/AddQuestion';
 import PreviewComponentModal from '@/components/createForm/PreviewComponentModal';
 import { TitleSheet } from '@/components/createForm/TitleSheet';
-
+import { LuDelete } from "react-icons/lu";
+import { FaRegCopy } from "react-icons/fa";
 const CreateTemplate = () => {
   const [formType, setFormType] = useState('');
   const [forms, setForms] = useState([]);
@@ -87,8 +88,12 @@ const CreateTemplate = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className="w-full bg-white rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md"
-                      >
+                        className="w-full relative bg-white rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md"
+                      > 
+                      <div className="absolute top-2 right-2 flex gap-2 items-center justify-center">
+                        <FaRegCopy className='size-5 text-slate-900 hover:opacity-80'/>
+                        <LuDelete className='size-5 text-slate-900 hover:opacity-80'/>
+                      </div>
                         {form.type !== 'header' && form.type !== 'paragraph' && (
                           <div>
                             {editing ? (
