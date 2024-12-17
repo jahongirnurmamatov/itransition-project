@@ -1,5 +1,4 @@
 import axiosInstance from '@/lib/axiosInstance';
-import { Navigate } from 'react-router-dom';
 import {create} from 'zustand';
 
 export const useAuthStore = create((set)=>({
@@ -43,7 +42,7 @@ export const useAuthStore = create((set)=>({
     checkAuth: async()=>{
         set({isCheckingAuth:true, error:null});
         try {
-            const res = await axios.get(`/auth/check-auth`);
+            const res = await axiosInstance.get(`/auth/check-auth`);
             set({user:res.data.user, isAuthenticated:true, isLoading:false, isCheckingAuth:false});
         } catch (error) {
             set({error:null, isCheckingAuth:false});

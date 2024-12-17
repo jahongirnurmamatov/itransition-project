@@ -10,13 +10,12 @@ import Loading from "./components/loading/Loading";
 
 const App = () => {
   const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore();
-
+  
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
   if (isCheckingAuth) {
-    console.log('checking')
     return <Loading />;
   }
 
@@ -24,7 +23,7 @@ const App = () => {
     <Routes>
       <Route element={ isAuthenticated ? <Layout /> : < Navigate to="/login" />}>
         <Route path="/my-templates" element={<MyTemplates />} />
-        <Route path="/create/:templateId" element={<CreateTemplate />} />
+        <Route path="/templates/:templateId/create" element={<CreateTemplate />} />
       </Route>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
