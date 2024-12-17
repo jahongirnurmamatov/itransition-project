@@ -21,9 +21,9 @@ const PreviewComponentModal = ({forms}) => {
           </DialogTrigger>
           <DialogContent className="sm:max-w-[80%] h-[90%]">
           <ScrollArea className="w-[95%]">
-            <DialogHeader>
-              <DialogTitle>Here is the preview of template</DialogTitle>
-              <DialogDescription>
+            <DialogHeader className={"text-center my-2 mb-5"}>
+              <DialogTitle className='text-slate-900 text-2xl text-center'>Here is the preview of template</DialogTitle>
+              <DialogDescription className='text-gray-500 text-sm my-2 italic'>
                 You can edit further if you want
               </DialogDescription>
             </DialogHeader>
