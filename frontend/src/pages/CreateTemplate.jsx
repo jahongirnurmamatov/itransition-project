@@ -61,7 +61,27 @@ const CreateTemplate = () => {
 
     setForms(reorderedForms);
   };
-  console.log(forms)
+
+  const duplicateForm = (id) => {
+    const index = forms.findIndex((form) => form.id === id);
+    if (index !== -1) {
+      const formToDuplicate = forms[index];
+      const duplicatedForm = { ...formToDuplicate, id: uuidv4() };
+      const updatedForms = [
+        ...forms.slice(0, index + 1), // Forms up to and including the original
+        duplicatedForm,               // Add the duplicated form
+        ...forms.slice(index + 1),    // Remaining forms after the original
+      ];
+      setForms(updatedForms);
+    }
+  };
+
+  const deleteForm = (id) => {
+    const filteredForms = forms.filter((form) => form.id !== id);
+    setForms(filteredForms);
+  };
+  
+  
   return (
   <DragDropContext onDragEnd={onDragEnd}>
     <div className="w-full bg-slate-100 min-h-screen flex items-start justify-center">
@@ -91,8 +111,12 @@ const CreateTemplate = () => {
                         className="w-full relative bg-white rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md"
                       > 
                       <div className="absolute top-2 right-2 flex gap-2 items-center justify-center">
-                        <FaRegCopy className='size-5 text-slate-900 hover:opacity-80'/>
-                        <LuDelete className='size-5 text-slate-900 hover:opacity-80'/>
+                        <FaRegCopy 
+                        onClick={() => duplicateForm(form.id)}
+                        className='size-5 text-slate-900 hover:opacity-80'/>
+                        <LuDelete
+                        onClick={() => deleteForm(form.id)}
+                        className='size-5 text-slate-900 hover:opacity-80'/>
                       </div>
                         {form.type !== 'header' && form.type !== 'paragraph' && (
                           <div>
