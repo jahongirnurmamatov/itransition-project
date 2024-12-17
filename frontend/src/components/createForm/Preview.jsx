@@ -70,7 +70,6 @@ const PreviewComponent = ({ forms }) => {
                         label='Write your text here...'
                         multiline
                         rows={4}
-                        defaultValue="Default Value"
                         variant="standard"
                         />
                     );

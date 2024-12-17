@@ -1,0 +1,86 @@
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+
+
+const topics = [
+    "Education",
+    "Health",
+    "Sport",
+    "Politics",
+    "Economy",
+    "Technology",
+    "Entertainment",
+    "Others",
+]
+import { MdOutlineEditCalendar } from "react-icons/md";
+export function TitleSheet() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">
+          <MdOutlineEditCalendar className="size-6 hover:opacity-80 cursor-pointer"/>
+        </Button>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Edit Template Essentials</SheetTitle>
+          <SheetDescription>
+            Make changes to your profile here. Click save when you're done.
+          </SheetDescription>
+        </SheetHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Title
+            </Label>
+            <Input id="title" defaultValue={`Title - ${Date.now()}`}  className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="topic" className="text-right">
+              Topic
+            </Label>
+            <Select id='topic'>
+                <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup  >
+                        {
+                            topics.map((topic) => (
+                              <SelectItem key={topic} value={topic} >
+                                {topic}
+                              </SelectItem>
+                            ))
+                          }
+                        </SelectGroup>
+                  </SelectContent>
+              </Select>
+          </div>
+          <div className=" items-center gap-4">
+            <Label htmlFor="topic" className="text-right">
+              Image
+            </Label>
+            <input type="file" />
+          </div>
+        </div>
+        <SheetFooter>
+          <SheetClose asChild>
+            <Button type="submit">Save changes</Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  )
+}

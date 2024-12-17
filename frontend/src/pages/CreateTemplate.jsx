@@ -9,6 +9,7 @@ import RadioForm from '@/components/createForm/RadioFrom';
 import SelectForm from '@/components/createForm/SelectForm';
 import { DialogDemo } from '@/components/createForm/AddQuestion';
 import PreviewComponentModal from '@/components/createForm/PreviewComponentModal';
+import { TitleSheet } from '@/components/createForm/TitleSheet';
 
 const CreateTemplate = () => {
   const [formType, setFormType] = useState('');
@@ -64,12 +65,14 @@ const CreateTemplate = () => {
   <DragDropContext onDragEnd={onDragEnd}>
     <div className="w-full bg-slate-100 min-h-screen flex items-start justify-center">
       <div className="mx-auto w-4/5 my-6">
-        <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-center text-slate-800">
-          Create Your Form           
+        <h1 className="text-2xl  font-bold text-center text-slate-800">
+          Create Your Template           
         </h1>
-        <PreviewComponentModal forms={forms} />
+        <div className="flex gap-2 justify-end">
+          <PreviewComponentModal forms={forms} />
+          <TitleSheet />
         </div>
+        
         <Droppable droppableId={dId}>
             {(provided) => (
               <div

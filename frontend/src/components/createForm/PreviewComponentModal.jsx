@@ -10,15 +10,14 @@ import {
 import PreviewComponent from "./Preview"
 import { IoMdEye } from "react-icons/io";
 import { ScrollArea } from "../ui/scroll-area";
+import { Button } from "../ui/button";
 const PreviewComponentModal = ({forms}) => {
   return (
     <Dialog >
           <DialogTrigger asChild>   
-            <button className="flex gap-1">
-                <p>Preview</p>  
-                <IoMdEye className="size-7 hover:opacity-80 cursor-pointer"/> 
-            </button>      
-                
+            <Button variant="outline">
+                <IoMdEye className="size-7 hover:opacity-80 cursor-pointer"/>          
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[80%] h-[90%]">
           <ScrollArea className="w-[95%]">
