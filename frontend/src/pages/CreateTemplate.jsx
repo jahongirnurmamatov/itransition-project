@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { Input } from '@/components/ui/input';
@@ -26,6 +26,10 @@ const CreateTemplate = () => {
     };
     setForms([...forms, newForm]);
   };
+  let dId = uuidv4();
+  useEffect(() => {
+    dId = uuidv4();
+  }, [forms]);
 
   const editLabel = (id, label) => {
     const allforms = [...forms];
@@ -66,7 +70,7 @@ const CreateTemplate = () => {
         </h1>
         <PreviewComponentModal forms={forms} />
         </div>
-        <Droppable droppableId="forms" className='h-full'>
+        <Droppable droppableId={dId}>
             {(provided) => (
               <div
                 {...provided.droppableProps}
