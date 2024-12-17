@@ -176,7 +176,7 @@ const CreateTemplate = () => {
                               return (
                                 <Textarea
                                   placeholder="Type your text here"
-                                  className="w-1/2 p-2"
+                                  className="w-full p-2"
                                   rows="4"
                                 />
                               );
@@ -201,7 +201,7 @@ const CreateTemplate = () => {
                                   }
                                   onBlur={() => setEditing(false)}
                                   placeholder="Type form description here"
-                                  className="w-1/2 p-2"
+                                  className="w-full p-2"
                                   rows="4"
                                 />
                               ) : (

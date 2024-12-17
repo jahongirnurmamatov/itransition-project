@@ -15,7 +15,7 @@ const PreviewComponentModal = ({forms}) => {
   return (
     <Dialog >
           <DialogTrigger asChild>   
-            <button>
+            <button className="flex gap-1">
                 <p>Preview of the template</p>  
                 <IoMdEye className="size-7 hover:opacity-80 cursor-pointer"/> 
             </button>      

@@ -1,4 +1,7 @@
+import { Checkbox, FormControlLabel, Input, Radio, RadioGroup } from "@mui/material";
 import ImageUpload from "./ImageUpload";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import { Textarea } from "../ui/textarea";
 
 const PreviewComponent = ({ forms }) => {
   return (
@@ -33,57 +36,61 @@ const PreviewComponent = ({ forms }) => {
                     );
                   case 'number':
                     return (
-                      <input
-                        type="number"
-                        placeholder="Type a number here"
-                        className="w-2/3 p-2 border border-gray-300 rounded"
-                        readOnly
-                      />
+                         <Input
+                            type="number"
+                            placeholder="Type a number here"
+                            className="w-2/3 p-2"
+                        />
                     );
                   case 'checkbox':
                     return (
-                      <div className="flex flex-col">
-                        {form.options.map((option, index) => (
-                          <label key={index} className="flex items-center gap-2">
-                            <input type="checkbox" disabled />
-                            <span>{option}</span>
-                          </label>
-                        ))}
-                      </div>
-                    );
+                        form.options.map((option,index)=>(
+                            <div key={index} className="">
+                                 <Checkbox id="terms" />
+                                     <label
+                                       htmlFor="terms"
+                                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                     >
+                                      {option}
+                                    </label>
+                            </div>
+                        ))
+                    )
                   case 'radio-group':
                     return (
-                      <div className="flex flex-col">
-                        {form.options.map((option, index) => (
-                          <label key={index} className="flex items-center gap-2">
-                            <input type="radio" disabled />
-                            <span>{option}</span>
-                          </label>
-                        ))}
-                      </div>
-                    );
+                        <RadioGroup>
+                            {form.options.map((option,index)=>
+                                <FormControlLabel key={index} value={option} control={<Radio />} label={option} />
+                            )}
+                        </RadioGroup>
+                    )
                   case 'textarea':
                     return (
-                      <textarea
-                        placeholder="Type your text here"
-                        className="w-1/2 p-2 border border-gray-300 rounded"
+                      <Textarea
+                         placeholder="Type your text here"
+                         className="w-full p-2"
                         rows="4"
-                        readOnly
-                      ></textarea>
+                      />
                     );
                   case 'select':
                     return (
-                      <select
-                        className="w-2/3 p-2 border border-gray-300 rounded"
-                        disabled
-                      >
-                        {form.options.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                    );
+                        <Select >
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                            <SelectContent>
+                               <SelectGroup  >
+                                {
+                                  form.options.map((option,index) => (
+                                    <SelectItem key={index} value={option} >
+                                      {option}
+                                    </SelectItem>
+                                  ))
+                                }
+                                </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                    )
                   case 'image':
                     return (<ImageUpload />);
                   case 'paragraph':

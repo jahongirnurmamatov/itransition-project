@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { IconButton } from '@mui/material';
 import { IoAddCircleSharp } from 'react-icons/io5';
+import { MdDelete } from 'react-icons/md';
 
 export default function SelectForm({id, forms, setForms,editing,setEditing}) {
    const [newOption, setNewOption] = useState('');
@@ -57,7 +58,10 @@ export default function SelectForm({id, forms, setForms,editing,setEditing}) {
           {
             form.options.map((option) => (
               <div key={option} className="flex items-center gap-2">
-                <p>{option}</p>       
+                <p>{option}</p> 
+                <IconButton size="small" onClick={() => handleRemoveOption(option)}>
+                  <MdDelete  className='text-red-500 size-5'/> 
+                </IconButton>      
               </div>
             ))
           }
