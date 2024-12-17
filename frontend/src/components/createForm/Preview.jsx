@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, Input, Radio, RadioGroup } from "@mui/material";
+import { Checkbox, FormControlLabel, Input, Radio, RadioGroup, TextField } from "@mui/material";
 import ImageUpload from "./ImageUpload";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { Textarea } from "../ui/textarea";
@@ -66,11 +66,14 @@ const PreviewComponent = ({ forms }) => {
                     )
                   case 'textarea':
                     return (
-                      <Textarea
-                         placeholder="Type your text here"
-                         className="w-full p-2"
-                        rows="4"
-                      />
+                      <TextField
+                        id="standard-multiline-static"
+                        label='Write your text here...'
+                        multiline
+                        rows={4}
+                        defaultValue="Default Value"
+                        variant="standard"
+                        />
                     );
                   case 'select':
                     return (
