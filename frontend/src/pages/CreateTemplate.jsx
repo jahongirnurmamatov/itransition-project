@@ -12,20 +12,16 @@ import PreviewComponentModal from '@/components/createForm/PreviewComponentModal
 import { TitleSheet } from '@/components/createForm/TitleSheet';
 import { LuDelete } from "react-icons/lu";
 import { FaRegCopy } from "react-icons/fa";
+import { useTemplateStore } from '@/store/templateStore';
 const CreateTemplate = () => {
-  const [title, setTitle] = useState('');
-  const [topic, setTopic] = useState('');
-  const [image,setImage] = useState('');
-  const [prevImg,setPrevImg] = useState('');
-
+  const {  image,setPreviewImg,previewImg,forms,setForms } = useTemplateStore();
   const [formType, setFormType] = useState('');
-  const [forms, setForms] = useState([]);
   const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     if (image) {
       const objectUrl = URL.createObjectURL(image);
-      setPrevImg(objectUrl);
+      setPreviewImg(objectUrl);
       return () => URL.revokeObjectURL(objectUrl);
     }
   }, [image]);
@@ -113,14 +109,14 @@ const CreateTemplate = () => {
         <h1 className="text-2xl  font-bold text-center text-slate-800">
           Create Your Template           
         </h1>
-        {prevImg && 
+        {previewImg && 
           <div className="flex items-center justify-center h-[300px] w-[100%] my-5">
-            <img src={prevImg} alt="" className='h-[300px] w-[100%] overflow-hidden object-cover' />
+            <img src={previewImg} alt="" className='h-[300px] w-[100%] overflow-hidden object-cover' />
           </div>
         }
         <div className="flex gap-2 justify-end">
-          <PreviewComponentModal forms={forms} prevImg={prevImg} title={title} topic={topic} />
-          <TitleSheet title={title} setTitle={setTitle} topic={topic} setTopic={setTopic} image={image} setImage={setImage} />
+          <PreviewComponentModal  />
+          <TitleSheet  />
         </div>
         
         <Droppable droppableId={dId}>
@@ -221,8 +217,6 @@ const CreateTemplate = () => {
                               return (
                                 <CheckboxForm
                                   id={form.id}
-                                  forms={forms}
-                                  setForms={setForms}
                                   editing={editing}
                                   setEditing={setEditing}
                                 />
@@ -231,8 +225,6 @@ const CreateTemplate = () => {
                               return (
                                 <RadioForm
                                   id={form.id}
-                                  forms={forms}
-                                  setForms={setForms}
                                   editing={editing}
                                   setEditing={setEditing}
                                 />
@@ -249,8 +241,6 @@ const CreateTemplate = () => {
                               return (
                                 <SelectForm
                                   id={form.id}
-                                  forms={forms}
-                                  setForms={setForms}
                                   editing={editing}
                                   setEditing={setEditing}
                                 />

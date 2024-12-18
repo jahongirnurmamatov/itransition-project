@@ -3,9 +3,11 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { IconButton } from '@mui/material';
 import { IoAddCircleSharp } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
+import { useTemplateStore } from '@/store/templateStore';
 
-export default function SelectForm({id, forms, setForms,editing,setEditing}) {
-   const [newOption, setNewOption] = useState('');
+export default function SelectForm({id,editing}) {
+  const [newOption, setNewOption] = useState('');
+  const {forms,setForms} = useTemplateStore();
       const handleAddOption = () => {
         if (newOption.trim()) {
           const updatedForms = forms.map((form) => {

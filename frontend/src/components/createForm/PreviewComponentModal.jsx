@@ -2,7 +2,6 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -11,7 +10,7 @@ import PreviewComponent from "./Preview"
 import { IoMdEye } from "react-icons/io";
 import { ScrollArea } from "../ui/scroll-area";
 import { Button } from "../ui/button";
-const PreviewComponentModal = ({forms,prevImg,title,topic}) => {
+const PreviewComponentModal = () => {
   return (
     <Dialog >
           <DialogTrigger asChild>   
@@ -27,7 +26,7 @@ const PreviewComponentModal = ({forms,prevImg,title,topic}) => {
                 You can edit further if you want
               </DialogDescription>
             </DialogHeader>
-            <PreviewComponent forms={forms} prevImg={prevImg} title={title} topic={topic} />
+            <PreviewComponent />
         </ScrollArea>
         </DialogContent>
     </Dialog>

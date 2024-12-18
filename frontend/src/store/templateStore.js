@@ -8,6 +8,8 @@ export const useTemplateStore = create((set) => ({
     topic: '',
     image: '',
     template: null,
+    previewImg: '',
+    setPreviewImg: (previewImg) => set({ previewImg }),
     setTemplate: (template) => set({ template }),
     setForms: (forms) => set({ forms }),
     setTitle: (title) => set({ title }),

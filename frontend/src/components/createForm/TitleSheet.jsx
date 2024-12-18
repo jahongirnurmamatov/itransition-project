@@ -25,7 +25,9 @@ const topics = [
     "Others",
 ]
 import { MdOutlineEditCalendar } from "react-icons/md";
-export function TitleSheet({title,setTitle,topic,setTopic,image,setImage}) {
+import { useTemplateStore } from "@/store/templateStore"
+export function TitleSheet() {
+  const {title,setTitle, topic, setTopic, setImage} = useTemplateStore()
   return (
     <Sheet>
       <SheetTrigger asChild>

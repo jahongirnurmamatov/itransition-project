@@ -1,11 +1,13 @@
+import { useTemplateStore } from '@/store/templateStore';
 import { FormControl, FormControlLabel, IconButton, Radio, RadioGroup } from '@mui/material';
 import React, { useState } from 'react';
 import { IoAddCircleSharp } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 
-const RadioForm = ({ id, forms, setForms, editing, setEditing }) => {
+const RadioForm = ({ id, editing, setEditing }) => {
   const [newOption, setNewOption] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
+  const {forms,setForms} = useTemplateStore();
 
   const handleAddOption = () => {
     if (newOption.trim()) {

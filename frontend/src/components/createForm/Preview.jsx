@@ -2,22 +2,24 @@ import { Checkbox, FormControlLabel, Input, Radio, RadioGroup, TextField } from 
 import ImageUpload from "./ImageUpload";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { IoMdPricetag } from "react-icons/io";
-const PreviewComponent = ({ forms,prevImg,title,topic }) => {
+import { useTemplateStore } from "@/store/templateStore";
+const PreviewComponent = () => {
+  const {title,topic,previewImg,forms} = useTemplateStore();
   return (
-    <div className="w-full bg-slate-100 min-h-screen flex flex-col items-start justify-center">
-        {prevImg && 
-          <div className="flex items-center justify-center h-[300px] w-[100%] mb-5 top-0">
-            <img src={prevImg} alt="" className='h-[200px] w-[100%] overflow-hidden object-cover' />
+    <div className="w-full bg-slate-100 min-h-screen flex flex-col items-start">
+        {previewImg && 
+          <div className="flex items-center justify-center h-[300px] w-[100%] top-0">
+            <img src={previewImg} alt="" className='h-[200px] w-[100%] overflow-hidden object-cover' />
           </div>
         }
       <div className="mx-auto w-4/5 my-6">
       <h1 className="text-2xl text-center font-bold text-slate-900">{title}</h1>
         
       <div className="flex justify-end my-2">
-        <div className="flex gap-2">
+        {topic && <div className="flex gap-2">
           <IoMdPricetag className="size-5 text-gray-500 " />
           <p className="text-sm text-gray-500">{topic}</p>
-        </div>
+        </div>}
       </div>
        
         <div className="flex flex-col gap-4 my-5">

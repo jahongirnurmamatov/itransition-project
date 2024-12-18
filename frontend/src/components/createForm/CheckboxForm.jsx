@@ -2,8 +2,10 @@ import { Checkbox, FormControlLabel, IconButton } from '@mui/material'
 import  { useState } from 'react'
 import { MdDelete } from "react-icons/md";
 import { IoAddCircleSharp } from "react-icons/io5";
-const CheckboxForm = ({ id, forms, setForms,editing,setEditing}) => {
+import { useTemplateStore } from '@/store/templateStore';
+const CheckboxForm = ({ id,editing,setEditing}) => {
     const [newOption, setNewOption] = useState('');
+    const {forms,setForms} = useTemplateStore();
   
     const handleAddOption = () => {
       if (newOption.trim()) {
