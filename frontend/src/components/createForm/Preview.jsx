@@ -2,10 +2,17 @@ import { Checkbox, FormControlLabel, Input, Radio, RadioGroup, TextField } from 
 import ImageUpload from "./ImageUpload";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
-const PreviewComponent = ({ forms }) => {
+const PreviewComponent = ({ forms,prevImg }) => {
   return (
-    <div className="w-full bg-slate-100 min-h-screen flex items-start justify-center">
+    <div className="w-full bg-slate-100 min-h-screen flex flex-col items-start justify-center">
+        {prevImg && 
+          <div className="flex items-center justify-center h-[300px] w-[100%] mb-5 top-0">
+            <img src={prevImg} alt="" className='h-[200px] w-[100%] overflow-hidden object-cover' />
+          </div>
+        }
       <div className="mx-auto w-4/5 my-6">
+        
+       
         <div className="flex flex-col gap-4 my-5">
           {forms.map((form) => (
             <div

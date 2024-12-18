@@ -16,12 +16,20 @@ const CreateTemplate = () => {
   const [title, setTitle] = useState('');
   const [topic, setTopic] = useState('');
   const [image,setImage] = useState('');
+  const [prevImg,setPrevImg] = useState('');
 
   const [formType, setFormType] = useState('');
   const [forms, setForms] = useState([]);
   const [editing, setEditing] = useState(false);
 
-  // handle create template
+  useEffect(() => {
+    if (image) {
+      const objectUrl = URL.createObjectURL(image);
+      setPrevImg(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [image]);
+ 
   const handleCreateTemplate = () => { 
     const template = {
       title,
@@ -101,11 +109,17 @@ const CreateTemplate = () => {
   <DragDropContext onDragEnd={onDragEnd}>
     <div className="w-full bg-slate-100 min-h-screen flex items-start justify-center">
       <div className="mx-auto w-4/5 my-6">
+        
         <h1 className="text-2xl  font-bold text-center text-slate-800">
           Create Your Template           
         </h1>
+        {prevImg && 
+          <div className="flex items-center justify-center h-[300px] w-[100%] my-5">
+            <img src={prevImg} alt="" className='h-[300px] w-[100%] overflow-hidden object-cover' />
+          </div>
+        }
         <div className="flex gap-2 justify-end">
-          <PreviewComponentModal forms={forms} />
+          <PreviewComponentModal forms={forms} prevImg={prevImg}  />
           <TitleSheet title={title} setTitle={setTitle} topic={topic} setTopic={setTopic} image={image} setImage={setImage} />
         </div>
         
