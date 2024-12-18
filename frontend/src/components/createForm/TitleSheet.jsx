@@ -25,7 +25,7 @@ const topics = [
     "Others",
 ]
 import { MdOutlineEditCalendar } from "react-icons/md";
-export function TitleSheet() {
+export function TitleSheet({title,setTitle,topic,setTopic,image,setImage}) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -45,13 +45,15 @@ export function TitleSheet() {
             <Label htmlFor="name" className="text-right">
               Title
             </Label>
-            <Input id="title" defaultValue={`Title - ${Date.now()}`}  className="col-span-3" />
+            <Input onChange={(e) => setTitle(e.target.value)}
+            value={title}
+            id="title" defaultValue={`Title - ${Date.now()}`}  className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="topic" className="text-right">
               Topic
             </Label>
-            <Select id='topic'>
+            <Select onValueChange={(e) => setTopic(e)} value={topic} id='topic'>
                 <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select" />
                 </SelectTrigger>
@@ -59,7 +61,7 @@ export function TitleSheet() {
                         <SelectGroup  >
                         {
                             topics.map((topic) => (
-                              <SelectItem key={topic} value={topic} >
+                              <SelectItem onChange={(e) => setTopic(e.target.value)} key={topic} value={topic} >
                                 {topic}
                               </SelectItem>
                             ))
@@ -72,12 +74,12 @@ export function TitleSheet() {
             <Label htmlFor="topic" className="text-right">
               Image
             </Label>
-            <input type="file" />
+            <input onChange={(e)=>setImage(e.target.files[0])} type="file" />
           </div>
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Create Template</Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

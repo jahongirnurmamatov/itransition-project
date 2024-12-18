@@ -13,9 +13,24 @@ import { TitleSheet } from '@/components/createForm/TitleSheet';
 import { LuDelete } from "react-icons/lu";
 import { FaRegCopy } from "react-icons/fa";
 const CreateTemplate = () => {
+  const [title, setTitle] = useState('');
+  const [topic, setTopic] = useState('');
+  const [image,setImage] = useState('');
+
   const [formType, setFormType] = useState('');
   const [forms, setForms] = useState([]);
   const [editing, setEditing] = useState(false);
+
+  // handle create template
+  const handleCreateTemplate = () => { 
+    const template = {
+      title,
+      topic,
+      image,
+      forms,
+    };
+    // api here
+  };
 
   const addForm = (formType) => {
     const newForm = {
@@ -68,9 +83,9 @@ const CreateTemplate = () => {
       const formToDuplicate = forms[index];
       const duplicatedForm = { ...formToDuplicate, id: uuidv4() };
       const updatedForms = [
-        ...forms.slice(0, index + 1), // Forms up to and including the original
-        duplicatedForm,               // Add the duplicated form
-        ...forms.slice(index + 1),    // Remaining forms after the original
+        ...forms.slice(0, index + 1), 
+        duplicatedForm,               
+        ...forms.slice(index + 1),    
       ];
       setForms(updatedForms);
     }
@@ -91,7 +106,7 @@ const CreateTemplate = () => {
         </h1>
         <div className="flex gap-2 justify-end">
           <PreviewComponentModal forms={forms} />
-          <TitleSheet />
+          <TitleSheet title={title} setTitle={setTitle} topic={topic} setTopic={setTopic} image={image} setImage={setImage} />
         </div>
         
         <Droppable droppableId={dId}>
