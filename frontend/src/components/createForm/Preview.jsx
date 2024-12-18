@@ -1,8 +1,8 @@
 import { Checkbox, FormControlLabel, Input, Radio, RadioGroup, TextField } from "@mui/material";
 import ImageUpload from "./ImageUpload";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-
-const PreviewComponent = ({ forms,prevImg }) => {
+import { IoMdPricetag } from "react-icons/io";
+const PreviewComponent = ({ forms,prevImg,title,topic }) => {
   return (
     <div className="w-full bg-slate-100 min-h-screen flex flex-col items-start justify-center">
         {prevImg && 
@@ -11,7 +11,14 @@ const PreviewComponent = ({ forms,prevImg }) => {
           </div>
         }
       <div className="mx-auto w-4/5 my-6">
+      <h1 className="text-2xl text-center font-bold text-slate-900">{title}</h1>
         
+      <div className="flex justify-end my-2">
+        <div className="flex gap-2">
+          <IoMdPricetag className="size-5 text-gray-500 " />
+          <p className="text-sm text-gray-500">{topic}</p>
+        </div>
+      </div>
        
         <div className="flex flex-col gap-4 my-5">
           {forms.map((form) => (

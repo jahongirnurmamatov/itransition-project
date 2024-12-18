@@ -119,7 +119,7 @@ const CreateTemplate = () => {
           </div>
         }
         <div className="flex gap-2 justify-end">
-          <PreviewComponentModal forms={forms} prevImg={prevImg}  />
+          <PreviewComponentModal forms={forms} prevImg={prevImg} title={title} topic={topic} />
           <TitleSheet title={title} setTitle={setTitle} topic={topic} setTopic={setTopic} image={image} setImage={setImage} />
         </div>
         
