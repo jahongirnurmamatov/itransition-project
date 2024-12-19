@@ -8,17 +8,59 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id       String   @id @default(cuid())
-  username String   @unique
-  email    String   @unique
-  password String 
-  role     Role     @default(USER)
+  id        Int   @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  templates Template[]
+  role      Role     @default(USER)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 enum Role {
   ADMIN
   USER
 }
+
+model Template {
+  id          Int       @id @default(autoincrement())
+  name        String
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  description String?
+  questions   Question[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+model Question {
+  id          Int       @id @default(autoincrement())
+  templateId  Int
+  type        QuestionType
+  state       QuestionState
+  question    String
+  orderIndex  Int
+  options     Option[]
+  template    Template   @relation(fields: [templateId], references: [id], onDelete: Cascade)
+}
+
+enum QuestionType {
+  STRING
+  INTEGER
+  MULTIPLE_CHOICE
+  RADIO_GROUP
+  SELECT_GROUP
+  TEXT
+}
+
+enum QuestionState {
+  NOT_PRESENT
+  OPTIONAL
+  REQUIRED
+}
+model Option {
+  id         Int       @id @default(autoincrement())
+  questionId Int
+  value      String
+  question   Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+

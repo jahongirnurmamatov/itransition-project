@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sheet"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
-
+import {labeledTags} from '@/assets/data.js'
 const topics = [
     "Education",
     "Health",
@@ -26,8 +26,11 @@ const topics = [
 ]
 import { MdOutlineEditCalendar } from "react-icons/md";
 import { useTemplateStore } from "@/store/templateStore"
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
 export function TitleSheet() {
-  const {title,setTitle, topic, setTopic, setImage} = useTemplateStore()
+  const {title,setTitle, topic, setTopic, setImage,tags,setTags,descripton,setDescription} = useTemplateStore()
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -71,6 +74,30 @@ export function TitleSheet() {
                         </SelectGroup>
                   </SelectContent>
               </Select>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label>Description</Label>
+            <Input onChange={(e) => setDescription(e.target.value)} value={descripton} id="description" className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label>Add Tags</Label>
+            <Stack spacing={2} sx={{ width: 500 }}>
+            <Autocomplete
+                multiple
+                id="size-small-standard-multi"
+                size="small"
+                options={labeledTags}
+                getOptionLabel={(option) => option.title}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    label="Add Tags"
+                    placeholder="Select Tags"
+                  />
+                )}
+              />
+        </Stack>
           </div>
           <div className=" items-center gap-4">
             <Label htmlFor="topic" className="text-right">

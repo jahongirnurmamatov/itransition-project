@@ -1,3 +1,4 @@
+import { SheetDescription } from '@/components/ui/sheet';
 import axiosInstance from '@/lib/axiosInstance';
 import {create} from 'zustand'
 
@@ -9,6 +10,10 @@ export const useTemplateStore = create((set) => ({
     image: '',
     template: null,
     previewImg: '',
+    description: '',
+    tags: [],
+    setTags: (tags) => set({ tags }),
+    setDescription: (description) => set({ description }),
     setPreviewImg: (previewImg) => set({ previewImg }),
     setTemplate: (template) => set({ template }),
     setForms: (forms) => set({ forms }),
@@ -20,8 +25,10 @@ export const useTemplateStore = create((set) => ({
         const template = {
             title,
             topic,
+            description,
             image,
             forms,
+            tags,
         };
         try {
             set({isLoading:true, error:null});

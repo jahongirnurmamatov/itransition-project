@@ -151,3 +151,44 @@ export const data = {
         "description": "Gather feedback from the local community."
       }
     ]
+
+
+    export const labeledTags = [
+      { name: "technology" },
+  { name: "programming" },
+  { name: "web development" },
+  { name: "software engineering" },
+  { name: "artificial intelligence" },
+  { name: "machine learning" },
+  { name: "data science" },
+  { name: "cybersecurity" },
+  { name: "cloud computing" },
+  { name: "devops" },
+  { name: "blockchain" },
+  { name: "cryptocurrency" },
+  { name: "internet of things" },
+  { name: "augmented reality" },
+  { name: "virtual reality" },
+  { name: "marketing" },
+  { name: "digital marketing" },
+  { name: "social media marketing" },
+  { name: "content marketing" },
+  { name: "email marketing" },
+  { name: "seo" },
+  { name: "business" },
+  { name: "finance" },
+  { name: "entrepreneurship" },
+  { name: "leadership" },
+  { name: "productivity" },
+  { name: "health" },
+  { name: "fitness" },
+  { name: "nutrition" },
+  { name: "mental health" },
+  { name: "environment" },
+  { name: "sustainability" },
+  { name: "climate change" },
+  { name: "education" },
+  { name: "online learning" },
+  { name: "personal development" },
+  { name: "lifestyle" }
+      ]
