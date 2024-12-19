@@ -6,6 +6,7 @@ import { useTemplateStore } from "@/store/templateStore";
 import { BsChatLeftQuote } from "react-icons/bs";
 import { Separator } from "../ui/separator";
 import { Interaction } from "../userInteraction/Interaction";
+import CommentBox from "../userInteraction/CommentBox";
 
 const tagColors = ["bg-red-200", "bg-green-200", "bg-blue-200", "bg-yellow-200", "bg-purple-200"];
 const PreviewComponent = () => {
@@ -145,6 +146,8 @@ const PreviewComponent = () => {
         }
         <Separator className="my-5"	 />
         <Interaction />
+        <Separator className="my-5"	 />
+        <CommentBox />
       </div>
     </div>
   );
