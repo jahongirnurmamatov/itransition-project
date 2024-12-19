@@ -4,6 +4,8 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { IoMdPricetag } from "react-icons/io";
 import { useTemplateStore } from "@/store/templateStore";
 import { BsChatLeftQuote } from "react-icons/bs";
+import { Separator } from "../ui/separator";
+import { Interaction } from "../userInteraction/Interaction";
 
 const tagColors = ["bg-red-200", "bg-green-200", "bg-blue-200", "bg-yellow-200", "bg-purple-200"];
 const PreviewComponent = () => {
@@ -141,6 +143,8 @@ const PreviewComponent = () => {
             </div>
          )
         }
+        <Separator className="my-5"	 />
+        <Interaction />
       </div>
     </div>
   );
