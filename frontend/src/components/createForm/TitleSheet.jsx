@@ -31,8 +31,9 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 export function TitleSheet() {
   const {title,setTitle, topic, setTopic, setImage,tags,setTags,descripton,setDescription} = useTemplateStore()
+  console.log(tags)
   return (
-    <Sheet>
+    <Sheet className="w-full sm:w-1/2 lg:w-1/5">
       <SheetTrigger asChild>
         <Button variant="outline">
           <MdOutlineEditCalendar className="size-6 hover:opacity-80 cursor-pointer"/>
@@ -81,23 +82,29 @@ export function TitleSheet() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label>Add Tags</Label>
-            <Stack spacing={2} sx={{ width: 500 }}>
-            <Autocomplete
+            <Stack spacing={2} sx={{ width: 300 }}>
+              <Autocomplete
                 multiple
-                id="size-small-standard-multi"
-                size="small"
+                id="tags-standard"
                 options={labeledTags}
                 getOptionLabel={(option) => option.title}
+                value={tags.map((tagTitle) => labeledTags.find((tag) => tag.title === tagTitle) || { title: tagTitle })} // Map back to full objects
+                onChange={(event, newValue) => {
+                  setTags(newValue.map((option) => option.title)); 
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="standard"
-                    label="Add Tags"
-                    placeholder="Select Tags"
+                    label="Select Tags"
+                    placeholder="Tags"
+                    className="w-1/2"
                   />
                 )}
               />
-        </Stack>
+
+
+            </Stack>
           </div>
           <div className=" items-center gap-4">
             <Label htmlFor="topic" className="text-right">

@@ -3,8 +3,11 @@ import ImageUpload from "./ImageUpload";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { IoMdPricetag } from "react-icons/io";
 import { useTemplateStore } from "@/store/templateStore";
+import { BsChatLeftQuote } from "react-icons/bs";
+
+const tagColors = ["bg-red-200", "bg-green-200", "bg-blue-200", "bg-yellow-200", "bg-purple-200"];
 const PreviewComponent = () => {
-  const {title,topic,previewImg,forms} = useTemplateStore();
+  const {title,topic,previewImg,forms,tags} = useTemplateStore();
   return (
     <div className="w-full bg-slate-100 min-h-screen flex flex-col items-start">
         {previewImg && 
@@ -17,7 +20,7 @@ const PreviewComponent = () => {
         
       <div className="flex justify-end my-2">
         {topic && <div className="flex gap-2">
-          <IoMdPricetag className="size-5 text-gray-500 " />
+          <BsChatLeftQuote className="size-5 text-gray-500 " />
           <p className="text-sm text-gray-500">{topic}</p>
         </div>}
       </div>
@@ -123,6 +126,21 @@ const PreviewComponent = () => {
             </div>
           ))}
         </div>
+        {
+          tags && (
+            <div className="flex items-start justify-start gap-2">
+              <IoMdPricetag className="size-5 text-gray-500" />
+              {tags.map((tag, index) => (
+                <p
+                  key={index}
+                  className={`text-sm text-gray-700 px-2 py-1 rounded ${tagColors[index % tagColors.length]}`}
+                >
+                  {tag}
+                </p>
+              ))}
+            </div>
+         )
+        }
       </div>
     </div>
   );
