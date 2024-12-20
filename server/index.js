@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import uploadToCloudinary from "./utils/cloudinaryConfig.js";
 import upload from "./utils/multer.js";
+import fs from 'fs/promises'
 dotenv.config();
 
 const app = express();
@@ -20,13 +21,22 @@ app.post('/upload', upload.single('file'), async (req, res) => {
      if (!req.file) {
       return res.status(400).send('No file uploaded.');
       }
+
     const cloudinaryResponse = await uploadToCloudinary(req.file.path);
+    await fs.unlink(req.file.path);
     res.json({
       message: 'File uploaded successfully',
       cloudinaryUrl: cloudinaryResponse.secure_url,
     });
   } catch (error) {
     res.status(500).send('Error uploading file.');
+    if (req.file && req.file.path) {
+      try {
+        await fs.unlink(req.file.path);
+      } catch (cleanupError) {
+        console.error('Error cleaning up file:', cleanupError);
+      }
+    }
   }
 });
 
