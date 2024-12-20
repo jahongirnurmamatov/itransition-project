@@ -30,12 +30,15 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 export function TitleSheet() {
-  const {title,setTitle, topic, setTopic, setImage,tags,setTags,
-    createTemplate,descripton,setDescription} = useTemplateStore()
+  const {title,setTitle, topic,setImage, setTopic,tags,setTags,image,
+    uploadToCloudinary,descripton,setDescription,isLoading} = useTemplateStore()
   
-  const handleSave = () => {
-    createTemplate();
-  };
+    const handleUpload = async() => {
+      const form = new FormData();
+      form.append('file', image);
+      await uploadToCloudinary(form);
+    }
+
   return (
     <Sheet className="w-full sm:w-1/2 lg:w-1/5">
       <SheetTrigger asChild>
@@ -55,16 +58,16 @@ export function TitleSheet() {
             <Label htmlFor="name" className="text-right">
               Title
             </Label>
-            <Input onChange={(e) => setTitle(e.target.value)}
+            <Input className="col-span-3" onChange={(e) => setTitle(e.target.value)}
             value={title}
-            id="title" defaultValue={`Title - ${Date.now()}`}  className="col-span-3" />
+            id="title" defaultValue={`Title - ${Date.now()}`} />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="topic" className="text-right">
               Topic
             </Label>
-            <Select onValueChange={(e) => setTopic(e)} value={topic} id='topic'>
-                <SelectTrigger className="w-[180px]">
+            <Select  onValueChange={(e) => setTopic(e)} value={topic} id='topic'>
+                <SelectTrigger  className="col-span-3">
                     <SelectValue placeholder="Select" />
                 </SelectTrigger>
                     <SelectContent>
@@ -85,8 +88,17 @@ export function TitleSheet() {
             <Input onChange={(e) => setDescription(e.target.value)} value={descripton} id="description" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="topic" className="text-right">
+              Image
+            </Label>
+            <div className="col-span-3 flex flex-col">
+              <Input onChange={(e) => setImage(e.target.files[0])} type="file" className='' />
+              <Button disabled={isLoading} onClick={()=>handleUpload()} className="mt-2 bg-green-600 hover:bg-green-500">Upload Image</Button>
+            </div>
+          </div>
+          <div className="grid grid-cols-4 w-full items-center gap-4">
             <Label>Add Tags</Label>
-            <Stack spacing={2} sx={{ width: 300 }}>
+            <Stack className="col-span-3" spacing={2} >
               <Autocomplete
                 multiple
                 id="tags-standard"
@@ -110,16 +122,11 @@ export function TitleSheet() {
 
             </Stack>
           </div>
-          <div className=" items-center gap-4">
-            <Label htmlFor="topic" className="text-right">
-              Image
-            </Label>
-            <input onChange={(e)=>setImage(e.target.files[0])} type="file" />
-          </div>
+         
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button onClick={handleSave}>Finish Editing</Button>
+            <Button >Finish Editing</Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

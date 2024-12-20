@@ -12,6 +12,8 @@ export const useTemplateStore = create((set,get) => ({
     previewImg: '',
     description: '',
     tags: [],
+    imageUrl:'',
+    setImageURL:(imageUrl) => set({ imageUrl }),
     setTags: (tags) => set({ tags }),
     setDescription: (description) => set({ description }),
     setPreviewImg: (previewImg) => set({ previewImg }),
@@ -40,5 +42,16 @@ export const useTemplateStore = create((set,get) => ({
             throw Error(error);
         }      
     },
+    uploadToCloudinary: async (file) => {
+        try {
+          set({isLoading:true, error:null});
+          const res = await axiosInstance.post('/upload', file)
+          set({imageUrl:res.data.imgUrl, isLoading:false});
+        } catch (error) {
+          console.error('Error uploading to Cloud', error);
+          set({error:error.response.data.message, isLoading:false});
+          throw error;
+        }
+      },
 
 }))
