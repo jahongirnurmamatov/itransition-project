@@ -1,11 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import authRoute from "./routes/auth.route.js";
+import uploadRoute from "./routes/upload.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import uploadToCloudinary from "./utils/cloudinaryConfig.js";
-import upload from "./utils/multer.js";
-import fs from 'fs/promises'
 dotenv.config();
 
 const app = express();
@@ -16,32 +14,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
-app.post('/upload', upload.single('file'), async (req, res) => {
-  try {
-     if (!req.file) {
-      return res.status(400).send('No file uploaded.');
-      }
-
-    const cloudinaryResponse = await uploadToCloudinary(req.file.path);
-    await fs.unlink(req.file.path);
-    res.json({
-      message: 'File uploaded successfully',
-      cloudinaryUrl: cloudinaryResponse.secure_url,
-    });
-  } catch (error) {
-    res.status(500).send('Error uploading file.');
-    if (req.file && req.file.path) {
-      try {
-        await fs.unlink(req.file.path);
-      } catch (cleanupError) {
-        console.error('Error cleaning up file:', cleanupError);
-      }
-    }
-  }
-});
 
 // routes
 app.use("/api/auth", authRoute);
+app.use("/api/upload", uploadRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello from the backend");
