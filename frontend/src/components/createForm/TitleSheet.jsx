@@ -124,11 +124,6 @@ export function TitleSheet() {
           </div>
          
         </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button >Finish Editing</Button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   )

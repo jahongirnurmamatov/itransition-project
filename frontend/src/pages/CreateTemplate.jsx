@@ -13,8 +13,9 @@ import { TitleSheet } from '@/components/createForm/TitleSheet';
 import { LuDelete } from "react-icons/lu";
 import { FaRegCopy } from "react-icons/fa";
 import { useTemplateStore } from '@/store/templateStore';
+import { Button } from '@/components/ui/button';
 const CreateTemplate = () => {
-  const {  image,setPreviewImg,previewImg,forms,setForms } = useTemplateStore();
+  const {  image,setPreviewImg,previewImg,forms,setForms,createTemplate } = useTemplateStore();
   const [formType, setFormType] = useState('');
   const [editing, setEditing] = useState(false);
 
@@ -26,16 +27,6 @@ const CreateTemplate = () => {
     }
   }, [image]);
  
-  const handleCreateTemplate = () => { 
-    const template = {
-      title,
-      topic,
-      image,
-      forms,
-    };
-    // api here
-  };
-
   const addForm = (formType) => {
     const newForm = {
       id: uuidv4(),
@@ -100,6 +91,9 @@ const CreateTemplate = () => {
     setForms(filteredForms);
   };
   
+  const handleSubmit = ()=>{
+    createTemplate();
+  }
   
   return (
   <DragDropContext onDragEnd={onDragEnd}>
@@ -279,12 +273,15 @@ const CreateTemplate = () => {
               </div>
             )}
           </Droppable>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center gap-3">
           <DialogDemo
             addForm={addForm}
             setFormType={setFormType}
             formType={formType}
             />
+            <Button  className='bg-green-700 text-white hover:bg-green-600 px-5' onClick={handleSubmit}>
+              Create Template
+            </Button>
         </div>
       </div>
     </div>

@@ -24,19 +24,19 @@ export const useTemplateStore = create((set,get) => ({
     setImage: (image) => set({ image }),
 
     createTemplate: () => {
-        const { title, topic, description, image, forms, tags } = get();
+        const { title, topic, description, imageUrl, forms, tags } = get();
         const template = {
             title,
             topic,
             description,
-            image,
+            imageUrl,
             forms,
             tags,
         };
         try {
             set({isLoading:true, error:null});
-            const res = axiosInstance.post('/template/create-template', template);
-            set({template:res.data.template, isLoading:false});
+            const res = axiosInstance.post('/template/create', template);
+            set({ isLoading:false});
         } catch (error) {
             set({error:error.response.data.message, isLoading:false});
             throw Error(error);
