@@ -15,17 +15,20 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
-
-
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
-    res.json('multer called')
-  
+     if (!req.file) {
+      return res.status(400).send('No file uploaded.');
+      }
+    const cloudinaryResponse = await uploadToCloudinary(req.file.path);
+    res.json({
+      message: 'File uploaded successfully',
+      cloudinaryUrl: cloudinaryResponse.secure_url,
+    });
   } catch (error) {
     res.status(500).send('Error uploading file.');
   }
 });
-
 
 // routes
 app.use("/api/auth", authRoute);
