@@ -30,8 +30,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 export function TitleSheet() {
-  const {title,setTitle, topic, setTopic, setImage,tags,setTags,descripton,setDescription} = useTemplateStore()
-  console.log(tags)
+  const {title,setTitle, topic, setTopic, setImage,tags,setTags,
+    createTemplate,descripton,setDescription} = useTemplateStore()
+  
+  const handleSave = () => {
+    createTemplate();
+  };
   return (
     <Sheet className="w-full sm:w-1/2 lg:w-1/5">
       <SheetTrigger asChild>
@@ -115,7 +119,7 @@ export function TitleSheet() {
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit">Create Template</Button>
+            <Button onClick={handleSave}>Finish Editing</Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>
