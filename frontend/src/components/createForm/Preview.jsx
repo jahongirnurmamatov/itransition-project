@@ -7,6 +7,7 @@ import { BsChatLeftQuote } from "react-icons/bs";
 import { Separator } from "../ui/separator";
 import { Interaction } from "../userInteraction/Interaction";
 import CommentBox from "../userInteraction/CommentBox";
+import Comments from "../userInteraction/Comments";
 
 const tagColors = ["bg-red-200", "bg-green-200", "bg-blue-200", "bg-yellow-200", "bg-purple-200"];
 const PreviewComponent = () => {
@@ -130,7 +131,7 @@ const PreviewComponent = () => {
           ))}
         </div>
         {
-          tags && (
+          tags.length>0 && (
             <div className="flex items-start justify-start gap-2">
               <IoMdPricetag className="size-5 text-gray-500" />
               {tags.map((tag, index) => (
@@ -148,6 +149,7 @@ const PreviewComponent = () => {
         <Interaction />
         <Separator className="my-5"	 />
         <CommentBox />
+        <Comments />
       </div>
     </div>
   );

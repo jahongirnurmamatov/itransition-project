@@ -16,12 +16,12 @@ const CommentBox = () => {
         </div>   
         <TextField
             className='w-2/3'
-          id="outlined-multiline-static"
-          label="Comment"
-          multiline
-          rows={2}
-          placeholder="Write a comment..."
-        />
+            id="outlined-multiline-static"
+            label="Comment here"
+            multiline
+            rows={2}
+            placeholder="Write a comment..."
+            />
     </div>
   )
 }

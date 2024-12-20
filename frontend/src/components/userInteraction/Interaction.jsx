@@ -30,13 +30,6 @@ export const Interaction = () => {
   )
 }
 
-const responses = [
-    "user1",
-    "user2",
-    "user3",
-    "user4",
-    "user5"
-  ];
 
 const comments = [
     {
@@ -65,3 +58,12 @@ const comments = [
       commentText: "I have a suggestion for improving this post. You could add a section on..."
     }
   ];
+
+const responses = [
+    "user1",
+    "user2",
+    "user3",
+    "user4",
+    "user5"
+  ];
+
