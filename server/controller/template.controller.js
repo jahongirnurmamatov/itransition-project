@@ -57,7 +57,7 @@ export const getTemplateById = async(req,res)=>{
   }
 }
 
-export const deleteTemplate = async (req, res, next) => {
+export const deleteTemplate = async (req, res) => {
   try {
     const { id } = req.params; 
     const userId = req.userId; 
@@ -82,6 +82,30 @@ export const deleteTemplate = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: 'Template deleted successfully.',
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const getMyTemplates = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const templates = await prisma.template.findMany({
+      where: { userId },
+      select: {
+        id: true,
+        title: true, 
+        topic: true, 
+        description: true, 
+        imageUrl: true, 
+        createdAt: true, 
+        updatedAt: true, 
+      },
+    });
+    res.status(200).json({
+      success: true,
+      templates,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
