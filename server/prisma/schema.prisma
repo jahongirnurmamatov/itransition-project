@@ -24,7 +24,7 @@ enum Role {
 
 model Template {
   id          Int        @id @default(autoincrement())
-  name        String
+  title       String
   topic       String
   description String?
   imageUrl    String?   
@@ -49,12 +49,14 @@ model Question {
 }
 
 enum QuestionType {
-  STRING
-  INTEGER
-  MULTIPLE_CHOICE
-  RADIO_GROUP
-  SELECT_GROUP
-  TEXT
+  header
+  checkbox
+  number
+  image
+  radio
+  select
+  textarea
+  paragraph
 }
 
 model Option {

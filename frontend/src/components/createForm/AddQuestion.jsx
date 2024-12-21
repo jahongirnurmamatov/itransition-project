@@ -47,7 +47,7 @@ export function DialogDemo({setFormType, addForm,formType}) {
                  <SelectItem value="header" >Header</SelectItem>
                   <SelectItem value="paragraph">Paragraph</SelectItem>
                   <SelectItem value="number">Number</SelectItem>
-                  <SelectItem value="radio-group">Radio-group</SelectItem>
+                  <SelectItem value="radio">Radio-group</SelectItem>
                   <SelectItem value="textarea">Textarea</SelectItem>
                   <SelectItem value="checkbox">Checkbox</SelectItem>
                   <SelectItem value="image">Image</SelectItem>

@@ -215,7 +215,7 @@ const CreateTemplate = () => {
                                   setEditing={setEditing}
                                 />
                               );
-                            case 'radio-group':
+                            case 'radio':
                               return (
                                 <RadioForm
                                   id={form.id}
