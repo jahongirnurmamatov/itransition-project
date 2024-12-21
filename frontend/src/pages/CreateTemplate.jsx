@@ -14,10 +14,12 @@ import { LuDelete } from "react-icons/lu";
 import { FaRegCopy } from "react-icons/fa";
 import { useTemplateStore } from '@/store/templateStore';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 const CreateTemplate = () => {
   const {  image,setPreviewImg,previewImg,forms,setForms,createTemplate } = useTemplateStore();
   const [formType, setFormType] = useState('');
   const [editing, setEditing] = useState(false);
+  const { toast } = useToast()
 
   useEffect(() => {
     if (image) {
@@ -62,7 +64,6 @@ const CreateTemplate = () => {
   };
 
   const onDragEnd = (result) => {
-     console.log(result);
     if (!result.destination) return;
 
     const reorderedForms = Array.from(forms);
@@ -92,7 +93,13 @@ const CreateTemplate = () => {
   };
   
   const handleSubmit = ()=>{
-    createTemplate();
+    if(forms.length>0){
+      createTemplate();
+    }else{
+      toast({
+        description: "Please at least one form question",
+      })
+    }
   }
   
   return (

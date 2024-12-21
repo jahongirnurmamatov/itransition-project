@@ -31,14 +31,13 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 export function TitleSheet() {
   const {title,setTitle, topic,setImage, setTopic,tags,setTags,image,
-    uploadToCloudinary,descripton,setDescription,isLoading} = useTemplateStore()
+    uploadToCloudinary,description,setDescription,isLoading} = useTemplateStore()
   
     const handleUpload = async() => {
       const form = new FormData();
       form.append('file', image);
       await uploadToCloudinary(form);
     }
-
   return (
     <Sheet className="w-full sm:w-1/2 lg:w-1/5">
       <SheetTrigger asChild>
@@ -85,7 +84,7 @@ export function TitleSheet() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label>Description</Label>
-            <Input onChange={(e) => setDescription(e.target.value)} value={descripton} id="description" className="col-span-3" />
+            <Input onChange={(e) => setDescription(e.target.value)} value={description} id="description" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="topic" className="text-right">
