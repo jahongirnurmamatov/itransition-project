@@ -70,7 +70,7 @@ const TabelForms = ({ data }) => {
             <TableRow key={template.id}>
               <TableCell className="font-medium cursor-pointer">
                 <Link
-                  to={`/template/${template.id}`}
+                  to={`/templates/${template.id}`}
                   className="hover:text-blue-500 hover:underline"
                 >
                   {index+1}
@@ -78,7 +78,7 @@ const TabelForms = ({ data }) => {
               </TableCell>
               <TableCell className="font-medium cursor-pointer" >
                 <Link
-                  to={`/template/${template.id}`}
+                  to={`/templates/${template.id}`}
                   className="hover:text-blue-500 hover:underline"
                 >
                   {template.title}

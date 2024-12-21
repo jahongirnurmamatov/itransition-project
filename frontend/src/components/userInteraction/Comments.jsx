@@ -7,10 +7,10 @@ const Comments = () => {
   return (
     <div className="my-4">
         <h1 className='text-xl font-bold'>Comments</h1>
-        <div className='flex flex-col items-start justify-start gap-2 my-5 '>
+        <div className='flex flex-col items-start justify-start gap-4 my-5 '>
         {
             comments.map((comment,index) =>(
-                <div key={index} className='flex  justify-start gap-2 '>
+                <div key={index} className='flex  justify-start gap-3 '>
                     <div className="flex">
                     {
                         user?.avatar ? <img src={user.avatar} alt={user.username} className='size-6 rounded-full' /> 

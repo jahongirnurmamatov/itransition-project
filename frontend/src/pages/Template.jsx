@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { Interaction } from "@/components/userInteraction/Interaction";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { Button } from "@mui/material";
 
 const Template = () => {
   const {  getTemplateById, isLoading, error } = useTemplateStore();
@@ -30,6 +31,9 @@ const Template = () => {
   return (
     <div className="flex flex-col gap-3">
         <PreviewComponent />
+        <div className="flex items-center justify-center">
+          <Button variant="contained" className=" w-[200px] mx-auto text-center">Submit Form</Button>
+        </div>
         <div className="flex flex-col gap-2 px-20 ">
             <Separator className="my-5"	 />
             <Interaction />
