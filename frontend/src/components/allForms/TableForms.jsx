@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import { format } from 'date-fns';
 import {
   Pagination,
   PaginationContent,
@@ -20,11 +20,19 @@ import {
 import { Link } from "react-router-dom";
 import { Input } from "../ui/input";
 import { ArrowDownNarrowWide, Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useTemplateStore } from "@/store/templateStore";
 
 const TabelForms = ({ data }) => {
   const [sortTitle, setSortTitle] = useState("asc");
   const [sortDate, setSortDate] = useState("asc");
+
+  const {templates,getMyTemplates} = useTemplateStore();
+
+  useEffect(()=>{
+    getMyTemplates();
+  },[])
+  console.log(templates)
 
   return (
     <div className="w-full bg-white rounded-lg px-5 py-3 shadow-md">
@@ -36,39 +44,49 @@ const TabelForms = ({ data }) => {
         <TableCaption>A list of your all templates.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[50px]">ID</TableHead>
+            <TableHead >#</TableHead>
             <TableHead 
              onClick={() => setSortTitle(sortTitle === "asc" ? "desc" : "asc")}
-            className="flex gap-3 items-center justify-start cursor-pointer"	>Title <ArrowDownNarrowWide className={`size-4 text-gray-500 ${sortTitle === "desc" ? "rotate-180" : ""}`} /> </TableHead>
-            <TableHead>Status</TableHead>
+           	>
+              <div  className="flex gap-3 items-center justify-start cursor-pointer">
+                Title 
+                <ArrowDownNarrowWide className={`size-4 text-gray-500 ${sortTitle === "desc" ? "rotate-180" : ""}`} /> 
+              </div>
+            </TableHead>
             <TableHead
             onClick={() => setSortDate(sortDate === "asc" ? "desc" : "asc")}
-            className="flex gap-3 items-center justify-start cursor-pointer">Date <ArrowDownNarrowWide className={`size-4 text-gray-500 ${sortDate === "desc" ? "rotate-180" : ""}`}  /></TableHead>
+           >
+            <div  className="flex gap-3 items-center justify-start cursor-pointer">
+              Date 
+              <ArrowDownNarrowWide className={`size-4 text-gray-500 ${sortDate === "desc" ? "rotate-180" : ""}`}  />
+            </div>
+            </TableHead>
+            <TableHead>Topic</TableHead>
             <TableHead>Description</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item) => (
-            <TableRow key={item.id}>
+          {templates.map((template,index) => (
+            <TableRow key={template.id}>
               <TableCell className="font-medium cursor-pointer">
                 <Link
-                  to={`/my-templates/${item.id}`}
+                  to={`/template/${template.id}`}
                   className="hover:text-blue-500 hover:underline"
                 >
-                  {item.id}
+                  {index+1}
                 </Link>
               </TableCell>
               <TableCell className="font-medium cursor-pointer" >
                 <Link
-                  to={`/my-templates/${item.id}`}
+                  to={`/template/${template.id}`}
                   className="hover:text-blue-500 hover:underline"
                 >
-                  {item.title}
+                  {template.title}
                 </Link>
               </TableCell>
-              <TableCell>{item.status}</TableCell>
-              <TableCell>{item.date}</TableCell>
-              <TableCell>{item.description}</TableCell>
+              <TableCell>{format(template.createdAt, 'dd/MM/yyyy ')}</TableCell>
+              <TableCell>{template.topic}</TableCell>
+              <TableCell>{template.description||"-"}</TableCell>
             </TableRow>
           ))}
         </TableBody>

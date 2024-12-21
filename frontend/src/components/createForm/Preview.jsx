@@ -11,12 +11,12 @@ import Comments from "../userInteraction/Comments";
 
 const tagColors = ["bg-red-200", "bg-green-200", "bg-blue-200", "bg-yellow-200", "bg-purple-200"];
 const PreviewComponent = () => {
-  const {title,topic,previewImg,forms,tags,description} = useTemplateStore();
+  const {title,topic,previewImg,imageUrl,forms,tags,description} = useTemplateStore();
   return (
     <div className="w-full bg-slate-100 min-h-screen flex flex-col items-start">
-        {previewImg && 
+        {previewImg || imageUrl && 
           <div className="flex items-center justify-center h-[300px] w-[100%] top-0">
-            <img src={previewImg} alt="" className='h-[200px] w-[100%] overflow-hidden object-cover' />
+            <img src={previewImg||imageUrl} alt="" className='h-[200px] w-[100%] overflow-hidden object-cover' />
           </div>
         }
       <div className="mx-auto w-4/5 my-6">

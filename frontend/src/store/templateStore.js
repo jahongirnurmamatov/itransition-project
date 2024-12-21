@@ -8,7 +8,7 @@ export const useTemplateStore = create((set,get) => ({
     title: '',
     topic: '',
     image: '',
-    template: null,
+    templates: [],
     previewImg: '',
     description: '',
     tags: [],
@@ -17,7 +17,7 @@ export const useTemplateStore = create((set,get) => ({
     setTags: (tags) => set({ tags }),
     setDescription: (description) => set({ description }),
     setPreviewImg: (previewImg) => set({ previewImg }),
-    setTemplate: (template) => set({ template }),
+    setTemplates: (templates) => set({ templates}),
     setForms: (forms) => set({ forms }),
     setTitle: (title) => set({ title }),
     setTopic: (topic) => set({ topic }),
@@ -68,7 +68,6 @@ export const useTemplateStore = create((set,get) => ({
             orderIndex: q.orderIndex,
           }));
           set({
-            template: res.data.template,
             title,
             topic,
             description,
@@ -79,6 +78,16 @@ export const useTemplateStore = create((set,get) => ({
           });
         } catch (error) {
           set({ error: error.response?.data?.message || 'Failed to fetch template.', isLoading: false });
+          throw error;
+        }
+      },
+    getMyTemplates: async () => {
+        try {
+          set({ isLoading: true, error: null });
+          const res = await axiosInstance.get('/template/get-my-templates');
+          set({ templates: res.data.templates, isLoading: false });
+        } catch (error) {
+          set({ error: error.response?.data?.message || 'Failed to fetch templates.', isLoading: false });
           throw error;
         }
       },
