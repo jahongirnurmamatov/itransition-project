@@ -12,7 +12,6 @@ import Comments from "../userInteraction/Comments";
 const tagColors = ["bg-red-200", "bg-green-200", "bg-blue-200", "bg-yellow-200", "bg-purple-200"];
 const PreviewComponent = () => {
   const {title,topic,previewImg,forms,tags,description} = useTemplateStore();
-  console.log(description)
   return (
     <div className="w-full bg-slate-100 min-h-screen flex flex-col items-start">
         {previewImg && 

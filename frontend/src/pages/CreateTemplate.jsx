@@ -96,7 +96,10 @@ const CreateTemplate = () => {
     if(forms.length>0){
       createTemplate();
     }else{
+      
       toast({
+        variant: "destructive",
+        title: "Something went wrong.",
         description: "Please at least one form question",
       })
     }

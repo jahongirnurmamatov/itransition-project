@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import LandingPage from "./pages/LandingPage";
 import { useAuthStore } from "./store/authStore";
 import Loading from "./components/loading/Loading";
+import Template from "./pages/Template";
 
 const App = () => {
   const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore();
@@ -24,6 +25,7 @@ const App = () => {
       <Route element={ isAuthenticated ? <Layout /> : < Navigate to="/login" />}>
         <Route path="/my-templates" element={<MyTemplates />} />
         <Route path="/templates/:templateId/create" element={<CreateTemplate />} />
+        <Route path="/templates/:templateId" element={<Template />} />
       </Route>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
