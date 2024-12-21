@@ -24,7 +24,7 @@ export const createTemplate = async (req, res) => {
               ? {
                   create: form.options.map(option => ({
                     value: option, 
-                  })),
+                  })),  
                 }
               : undefined,
           })),
@@ -38,7 +38,24 @@ export const createTemplate = async (req, res) => {
     res.status(500).json({ success: false, message: 'Error creating template' });
   }
 };
-
+export const getTemplateById = async(req,res)=>{
+  try {
+    const { id } = req.params; 
+    console.log(id)
+    const template = await prisma.template.findUnique({
+      where: { id: parseInt(id) },
+      include: { questions: {
+        include: { options: true }
+      } }, 
+    });
+    res.status(200).json({
+      success: true,
+      template
+    })
+  } catch (error) {
+    
+  }
+}
 
 export const deleteTemplate = async (req, res, next) => {
   try {
