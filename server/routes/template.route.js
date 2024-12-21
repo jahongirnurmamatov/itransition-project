@@ -1,9 +1,10 @@
 import express from 'express';
-import { createTemplate } from '../controller/template.controller.js';
+import { createTemplate, deleteTemplate } from '../controller/template.controller.js';
 import { verifyToken } from '../middleware/verifyToken.js';
 
 const router = express.Router();
 
 router.post('/create', verifyToken,createTemplate);
+router.delete('/:id', verifyToken, deleteTemplate);
 
 export default router;

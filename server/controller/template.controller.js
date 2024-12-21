@@ -38,3 +38,35 @@ export const createTemplate = async (req, res) => {
     res.status(500).json({ success: false, message: 'Error creating template' });
   }
 };
+
+
+export const deleteTemplate = async (req, res, next) => {
+  try {
+    const { id } = req.params; 
+    const userId = req.userId; 
+
+    const template = await prisma.template.findUnique({
+      where: { id: parseInt(id) },
+      include: { questions: true }, 
+    });
+
+    if (!template) {
+      return res.status(404).json({success:false, message:'Template not found.'});
+    }
+
+    if (template.userId !== userId) {
+      return res.status(404).json({success:false, message:"Forbidden - You don't have permission to delete this template."});
+    }
+
+    await prisma.template.delete({
+      where: { id: parseInt(id) },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Template deleted successfully.',
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
