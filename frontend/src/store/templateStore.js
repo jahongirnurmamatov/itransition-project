@@ -55,11 +55,30 @@ export const useTemplateStore = create((set,get) => ({
       },
     getTemplateById: async (templateId) => {
         try {
-          set({isLoading:true, error:null});
+          set({ isLoading: true, error: null });
           const res = await axiosInstance.get(`/template/${templateId}`);
-          set({template:res.data.template, isLoading:false});
+          const { title, topic, description, imageUrl, tags, questions } = res.data.template;
+          const forms = questions.map((q) => ({
+            id: q.id,
+            type: q.type,
+            label: q.label,
+            description: q.description,
+            required: q.required,
+            options: q.options.map((o) => o.value), 
+            orderIndex: q.orderIndex,
+          }));
+          set({
+            template: res.data.template,
+            title,
+            topic,
+            description,
+            imageUrl,
+            tags,
+            forms,
+            isLoading: false,
+          });
         } catch (error) {
-          set({error:error.response.data.message, isLoading:false});
+          set({ error: error.response?.data?.message || 'Failed to fetch template.', isLoading: false });
           throw error;
         }
       },

@@ -147,11 +147,7 @@ const PreviewComponent = () => {
             </div>
          )
         }
-        <Separator className="my-5"	 />
-        <Interaction />
-        <Separator className="my-5"	 />
-        <CommentBox />
-        <Comments />
+       
       </div>
     </div>
   );

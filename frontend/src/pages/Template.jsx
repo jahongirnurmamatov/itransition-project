@@ -1,9 +1,15 @@
-import { useTemplateStore } from '@/store/templateStore';
-import  { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+
+import { useTemplateStore } from "@/store/templateStore"
+import PreviewComponent from "@/components/createForm/Preview";
+import Comments from "@/components/userInteraction/Comments";
+import CommentBox from "@/components/userInteraction/CommentBox";
+import { Separator } from "@/components/ui/separator";
+import { Interaction } from "@/components/userInteraction/Interaction";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const Template = () => {
-  const { template, getTemplateById, isLoading, error } = useTemplateStore();
+  const {  getTemplateById, isLoading, error } = useTemplateStore();
   const { templateId } = useParams();
 
   useEffect(() => {
@@ -13,7 +19,6 @@ const Template = () => {
     }
   }, [templateId, getTemplateById]);
 
-  console.log(template)
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -23,8 +28,15 @@ const Template = () => {
   }
 
   return (
-    <div>
-     
+    <div className="flex flex-col gap-3">
+        <PreviewComponent />
+        <div className="flex flex-col gap-2 px-20 ">
+            <Separator className="my-5"	 />
+            <Interaction />
+            <Separator className="my-5"	 />
+            <CommentBox />
+            <Comments />
+        </div>
     </div>
   );
 };
