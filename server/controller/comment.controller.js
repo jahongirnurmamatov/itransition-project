@@ -28,7 +28,14 @@ export const addComment = async (req, res) => {
         userId,
         templateId: parseInt(templateId),
         content,
-      },
+      },include: {
+        user: { 
+          select: { 
+            username: true, 
+            avatar: true 
+          } 
+        },
+      }
     });
 
     res.status(200).json({
@@ -58,6 +65,7 @@ export const getComments = async(req,res)=>{
                 } 
               }, 
             },
+            orderBy: { createdAt: "desc" },
           })
         res.status(200).json({
             success: true,

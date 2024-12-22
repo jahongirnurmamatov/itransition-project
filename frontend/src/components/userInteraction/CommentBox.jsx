@@ -10,14 +10,13 @@ const CommentBox = () => {
   const { user } = useAuthStore();
   const { templateId } = useParams();
   const [content, setContent] = useState("");
-  const { addComment, isCommentLoading, getComments } = useCommentStore();
+  const { addComment,isCommentAdding } = useCommentStore();
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
-    if (content.trim() === "") return; // Prevent empty comments
+    if (content.trim() === "") return; 
     addComment(templateId, content);
     setContent("");
-    getComments(templateId);
   };
 
   return (
@@ -50,9 +49,11 @@ const CommentBox = () => {
           />
           <button
             type="submit"
-            className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 hover:text-blue-500"
+            className="absolute top-3/4 right-3 -translate-y-1/2 text-gray-500 hover:text-blue-500"
           >
-            <TbSend2 className="w-6 h-6" />
+            {isCommentAdding ? (<div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-500"></div>) 
+            : <TbSend2 className="w-6 h-6" />}
+           
           </button>
         </div>
       </form>

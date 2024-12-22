@@ -12,7 +12,7 @@ const Comments = () => {
 
     useEffect(() => {
       getComments(templateId);
-    },[templateId]);
+    },[templateId,getComments]);
     if(isCommentLoading){
         return <Loading />;
     }
@@ -28,12 +28,12 @@ const Comments = () => {
                 <div key={index} className='flex  justify-start gap-3 '>
                     <div className="flex">
                     {
-                        comment.user?.avatar ? <img src={comment.user.avatar} alt={user.username} className='size-6 rounded-full' /> 
+                        comment?.user?.avatar ? <img src={comment?.user?.avatar} alt={comment?.user.username} className='size-6 rounded-full' /> 
                         : <FaCircleUser className='size-6 text-gray-500' />
                     }
                     </div>
                     <div className='flex flex-col items-start justify-start gap-1 rounded-lg bg-slate-200 py-2 px-4'>
-                        <span className='font-bold'>{comment.user.username}</span>
+                        <span className='font-bold'>{comment?.user?.username}</span>
                         <span>{comment.content}</span>
                     </div>  
                 </div>

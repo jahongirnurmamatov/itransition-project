@@ -1,9 +1,10 @@
 import axiosInstance from '@/lib/axiosInstance';
 import {create} from 'zustand';
 
-export const useCommentStore = create((set) => ({
+export const useCommentStore = create((set,get) => ({
     comments: [],
     isCommentLoading: false,
+    isCommentAdding:false, 
     commentError: null,
 
     getComments: async(templateID)=>{ 
@@ -17,11 +18,12 @@ export const useCommentStore = create((set) => ({
     },
     addComment: async(templateID, content)=>{
         try {
-            set({isCommentLoading: true, commentError: null});
+            set({isCommentAdding: true, commentError: null});
             const res = await axiosInstance.post(`/comment/${templateID}/add-comment`, {content});
-            set({comments: [...comments, res.data.comment], isCommentLoading: false});
+            const currentComments = get().comments;
+            set({comments: [ res.data.comment,...currentComments,], isCommentAdding: false});
         } catch (error) {
-            set({commentError: error.response.data.message, isCommentLoading: false});
+            set({commentError: error.response.data.message, isCommentAdding: false});
         }
     }
 }))
