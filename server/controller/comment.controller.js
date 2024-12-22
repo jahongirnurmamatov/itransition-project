@@ -43,3 +43,27 @@ export const addComment = async (req, res) => {
     });
   }
 };
+
+export const getComments = async(req,res)=>{
+    try {
+        const { templateId } = req.params;
+        const comments = await prisma.comment.findMany({
+            where: { templateId: parseInt(templateId) },
+            include: {
+              user: { 
+                select: { 
+                  username: true, 
+                  email: true, 
+                  avatar: true 
+                } 
+              }, 
+            },
+          })
+        res.status(200).json({
+            success: true,
+            comments
+        })
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+}

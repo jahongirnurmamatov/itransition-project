@@ -12,7 +12,9 @@ model User {
   id        Int   @id @default(autoincrement())
   username  String   @unique
   email     String   @unique
+  avatar    String?
   password  String
+  comments  Comment[]
   templates Template[]
   role      Role     @default(USER)
   createdAt DateTime @default(now())
@@ -72,6 +74,7 @@ model Comment {
   id          Int      @id @default(autoincrement())
   content     String
   userId      Int
+  user        User @relation(fields: [userId],references: [id], onDelete: Cascade)
   templateId  Int
   template    Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
