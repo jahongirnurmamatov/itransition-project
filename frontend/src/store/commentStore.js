@@ -14,6 +14,15 @@ export const useCommentStore = create((set) => ({
         } catch (error) {
             set({commentError: error.response.data.message, isCommentLoading: false});
         }
+    },
+    addComment: async(templateID, content)=>{
+        try {
+            set({isCommentLoading: true, commentError: null});
+            const res = await axiosInstance.post(`/comment/${templateID}/add-comment`, {content});
+            set({comments: [...comments, res.data.comment], isCommentLoading: false});
+        } catch (error) {
+            set({commentError: error.response.data.message, isCommentLoading: false});
+        }
     }
 }))
 
