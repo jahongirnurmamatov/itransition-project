@@ -7,6 +7,8 @@ import Loading from '../loading/Loading';
 import { formatDistanceToNow } from 'date-fns';
 import { EditDeleteDropDown } from './EditDeleteDropDown';
 import { Input } from '@mui/material';
+import { useTemplateStore } from '@/store/templateStore';
+import { FaCrown } from "react-icons/fa";
 
 const Comments = () => {
   const { user } = useAuthStore();
@@ -14,6 +16,7 @@ const Comments = () => {
   const { getComments, isCommentLoading, commentError, comments, editComment } = useCommentStore();
   const [editCommentId, setEditCommentId] = useState(null);
   const [editedContent, setEditedContent] = useState("");
+  const {userId} = useTemplateStore();
 
   useEffect(() => {
     getComments(templateId);
@@ -56,7 +59,10 @@ const Comments = () => {
             </div>
             <div className="flex rounded-lg bg-slate-200 py-2 px-4 min-w-100px] items-center gap-10 justify-between">
               <div className="flex flex-col items-start justify-start gap-0">
-                <span className="font-bold">{comment?.user?.username}</span>
+                <div className="flex gap-2">
+                  <p className="font-bold">{comment?.user?.username }</p>
+                  {userId===comment?.user?.id &&  <p className='text-gray-500 text-sm flex gap-2 items-center'><FaCrown size={12} /> <span>Author</span></p> }
+                </div> 
                 {editCommentId === comment.id ? (
                   <div className="flex items-center gap-2">
                     <Input

@@ -31,6 +31,7 @@ export const addComment = async (req, res) => {
       },include: {
         user: { 
           select: { 
+            id: true,
             username: true, 
             avatar: true 
           } 
@@ -60,7 +61,7 @@ export const getComments = async(req,res)=>{
               user: { 
                 select: { 
                   username: true, 
-                  email: true, 
+                  id: true, 
                   avatar: true 
                 } 
               }, 
@@ -98,6 +99,7 @@ export const editComment= async(req,res)=>{
             include:{
                 user: { 
                     select: { 
+                      id: true,
                       username: true, 
                       avatar: true 
                     } 
