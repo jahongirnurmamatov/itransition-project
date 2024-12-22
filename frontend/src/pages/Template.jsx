@@ -8,6 +8,7 @@ import { Interaction } from "@/components/userInteraction/Interaction";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
+import Loading from "@/components/loading/Loading";
 
 const Template = () => {
   const {  getTemplateById, isLoading, error } = useTemplateStore();
@@ -21,7 +22,7 @@ const Template = () => {
   }, [templateId, getTemplateById]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (error) {
