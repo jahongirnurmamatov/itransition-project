@@ -79,3 +79,17 @@ export const deleteComment = async(req,res)=>{
         res.status(500).json({ success: false, message: error.message });
     }
 }
+
+export const editComment= async(req,res)=>{
+    try {
+        const {commentId} = req.params;
+        const {content} = req.body;
+        await prisma.comment.update({
+            where: { id: parseInt(commentId) },
+            data: { content },
+        });
+        res.status(200).json({ success: true, message: "Comment updated successfully." });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
