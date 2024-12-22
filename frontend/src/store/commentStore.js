@@ -35,6 +35,16 @@ export const useCommentStore = create((set,get) => ({
         } catch (error) {
             set({commentError: error.response.data.message});
         }   
+    },
+    editComment: async(commentId, content)=>{
+        try {
+            set({ commentError: null});
+            const res = await axiosInstance.put(`/comment/${commentId}/edit`, {content});
+            const currentComments = get().comments;
+            set({comments: currentComments.map(comment => comment.id === commentId ? res.data.comment : comment)});
+        } catch (error) {
+            set({commentError: error.response.data.message});
+        }
     }
 }))
 

@@ -92,11 +92,19 @@ export const editComment= async(req,res)=>{
     try {
         const {commentId} = req.params;
         const {content} = req.body;
-        await prisma.comment.update({
+        const updatedComment = await prisma.comment.update({
             where: { id: parseInt(commentId) },
             data: { content },
+            include:{
+                user: { 
+                    select: { 
+                      username: true, 
+                      avatar: true 
+                    } 
+                  }, 
+            }
         });
-        res.status(200).json({ success: true, message: "Comment updated successfully." });
+        res.status(200).json({ success: true, message: "Comment updated successfully.",comment: updatedComment });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
