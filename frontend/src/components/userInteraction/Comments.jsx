@@ -5,6 +5,8 @@ import { FaCircleUser } from 'react-icons/fa6';
 import { useParams } from 'react-router-dom';
 import Loading from '../loading/Loading';
 import { formatDistanceToNow } from 'date-fns';
+import { EditDeleteDropDown } from './EditDeleteDropDown';
+
 
 const Comments = () => {
     const {user} = useAuthStore();
@@ -33,10 +35,15 @@ const Comments = () => {
                         : <FaCircleUser className='size-6 text-gray-500' />
                     }
                     </div>
-                    <div className='flex flex-col items-start justify-start gap-[2px] rounded-lg bg-slate-200 py-2 px-4 min-w-100px]'>
-                        <span className='font-bold'>{comment?.user?.username}</span>
-                        <span>{comment.content}</span>
-                        <p className='text-sm text-gray-500 text-end'>{formatDistanceToNow(comment.createdAt, { addSuffix: true })}</p>
+                    <div className='flex  rounded-lg bg-slate-200 py-2 px-4 min-w-100px] items-center gap-10 justify-between'>
+                        <div className="flex flex-col items-start justify-start gap-0">
+                          <span className='font-bold'>{comment?.user?.username}</span>
+                          <span>{comment.content}</span>
+                          <p className='text-sm text-gray-500 text-end'>{formatDistanceToNow(comment.createdAt, { addSuffix: true })}</p>
+                        </div>
+                        {
+                          comment.userId===user.id && <EditDeleteDropDown />
+                        }
                     </div>  
                 </div>
             ))
