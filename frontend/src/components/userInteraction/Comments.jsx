@@ -1,9 +1,24 @@
 import { useAuthStore } from '@/store/authStore';
-import React from 'react'
+import { useCommentStore } from '@/store/commentStore';
+import React, { useEffect } from 'react'
 import { FaCircleUser } from 'react-icons/fa6';
+import { useParams } from 'react-router-dom';
+import Loading from '../loading/Loading';
 
 const Comments = () => {
     const {user} = useAuthStore();
+    const { templateId } = useParams();
+    const {getComments,isCommentLoading,commentError,comments} = useCommentStore();
+
+    useEffect(() => {
+      getComments(templateId);
+    },[templateId]);
+    if(isCommentLoading){
+        return <Loading />;
+    }
+    if(commentError){
+      return <div className='text-center text-red-500'>{commentError}</div>
+    }
   return (
     <div className="my-4">
         <h1 className='text-xl font-bold'>Comments</h1>
@@ -13,13 +28,13 @@ const Comments = () => {
                 <div key={index} className='flex  justify-start gap-3 '>
                     <div className="flex">
                     {
-                        user?.avatar ? <img src={user.avatar} alt={user.username} className='size-6 rounded-full' /> 
+                        comment.user?.avatar ? <img src={comment.user.avatar} alt={user.username} className='size-6 rounded-full' /> 
                         : <FaCircleUser className='size-6 text-gray-500' />
                     }
                     </div>
                     <div className='flex flex-col items-start justify-start gap-1 rounded-lg bg-slate-200 py-2 px-4'>
-                        <span className='font-bold'>{comment.username}</span>
-                        <span>{comment.commentText}</span>
+                        <span className='font-bold'>{comment.user.username}</span>
+                        <span>{comment.content}</span>
                     </div>  
                 </div>
             ))

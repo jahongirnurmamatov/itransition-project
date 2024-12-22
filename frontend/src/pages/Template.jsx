@@ -15,7 +15,6 @@ const Template = () => {
   const { templateId } = useParams();
 
   useEffect(() => {
-    console.log(templateId)
     if (templateId) {
       getTemplateById(templateId);
     }
