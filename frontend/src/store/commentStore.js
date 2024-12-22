@@ -25,6 +25,16 @@ export const useCommentStore = create((set,get) => ({
         } catch (error) {
             set({commentError: error.response.data.message, isCommentAdding: false});
         }
+    },
+    deleteComment: async(commentId)=>{
+        try {
+            set({ commentError: null});
+            const res = await axiosInstance.delete(`/comment/${commentId}/delete`);
+            const currentComments = get().comments;
+            set({comments: currentComments.filter(comment => comment.id !== commentId)});
+        } catch (error) {
+            set({commentError: error.response.data.message});
+        }   
     }
 }))
 

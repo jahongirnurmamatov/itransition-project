@@ -42,7 +42,7 @@ const Comments = () => {
                           <p className='text-sm text-gray-500 text-end'>{formatDistanceToNow(comment.createdAt, { addSuffix: true })}</p>
                         </div>
                         {
-                          comment.userId===user.id && <EditDeleteDropDown />
+                          comment.userId===user.id && <EditDeleteDropDown commentId={comment.id} />
                         }
                     </div>  
                 </div>
