@@ -67,3 +67,15 @@ export const getComments = async(req,res)=>{
         res.status(500).json({ success: false, message: error.message });
     }
 }
+
+export const deleteComment = async(req,res)=>{
+    try {
+        const { commentId } = req.params;
+        await prisma.comment.delete({
+            where: { id: parseInt(commentId) },
+        });
+        res.status(200).json({ success: true, message: "Comment deleted successfully." });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
