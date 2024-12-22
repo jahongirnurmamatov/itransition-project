@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { FaCircleUser } from 'react-icons/fa6';
 import { useParams } from 'react-router-dom';
 import Loading from '../loading/Loading';
+import { formatDistanceToNow } from 'date-fns';
 
 const Comments = () => {
     const {user} = useAuthStore();
@@ -32,9 +33,10 @@ const Comments = () => {
                         : <FaCircleUser className='size-6 text-gray-500' />
                     }
                     </div>
-                    <div className='flex flex-col items-start justify-start gap-1 rounded-lg bg-slate-200 py-2 px-4'>
+                    <div className='flex flex-col items-start justify-start gap-[2px] rounded-lg bg-slate-200 py-2 px-4 min-w-100px]'>
                         <span className='font-bold'>{comment?.user?.username}</span>
                         <span>{comment.content}</span>
+                        <p className='text-sm text-gray-500 text-end'>{formatDistanceToNow(comment.createdAt, { addSuffix: true })}</p>
                     </div>  
                 </div>
             ))
