@@ -6,6 +6,7 @@ import { AiFillLike } from "react-icons/ai";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaCommentDots } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
+import WhoLiked from './WhoLiked';
 export const Interaction = ({templateId}) => {
     const [isliked,setIsliked] = useState(false);
     const {comments} = useCommentStore();
@@ -24,7 +25,7 @@ export const Interaction = ({templateId}) => {
             !islikedTemplate ? <AiOutlineLike onClick={handleLikeUnlike} className='size-5 cursor-pointer hover:opacity-80 text-blue-800' />
              : <AiFillLike onClick={handleLikeUnlike} className='size-5 text-blue-800 cursor-pointer hover:opacity-80' />
         } 
-        <span className='text-gray-500 text-sm'>{likes.length} <span className='hidden md:inline'>Likes</span> </span>
+          <WhoLiked />
         </div>
         <div className="flex items-center justify-center gap-3">
             <div className="flex items-center justify-center gap-2">
