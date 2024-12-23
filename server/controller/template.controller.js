@@ -158,7 +158,12 @@ export const likeUnlike   = async (req, res) => {
 
       const updatedTemplate = await prisma.template.findUnique({
           where: { id: parseInt(id) },
-          include: { likes: true },
+          include: { likes: {
+              select: {
+                  userId: true,
+                  user: { select: { username: true } },
+              },
+          } },
       });
 
       res.status(200).json({

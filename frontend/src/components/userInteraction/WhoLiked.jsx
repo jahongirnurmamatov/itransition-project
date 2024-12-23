@@ -16,7 +16,7 @@ const WhoLiked = () => {
                 <div className="text-sm"></div>
                 <div className="flex flex-col gap-1 items-start justify-center">
                     {likes.map((like) => (
-                        <p className="text-sm font-bold" key={like.id}>{like.user.username}</p>
+                        <p className="text-sm font-bold" key={like?.id}>{like?.user?.username}</p>
                     ))}
                 </div>
             </HoverCardContent>
