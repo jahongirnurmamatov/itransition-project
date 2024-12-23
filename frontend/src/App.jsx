@@ -8,6 +8,7 @@ import LandingPage from "./pages/LandingPage";
 import { useAuthStore } from "./store/authStore";
 import Loading from "./components/loading/Loading";
 import Template from "./pages/Template";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore();
@@ -29,6 +30,7 @@ const App = () => {
       </Route>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/*" element={<NotFound />} />
     </Routes>
   );
 };
