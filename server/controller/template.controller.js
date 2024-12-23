@@ -109,3 +109,50 @@ export const getMyTemplates = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+export const likeUnlike   = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const userId = req.userId;
+      const template = await prisma.template.findUnique({
+          where: { id: parseInt(id) },
+          include: { likes: true },            
+      });
+
+      if (!template) {
+          return res.status(404).json({success:false, message:'Template not found.'});
+      }
+
+      const isLiked = template.likes.some((like) => like.userId === userId);
+
+      if (isLiked) {            
+          await prisma.like.delete({
+            where: {
+              userId_templateId: { 
+                userId, 
+                templateId: parseInt(id),
+              },
+            },
+          });
+      } else {
+          await prisma.like.create({            
+              data: {
+                  userId,
+                  templateId: parseInt(id),
+              },
+          });
+      }
+
+      const updatedTemplate = await prisma.template.findUnique({
+          where: { id: parseInt(id) },
+          include: { likes: true },
+      });
+
+      res.status(200).json({
+          success: true,
+          template: updatedTemplate,
+      })
+  } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+  }
+}
