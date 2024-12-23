@@ -6,9 +6,8 @@ import templateRoute from "./routes/template.route.js";
 import commentRoute from "./routes/comment.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { app, server } from "./socket/socket.io.js";
 dotenv.config();
-
-const app = express();
  
 const PORT = process.env.PORT || 4000;
 
@@ -28,6 +27,6 @@ app.get("/", (req, res) => {
   res.send("Hello from the backend");
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
