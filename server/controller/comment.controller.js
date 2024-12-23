@@ -86,6 +86,7 @@ export const deleteComment = async(req,res)=>{
         await prisma.comment.delete({
             where: { id: parseInt(commentId) },
         });
+        io.emit("deleteComment", commentId);
         res.status(200).json({ success: true, message: "Comment deleted successfully." });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -109,6 +110,7 @@ export const editComment= async(req,res)=>{
                   }, 
             }
         });
+        io.emit("editComment", updatedComment, parseInt(commentId));
         res.status(200).json({ success: true, message: "Comment updated successfully.",comment: updatedComment });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

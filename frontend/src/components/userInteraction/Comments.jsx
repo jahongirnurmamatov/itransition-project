@@ -61,7 +61,7 @@ const Comments = () => {
                   <p className="font-bold">{comment?.user?.username }</p>
                   {userId===comment?.user?.id &&  <p className='text-gray-500 text-sm flex gap-2 items-center'><FaCrown size={12} /> <span>Author</span></p> }
                 </div> 
-                {editCommentId === comment.id ? (
+                {editCommentId === comment?.id ? (
                   <div className="flex items-center gap-2">
                     <Input
                       multiline
@@ -70,7 +70,7 @@ const Comments = () => {
                       onChange={(e) => setEditedContent(e.target.value)}
                     />
                     <button
-                      onClick={() => handleSave(comment.id)}
+                      onClick={() => handleSave(comment?.id)}
                       className="text-blue-500 text-sm"
                     >
                       Save
@@ -83,13 +83,13 @@ const Comments = () => {
                     </button>
                   </div>
                 ) : (
-                  <span>{comment.content}</span>
+                  <span>{comment?.content}</span>
                 )}
                 <p className="text-xs text-gray-500 place-self-start">
-                  {formatDistanceToNow(comment.createdAt, { addSuffix: true })}
+                  {formatDistanceToNow(comment?.createdAt, { addSuffix: true })}
                 </p>
               </div>
-              {comment.userId === user.id && (
+              {comment?.userId === user?.id && (
                 <EditDeleteDropDown
                   setEdit={() => handleEdit(comment.id, comment.content)}
                   commentId={comment.id}

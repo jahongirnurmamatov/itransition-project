@@ -12,9 +12,8 @@ export const Interaction = ({templateId,setShowComments}) => {
     const {user} = useAuthStore();
     const {likes,likeUnlike} = useTemplateStore();
 
-    const islikedTemplate = likes.some((like) => like.userId === user.id);
+    const islikedTemplate = likes.some((like) => like?.userId === user?.id);
 
-    console.log(comments)
     const handleLikeUnlike =  () => {
       likeUnlike(templateId);
     }
