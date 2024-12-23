@@ -46,7 +46,7 @@ const Login = () => {
         <div className="sm:w-[60%] sm:h-3/4 w-full h-full bg-gray-200 flex gap-0 rounded-lg shadow-lg">
           <div className="flex-1 hidden lg:block">
             <img className='object-cover w-full h-full'
-             src="https://media.licdn.com/dms/image/D5612AQHxNQ-nsSB6eg/article-cover_image-shrink_600_2000/0/1721172604107?e=2147483647&v=beta&t=gCa3gizo6ua-rVfgIKbXFCYBLWiEyJ2qqzbQ8HgYoNU" alt="" />
+             src="/login.gif" alt="" />
           </div>
           <div className="flex-1">
             <div className="w-full h-full flex flex-col items-center justify-center">

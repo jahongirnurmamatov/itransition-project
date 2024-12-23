@@ -18,7 +18,7 @@ const Hero = () => {
         <div className="w-1/2">
           <div className="w-full h-[300px] bg-transparent rounded-lg">
            <div className="w-[90%] h-full mx-auto -mt-28">
-                <img className='object-cover rounded-lg' src="https://localo.com/de/assets/img/definitions/what-is-forms.webp" alt="" />
+                <img className='object-cover rounded-lg' src="/heroImg.webp" alt="" />
            </div>
           </div>
         </div>

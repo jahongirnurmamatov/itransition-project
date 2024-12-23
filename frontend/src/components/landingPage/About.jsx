@@ -8,7 +8,7 @@ const About = () => {
               <div className="w-full h-[300px] bg-transparent rounded-lg">
                <div className="w-[90%] h-full mx-auto -mt-18">
                     <img className='object-cover rounded-lg' 
-                    src="https://www.guidingtech.com/wp-content/uploads/edit-google-forms_05be6e9b9d53d1d1680b6ab56f4753b7_4d470f76dc99e18ad75087b1b8410ea9.png" alt="" />
+                    src="/aboutImg.png" alt="" />
                </div>
               </div>
             </div>
