@@ -37,23 +37,36 @@ export const createTemplate = async (req, res) => {
     res.status(500).json({ success: false, message: 'Error creating template' });
   }
 };
-export const getTemplateById = async(req,res)=>{
+export const getTemplateById = async (req, res) => {
   try {
-    const { id } = req.params; 
+    const { id } = req.params;
     const template = await prisma.template.findUnique({
       where: { id: parseInt(id) },
-      include: { questions: {
-        include: { options: true }
-      } }, 
+      include: {
+        questions: {
+          include: { options: true },
+        },
+        likes: {
+          select: {
+            userId: true,
+            user: { select: { username: true } },
+          },
+        },
+      },
     });
+
+    if (!template) {
+      return res.status(404).json({ success: false, message: 'Template not found.' });
+    }
+
     res.status(200).json({
       success: true,
-      template
-    })
+      template,
+    });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message  });
+    res.status(500).json({ success: false, message: error.message });
   }
-}
+};
 
 export const deleteTemplate = async (req, res) => {
   try {

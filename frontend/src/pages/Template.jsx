@@ -18,7 +18,7 @@ const Template = () => {
     if (templateId) {
       getTemplateById(templateId);
     }
-  }, [templateId, getTemplateById]);
+  }, [templateId]);
 
   if (isLoading) {
     return <Loading />;
@@ -36,7 +36,7 @@ const Template = () => {
         </div>
         <div className="flex flex-col gap-2 px-20 ">
             <Separator className="my-5"	 />
-            <Interaction />
+            <Interaction templateId={templateId} />
             <Separator className="my-5"	 />
             <CommentBox />
             <Comments />

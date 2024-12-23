@@ -14,6 +14,7 @@ export const useTemplateStore = create((set,get) => ({
     tags: [],
     imageUrl:'',
     userId: null,
+    likes : [],
     setImageURL:(imageUrl) => set({ imageUrl }),
     setTags: (tags) => set({ tags }),
     setDescription: (description) => set({ description }),
@@ -58,7 +59,7 @@ export const useTemplateStore = create((set,get) => ({
         try {
           set({ isLoading: true, error: null });
           const res = await axiosInstance.get(`/template/${templateId}`);
-          const { title, topic, description, imageUrl, tags, questions,userId } = res.data.template;
+          const { title, topic, description, imageUrl, tags, questions,userId,likes  } = res.data.template;
           const forms = questions.map((q) => ({
             id: q.id,
             type: q.type,
@@ -76,7 +77,8 @@ export const useTemplateStore = create((set,get) => ({
             tags,
             forms,
             isLoading: false,
-            userId
+            userId,
+            likes 
           });
         } catch (error) {
           set({ error: error.response?.data?.message || 'Failed to fetch template.', isLoading: false });
@@ -90,6 +92,16 @@ export const useTemplateStore = create((set,get) => ({
           set({ templates: res.data.templates, isLoading: false });
         } catch (error) {
           set({ error: error.response?.data?.message || 'Failed to fetch templates.', isLoading: false });
+          throw error;
+        }
+      },
+    likeUnlike: async (templateId) => {
+        try {
+          set({  error: null });
+          const res = await axiosInstance.post(`/template/${templateId}/like-unlike`);
+          set({ likes: res.data.template.likes, isLoading: false });
+        } catch (error) { 
+          set({ error: error.response?.data?.message || 'Failed to like/unlike template.' });
           throw error;
         }
       },

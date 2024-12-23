@@ -20,7 +20,7 @@ const Comments = () => {
 
   useEffect(() => {
     getComments(templateId);
-  }, [templateId, getComments]);
+  }, [templateId]);
 
   const handleEdit = (commentId, content) => {
     setEditCommentId(commentId);

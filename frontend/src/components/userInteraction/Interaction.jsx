@@ -1,22 +1,30 @@
+import { useAuthStore } from '@/store/authStore';
 import { useCommentStore } from '@/store/commentStore';
+import { useTemplateStore } from '@/store/templateStore';
 import React, { useState } from 'react'
 import { AiFillLike } from "react-icons/ai";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaCommentDots } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
-export const Interaction = () => {
+export const Interaction = ({templateId}) => {
     const [isliked,setIsliked] = useState(false);
     const {comments} = useCommentStore();
+    const {user} = useAuthStore();
+    const {likes,likeUnlike} = useTemplateStore();
 
+    const islikedTemplate = likes.some((like) => like.userId === user.id);
 
+    const handleLikeUnlike =  () => {
+      likeUnlike(templateId);
+    }
   return (
     <div className='flex justify-between items-center my-1'>
         <div className="flex items-center justify-center gap-1">
         {
-            isliked ? <AiOutlineLike onClick={() => setIsliked(!isliked)} className='size-5 cursor-pointer hover:opacity-80 text-blue-800' />
-             : <AiFillLike onClick={() => setIsliked(!isliked)} className='size-5 text-blue-800 cursor-pointer hover:opacity-80' />
+            !islikedTemplate ? <AiOutlineLike onClick={handleLikeUnlike} className='size-5 cursor-pointer hover:opacity-80 text-blue-800' />
+             : <AiFillLike onClick={handleLikeUnlike} className='size-5 text-blue-800 cursor-pointer hover:opacity-80' />
         } 
-        <span className='text-gray-500 text-sm'>20 <span className='hidden md:inline'>Likes</span> </span>
+        <span className='text-gray-500 text-sm'>{likes.length} <span className='hidden md:inline'>Likes</span> </span>
         </div>
         <div className="flex items-center justify-center gap-3">
             <div className="flex items-center justify-center gap-2">
