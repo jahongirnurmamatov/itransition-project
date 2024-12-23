@@ -7,8 +7,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaCommentDots } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
 import WhoLiked from './WhoLiked';
-export const Interaction = ({templateId}) => {
-    const [isliked,setIsliked] = useState(false);
+export const Interaction = ({templateId,setShowComments}) => {
     const {comments} = useCommentStore();
     const {user} = useAuthStore();
     const {likes,likeUnlike} = useTemplateStore();
@@ -28,7 +27,9 @@ export const Interaction = ({templateId}) => {
           <WhoLiked />
         </div>
         <div className="flex items-center justify-center gap-3">
-            <div className="flex items-center justify-center gap-2">
+            <div 
+            onClick={()=>setShowComments((prev)=>!prev)}
+            className="flex items-center justify-center gap-2">
                 {comments.length>0 && <span className='text-gray-500  cursor-pointer hover:opacity-80 hover:underline text-sm'>{comments.length}
                    <span className='hidden md:inline'> Comments</span></span>}
                 <FaCommentDots className='size-5 text-gray-500 cursor-pointer hover:opacity-80 ' />
