@@ -32,7 +32,6 @@ const TabelForms = ({ data }) => {
   useEffect(()=>{
     getMyTemplates();
   },[])
-  console.log(templates)
 
   return (
     <div className="w-full bg-white rounded-lg px-5 py-3 shadow-md">

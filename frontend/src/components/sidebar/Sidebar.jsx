@@ -27,8 +27,8 @@ export function Sidebar() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                  My Forms
+                  <BreadcrumbLink href="/my-templates">
+                    My Forms
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />

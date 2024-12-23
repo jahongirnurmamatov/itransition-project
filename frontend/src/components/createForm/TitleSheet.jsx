@@ -38,6 +38,7 @@ export function TitleSheet() {
       form.append('file', image);
       await uploadToCloudinary(form);
     }
+
   return (
     <Sheet className="w-full sm:w-1/2 lg:w-1/5">
       <SheetTrigger asChild>

@@ -71,6 +71,7 @@ export const checkAuth = async (req, res) => {
           username: true,
           email: true,
           password: false,
+          avatar: true
         },
       });
     if (!user) {

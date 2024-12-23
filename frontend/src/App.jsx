@@ -22,9 +22,9 @@ const App = () => {
 
   return (
     <Routes>
-      <Route element={ isAuthenticated ? <Layout /> : < Navigate to="/login" />}>
+      <Route element={ isAuthenticated ? <Layout /> :  < Navigate to="/login" />}>
         <Route path="/my-templates" element={<MyTemplates />} />
-        <Route path="/templates/:templateId/create" element={<CreateTemplate />} />
+        <Route path="/template/create" element={<CreateTemplate />} />
         <Route path="/templates/:templateId" element={<Template />} />
       </Route>
       <Route path="/" element={<LandingPage />} />

@@ -7,11 +7,6 @@ import {
   
 
 export const data = {
-    user: {
-      name: "shadcn",
-      email: "m@example.com",
-      avatar: "/avatars/shadcn.jpg",
-    },
   
     navMain: [
       {
@@ -22,11 +17,11 @@ export const data = {
         items: [
           {
             title: "All Forms",
-            url: "#",
+            url: "/my-templates",
           },
           {
             title: "Favoruites",
-            url: "#",
+            url: "/my-favourites",
           },
         ],
       },
@@ -37,11 +32,11 @@ export const data = {
         items: [
           {
             title: "Create New Form",
-            url: "#",
+            url: "/template/create",
           },
           {
             title: "Edit Form",
-            url: "#",
+            url: "/template/edit",
           },
         ],
       },
@@ -67,11 +62,11 @@ export const data = {
         items: [
           {
             title: "Edit Profile",
-            url: "#",
+            url: "/my-profile",
           },
           {
             title: "Allow Users to Edit",
-            url: "#",
+            url: "/users",
           },
         ],
       },
