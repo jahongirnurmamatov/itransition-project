@@ -1,4 +1,5 @@
 import prisma from "../db/prisma.js";
+import { io } from "../socket/socket.io.js";
 
 export const addComment = async (req, res) => {
   try {
@@ -38,6 +39,7 @@ export const addComment = async (req, res) => {
         },
       }
     });
+    io.emit("newComment", newComment);
 
     res.status(200).json({
       success: true,
@@ -67,7 +69,8 @@ export const getComments = async(req,res)=>{
               }, 
             },
             orderBy: { createdAt: "desc" },
-          })
+          });
+
         res.status(200).json({
             success: true,
             comments

@@ -9,15 +9,18 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import Loading from "@/components/loading/Loading";
+import { useCommentStore } from "@/store/commentStore";
 
 const Template = () => {
   const {  getTemplateById, isLoading, error } = useTemplateStore();
   const { templateId } = useParams();
   const [showComments,setShowComments] = useState(false);
+  const {getComments} = useCommentStore();
 
   useEffect(() => {
     if (templateId) {
       getTemplateById(templateId);
+      getComments(templateId)
     }
   }, [templateId]);
 
@@ -37,7 +40,7 @@ const Template = () => {
         </div>
         <div className="flex flex-col gap-2 lg:px-40 md:px-20 px-10  ">
             <Separator className="my-5"	 />
-            <Interaction templateId={templateId} setShowComments={setShowComments}/>
+            <Interaction  setShowComments={setShowComments}/>
           {
             showComments && <>
             <Separator className="my-5"	 />

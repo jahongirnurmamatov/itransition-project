@@ -9,18 +9,16 @@ import { EditDeleteDropDown } from './EditDeleteDropDown';
 import { Input } from '@mui/material';
 import { useTemplateStore } from '@/store/templateStore';
 import { FaCrown } from "react-icons/fa";
+import { useListenComments } from '@/hooks/useListenComments';
 
 const Comments = () => {
   const { user } = useAuthStore();
-  const { templateId } = useParams();
-  const { getComments, isCommentLoading, commentError, comments, editComment } = useCommentStore();
+  const {  isCommentLoading, commentError, comments, editComment } = useCommentStore();
   const [editCommentId, setEditCommentId] = useState(null);
   const [editedContent, setEditedContent] = useState("");
   const {userId} = useTemplateStore();
 
-  useEffect(() => {
-    getComments(templateId);
-  }, [templateId]);
+  useListenComments();
 
   const handleEdit = (commentId, content) => {
     setEditCommentId(commentId);

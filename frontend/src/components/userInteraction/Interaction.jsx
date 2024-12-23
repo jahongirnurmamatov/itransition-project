@@ -14,6 +14,7 @@ export const Interaction = ({templateId,setShowComments}) => {
 
     const islikedTemplate = likes.some((like) => like.userId === user.id);
 
+    console.log(comments)
     const handleLikeUnlike =  () => {
       likeUnlike(templateId);
     }
@@ -30,7 +31,7 @@ export const Interaction = ({templateId,setShowComments}) => {
             <div 
             onClick={()=>setShowComments((prev)=>!prev)}
             className="flex items-center justify-center gap-2">
-                {comments.length>0 && <span className='text-gray-500  cursor-pointer hover:opacity-80 hover:underline text-sm'>{comments.length}
+                {comments?.length>0 && <span className='text-gray-500  cursor-pointer hover:opacity-80 hover:underline text-sm'>{comments.length}
                    <span className='hidden md:inline'> Comments</span></span>}
                 <FaCommentDots className='size-5 text-gray-500 cursor-pointer hover:opacity-80 ' />
             </div>

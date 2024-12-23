@@ -6,6 +6,7 @@ export const useCommentStore = create((set,get) => ({
     isCommentLoading: false,
     isCommentAdding:false, 
     commentError: null,
+    setComments: (newComments) => set({ comments: newComments }),
 
     getComments: async(templateID)=>{ 
         try {
@@ -20,8 +21,7 @@ export const useCommentStore = create((set,get) => ({
         try {
             set({isCommentAdding: true, commentError: null});
             const res = await axiosInstance.post(`/comment/${templateID}/add-comment`, {content});
-            const currentComments = get().comments;
-            set({comments: [ res.data.comment,...currentComments,], isCommentAdding: false});
+            set({ isCommentAdding: false});
         } catch (error) {
             set({commentError: error.response.data.message, isCommentAdding: false});
         }
