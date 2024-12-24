@@ -15,8 +15,38 @@ export const userRoleChange = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
     try {
-        const users = await prisma.user.findMany(
-           {
+        const {
+            searchKey = "",
+            usernameOrder,
+            emailOrder,
+            createdAtOrder,
+            page = 1,
+            limit = 10,
+        } = req.query;
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+
+        console.log(usernameOrder, emailOrder, createdAtOrder, page, limit, searchKey);
+
+        const where = {
+            AND: [
+                {
+                    OR: [
+                        { username: { contains: searchKey, mode: 'insensitive' } },
+                        { email: { contains: searchKey, mode: 'insensitive' } },
+                    ],
+                },
+                {
+                    id: { not: req.userId },
+                },
+            ],
+        };
+
+        const orderBy = [];
+        if (usernameOrder) orderBy.push({ username: usernameOrder });
+        if (emailOrder) orderBy.push({ email: emailOrder });
+        if (createdAtOrder) orderBy.push({ createdAt: createdAtOrder });
+
+        const users = await prisma.user.findMany({
             select: {
                 id: true,
                 email: true,
@@ -25,19 +55,21 @@ export const getAllUsers = async (req, res) => {
                 avatar: true,
                 createdAt: true,
             },
-            where: {
-                id: {
-                    not: req.userId,
-                },
-            },
-            orderBy: {
-                createdAt: "desc",
-            },
-           },
-           
-        );
-        res.status(200).json({ false: true, users });
+            where,
+            orderBy,
+            skip,
+            take: parseInt(limit),
+        });
+
+        const totalUsers = await prisma.user.count({ where });
+
+        res.status(200).json({
+            success: true,
+            users,
+            totalUsers,
+            totalPages: Math.ceil(totalUsers / parseInt(limit)),
+        });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+      res.status(500).json({ success: false, message: error.message });
     }
-}
+  };
