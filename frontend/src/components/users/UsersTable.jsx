@@ -25,6 +25,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from ".
 import { useAuthStore } from "@/store/authStore";
 import { useUsersStore } from "@/store/usersStore";
 import { useToast } from "@/hooks/use-toast";
+import { formatDistanceToNow } from "date-fns";
 
 const UsersTable = () => {
     const [sortTitle, setSortTitle] = useState("asc");
@@ -44,20 +45,19 @@ const UsersTable = () => {
         }
       }, []);
 
-      console.log(users)
-
     const handleRoleChange = async (userId, role) => {
         const result = await userRoleChange(userId, role);
         if (result.success) {
+            getAllUsers();
             toast({
                 title: "Success",
                 description: "User role changed successfully",
             });
         } else {
             toast({
+                variant: "destructive",
                 title: "Error",
-                description: result.message,
-                status: "error",
+                description: "You are not authorized!",
             });
         }
     };
@@ -88,7 +88,7 @@ const UsersTable = () => {
                 <ArrowDownNarrowWide className={`size-4 text-gray-500 ${sortDate === "desc" ? "rotate-180" : ""}`}  />
               </div>
               </TableHead>
-              <TableHead>Date</TableHead>
+              <TableHead>Registered</TableHead>
               <TableHead>Role</TableHead>
             </TableRow>
           </TableHeader>
@@ -106,22 +106,22 @@ const UsersTable = () => {
                 <TableCell className="font-medium cursor-pointer" >
                   <Link
                     to={`/users/${user.id}`}
-                    className="hover:text-blue-500 hover:underline flex gap-2"
+                    className="hover:text-blue-500 hover:underline flex gap-2 items-center justify-start"
                   >
                     <img src={user.avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                    {user.username}
+                    <span className="font-semibold text-slate-700">{user.username}</span>
                   </Link>
                 </TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{format(user.createdAt, 'dd/MM/yyyy ')}</TableCell>
+                <TableCell><span className="font-semibold text-slate-700">{user.email}</span></TableCell>
+                <TableCell><span className="text-gray-500">{formatDistanceToNow(user.createdAt)} ago</span></TableCell>
                 <TableCell>
                     <Select  defaultValue={user.role}
                      onValueChange={(value) => handleRoleChange( user.id, value)}>
-                        <SelectTrigger className="w-24">{ user.role}</SelectTrigger>
+                        <SelectTrigger className={`w-24 bg-slate-100 ${user.role === "ADMIN" ? "text-red-500" : "text-blue-500"}`}>{ user.role}</SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectItem value="Admin">Admin</SelectItem>
-                                <SelectItem value="User">User</SelectItem>
+                                <SelectItem value="Admin">ADMIN</SelectItem>
+                                <SelectItem value="User">USER</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
