@@ -127,6 +127,7 @@ export const likeUnlike   = async (req, res) => {
   try {
       const { id } = req.params;
       const userId = req.userId;
+      console.log(id)
       const template = await prisma.template.findUnique({
           where: { id: parseInt(id) },
           include: { likes: true },            

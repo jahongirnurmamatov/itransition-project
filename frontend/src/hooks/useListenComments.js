@@ -18,7 +18,7 @@ export const useListenComments = () => {
         });
         socket.on("editComment", (editedComment,commentId) => {
             setComments(comments.map(comment => comment.id === commentId ? editedComment : comment));
-        });
+        })
         return () => {
             socket.off("newComment");
             socket.off("deleteComment");

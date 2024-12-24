@@ -40,7 +40,7 @@ const Template = () => {
         </div>
         <div className="flex flex-col gap-2 lg:px-40 md:px-20 px-10  ">
             <Separator className="my-5"	 />
-            <Interaction  setShowComments={setShowComments}/>
+            <Interaction templateId={templateId} setShowComments={setShowComments}/>
           {
             showComments && <>
             <Separator className="my-5"	 />

@@ -12,11 +12,13 @@ export const signup = async (req, res) => {
         .json({ success: false, message: "All fields are required" });
     }
     const hashedPassword = bcrypt.hashSync(password, 10);
+    const avatar = `https://avatar.iran.liara.run/public/boy?username=${username}`
     const user = await prisma.user.create({
       data: {
         username,
         email,
         password: hashedPassword,
+        avatar
       },
     });
     if (user) {

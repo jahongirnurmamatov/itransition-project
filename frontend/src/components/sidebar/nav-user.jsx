@@ -31,6 +31,7 @@ export function NavUser() {
   const {logout} = useAuthStore();
   const { isMobile } = useSidebar()
   const {user} = useAuthStore();
+  console.log(user?.avatar)
   
   return (
     (<SidebarMenu>
@@ -42,7 +43,7 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
               <Avatar className="h-8 w-8 rounded-lg ">
                 
-                {user?.avatar ? <AvatarImage src={user?.avatar  }  className='object-cover' /> :
+                {user?.avatar ? <AvatarImage src={user?.avatar}  className='object-cover' /> :
                 <FaCircleUser className="w-8 h-8 text-gray-600" />
                 }
               </Avatar>

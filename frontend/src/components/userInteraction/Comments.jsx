@@ -49,10 +49,10 @@ const Comments = () => {
                 <img
                   src={comment?.user?.avatar}
                   alt={comment?.user.username}
-                  className="size-6 rounded-full"
+                  className="size-8 rounded-full"
                 />
               ) : (
-                <FaCircleUser className="size-6 text-gray-500" />
+                <FaCircleUser className="size-8 text-gray-500" />
               )}
             </div>
             <div className="flex rounded-lg bg-slate-200 py-2 px-4 min-w-100px] items-center gap-10 justify-between">
