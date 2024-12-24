@@ -4,6 +4,7 @@ import authRoute from "./routes/auth.route.js";
 import uploadRoute from "./routes/upload.route.js";
 import templateRoute from "./routes/template.route.js";
 import commentRoute from "./routes/comment.route.js";
+import userRoute from "./routes/user.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { app, server } from "./socket/socket.io.js";
@@ -21,6 +22,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/upload", uploadRoute);
 app.use("/api/template", templateRoute);
 app.use("/api/comment", commentRoute);
+app.use("/api/user", userRoute);
 
 
 app.get("/", (req, res) => {
