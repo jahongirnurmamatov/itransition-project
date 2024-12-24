@@ -31,7 +31,6 @@ export function NavUser() {
   const {logout} = useAuthStore();
   const { isMobile } = useSidebar()
   const {user} = useAuthStore();
-  console.log(user?.avatar)
   
   return (
     (<SidebarMenu>

@@ -20,58 +20,31 @@ import {
   import { Link } from "react-router-dom";
   import { Input } from "../ui/input";
   import { ArrowDownNarrowWide, Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from "../ui/select";
 import { useAuthStore } from "@/store/authStore";
-
-  const dummyUsers = [
-    {
-        id: 1,
-        username: "John Doe",
-        email: "johndoe@gmail.com",
-        date: "2023-08-01",
-        role: "Admin",
-        avatar: 'https://avatar.iran.liara.run/public/boy?username=1'
-    },
-    {
-        id: 2,
-        username: "Jane Smith",
-        email: "johndoe@gmail.com",
-        date: "2023-08-02",
-        role: "User",   
-        avatar: 'https://avatar.iran.liara.run/public/boy?username=2' 
-    },
-    {
-        id: 3,
-        username: "Bob Johnson",
-        email: "johndoe@gmail.com",
-        date: "2023-08-03",
-        role: "Admin",    
-        avatar: 'https://avatar.iran.liara.run/public/boy?username=3'
-    },
-    {
-        id: 4,
-        username: "Alice Brown",
-        email: "johndoe@gmail.com",
-        date: "2023-08-04",
-        role: "User",    
-        avatar: 'https://avatar.iran.liara.run/public/boy?username=4'
-    },
-    {
-        id: 5,
-        username: "Eve White",
-        email: "johndoe@gmail.com",
-        date: "2023-08-05",
-        role: "User",    
-        avatar: 'https://avatar.iran.liara.run/public/boy?username=5'
-    }
-]
+import { useUsersStore } from "@/store/usersStore";
+import { useToast } from "@/hooks/use-toast";
 
 const UsersTable = () => {
     const [sortTitle, setSortTitle] = useState("asc");
     const [sortDate, setSortDate] = useState("asc");
-    const [users,setUsers] = useState(dummyUsers);
     const {userRoleChange} = useAuthStore();
+    const {users,getAllUsers,error} = useUsersStore();
+    const { toast } = useToast();
+
+    useEffect(() => {
+        getAllUsers();  
+        if(error)  {
+            toast({
+                title: "Error",
+                description: error,
+                status: "error",
+            });
+        }
+      }, []);
+
+      console.log(users)
 
     const handleRoleChange = async (userId, role) => {
         const result = await userRoleChange(userId, role);
@@ -140,7 +113,7 @@ const UsersTable = () => {
                   </Link>
                 </TableCell>
                 <TableCell>{user.email}</TableCell>
-                <TableCell>{format(user.date, 'dd/MM/yyyy ')}</TableCell>
+                <TableCell>{format(user.createdAt, 'dd/MM/yyyy ')}</TableCell>
                 <TableCell>
                     <Select  defaultValue={user.role}
                      onValueChange={(value) => handleRoleChange( user.id, value)}>
