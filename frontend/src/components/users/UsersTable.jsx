@@ -23,7 +23,7 @@ import {
 import { useState } from "react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from "../ui/select";
 
-  const users = [
+  const dummyUsers = [
     {
         id: 1,
         username: "John Doe",
@@ -69,6 +69,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from ".
 const UsersTable = () => {
     const [sortTitle, setSortTitle] = useState("asc");
     const [sortDate, setSortDate] = useState("asc");
+    const [users,setUsers] = useState(dummyUsers);
   
     return (
       <div className="w-full bg-white rounded-lg px-5 py-3 shadow-md">
@@ -124,8 +125,13 @@ const UsersTable = () => {
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{format(user.date, 'dd/MM/yyyy ')}</TableCell>
                 <TableCell>
-                    <Select  defaultValue={user.role}    onValueChange={(value) => console.log(value)} >
-                        <SelectTrigger className="w-24">{user.role}</SelectTrigger>
+                    <Select  defaultValue={user.role}   
+                    onValueChange={(value) =>  {const updatedUser = { ...user }; 
+                    updatedUser.role = value; 
+                    setUsers((prevUsers) =>
+                      prevUsers.map((u) => (u.id === user.id ? updatedUser : u))
+                    )} }>
+                        <SelectTrigger className="w-24">{ user.role}</SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
                                 <SelectItem value="Admin">Admin</SelectItem>
