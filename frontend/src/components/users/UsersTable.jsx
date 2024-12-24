@@ -22,6 +22,7 @@ import {
   import { ArrowDownNarrowWide, Search } from "lucide-react";
 import { useState } from "react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from "../ui/select";
+import { useAuthStore } from "@/store/authStore";
 
   const dummyUsers = [
     {
@@ -70,7 +71,23 @@ const UsersTable = () => {
     const [sortTitle, setSortTitle] = useState("asc");
     const [sortDate, setSortDate] = useState("asc");
     const [users,setUsers] = useState(dummyUsers);
-  
+    const {userRoleChange} = useAuthStore();
+
+    const handleRoleChange = async (userId, role) => {
+        const result = await userRoleChange(userId, role);
+        if (result.success) {
+            toast({
+                title: "Success",
+                description: "User role changed successfully",
+            });
+        } else {
+            toast({
+                title: "Error",
+                description: result.message,
+                status: "error",
+            });
+        }
+    };
     return (
       <div className="w-full bg-white rounded-lg px-5 py-3 shadow-md">
         <div className="relative">
@@ -125,12 +142,8 @@ const UsersTable = () => {
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{format(user.date, 'dd/MM/yyyy ')}</TableCell>
                 <TableCell>
-                    <Select  defaultValue={user.role}   
-                    onValueChange={(value) =>  {const updatedUser = { ...user }; 
-                    updatedUser.role = value; 
-                    setUsers((prevUsers) =>
-                      prevUsers.map((u) => (u.id === user.id ? updatedUser : u))
-                    )} }>
+                    <Select  defaultValue={user.role}
+                     onValueChange={(value) => handleRoleChange( user.id, value)}>
                         <SelectTrigger className="w-24">{ user.role}</SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
