@@ -8,15 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatDistanceToNow } from "date-fns";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { Link, useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
 import { ArrowDownNarrowWide, Search } from "lucide-react";
@@ -25,10 +16,11 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from ".
 import { useAuthStore } from "@/store/authStore";
 import { useUsersStore } from "@/store/usersStore";
 import { useToast } from "@/hooks/use-toast";
+import PaginationComponent from "./PaginationComponent";
 
 const UsersTable = () => {
   const { userRoleChange } = useAuthStore();
-  const { users, getAllUsers, error } = useUsersStore();
+  const { users, getAllUsers, error,totalPages } = useUsersStore();
   const { toast } = useToast();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -207,24 +199,9 @@ const UsersTable = () => {
           ))}
         </TableBody>
       </Table>
-      <Pagination className="mt-4">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-            <PaginationLink href="#">2</PaginationLink>
-            <PaginationLink href="#">3</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <PaginationComponent totalPages={totalPages} page={page} />
+      
+
     </div>
   );
 };

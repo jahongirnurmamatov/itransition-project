@@ -21,11 +21,9 @@ export const getAllUsers = async (req, res) => {
             emailOrder,
             createdAtOrder,
             page = 1,
-            limit = 10,
+            limit = 5,
         } = req.query;
         const skip = (parseInt(page) - 1) * parseInt(limit);
-
-        console.log(usernameOrder, emailOrder, createdAtOrder, page, limit, searchKey);
 
         const where = {
             AND: [
