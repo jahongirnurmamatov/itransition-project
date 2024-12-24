@@ -1,7 +1,6 @@
 import axiosInstance from '@/lib/axiosInstance';
 import {create} from 'zustand';
 
-const { toast } = useToast()
 export const useAuthStore = create((set)=>({
     user:null,
     isAuthenticated:false,
@@ -10,7 +9,6 @@ export const useAuthStore = create((set)=>({
     isCheckingAuth:true,
     setUser:(user)=>set({user}),
 
-    
     signup: async(email,username, password)=>{
         set({isLoading:true, error:null});
         try {
