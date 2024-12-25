@@ -6,9 +6,12 @@ import { BsChatLeftQuote } from "react-icons/bs";
 import Tags from "./Tags";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { useResponseStore } from "@/store/responseStore";
 
-const PreviewComponent = () => {
+
+const PreviewComponent = ({templateId}) => {
   const {title,topic,imageUrl,forms,tags,description,previewImg} = useTemplateStore();
+  const {addResponse,isAddingResponse,responseError} = useResponseStore();
 
   const [selectValues, setSelectValues] = useState({}); 
 
@@ -45,8 +48,7 @@ const PreviewComponent = () => {
         value,
       };
     });
-  
-    console.log(answers);
+    addResponse(templateId,answers);
   };
 
   console.log(forms)

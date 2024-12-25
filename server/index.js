@@ -5,7 +5,7 @@ import uploadRoute from "./routes/upload.route.js";
 import templateRoute from "./routes/template.route.js";
 import commentRoute from "./routes/comment.route.js";
 import userRoute from "./routes/user.route.js";
-import responseRoute from "./routes/user.route.js";
+import responseRoute from "./routes/responses.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { app, server } from "./socket/socket.io.js";

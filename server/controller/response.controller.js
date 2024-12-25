@@ -1,6 +1,8 @@
+import prisma from "../db/prisma.js";
 
 export const addResponse =async (req, res) => {  
     try {
+        console.log('called')
         const userId = req.userId;
         const { templateId } = req.params; 
         const { answers } = req.body;
