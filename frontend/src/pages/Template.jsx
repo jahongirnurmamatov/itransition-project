@@ -10,17 +10,21 @@ import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import Loading from "@/components/loading/Loading";
 import { useCommentStore } from "@/store/commentStore";
+import { use } from "react";
+import { useResponseStore } from "@/store/responseStore";
 
 const Template = () => {
   const {  getTemplateById, isLoading, error } = useTemplateStore();
   const { templateId } = useParams();
   const [showComments,setShowComments] = useState(false);
   const {getComments} = useCommentStore();
+  const {getResponses} = useResponseStore();
 
   useEffect(() => {
     if (templateId) {
       getTemplateById(templateId);
-      getComments(templateId)
+      getComments(templateId);
+      getResponses(templateId);
     }
   }, [templateId]);
 

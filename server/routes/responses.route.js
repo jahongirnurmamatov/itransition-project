@@ -5,6 +5,6 @@ import { verifyToken } from '../middleware/verifyToken.js';
 const router = express.Router();
 
 router.post('/:templateId/submit',verifyToken, addResponse);
-router.get('/:templateId/responses', getResponses);
+router.get('/:templateId/get-responses', getResponses);
 
 export default router;

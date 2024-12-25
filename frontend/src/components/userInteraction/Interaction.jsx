@@ -1,16 +1,18 @@
 import { useAuthStore } from '@/store/authStore';
 import { useCommentStore } from '@/store/commentStore';
 import { useTemplateStore } from '@/store/templateStore';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiFillLike } from "react-icons/ai";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaCommentDots } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
 import WhoLiked from './WhoLiked';
+import { useResponseStore } from '@/store/responseStore';
 export const Interaction = ({templateId,setShowComments}) => {
     const {comments} = useCommentStore();
     const {user} = useAuthStore();
     const {likes,likeUnlike} = useTemplateStore();
+    const {responses} = useResponseStore();
 
     const islikedTemplate = likes.some((like) => like?.userId === user?.id);
 
@@ -35,7 +37,7 @@ export const Interaction = ({templateId,setShowComments}) => {
                 <FaCommentDots className='size-5 text-gray-500 cursor-pointer hover:opacity-80 ' />
             </div>
             <div className="flex items-center justify-center gap-2">
-                {responses.length>0 && <span className='text-gray-500  cursor-pointer hover:opacity-80 hover:underline text-sm'>{responses.length} 
+                {responses?.length>0 && <span className='text-gray-500  cursor-pointer hover:opacity-80 hover:underline text-sm'>{responses?.length} 
                   <span className='hidden md:inline'> Responses</span></span>}
                 <IoStatsChart className='size-5 text-gray-500 cursor-pointer hover:opacity-80 ' />
             </div>
