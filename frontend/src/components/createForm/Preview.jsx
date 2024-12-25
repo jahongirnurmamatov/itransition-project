@@ -63,7 +63,6 @@ const PreviewComponent = ({templateId}) => {
     }
   };
 
-  console.log(forms)
   return (
     <div className="w-full  min-h-screen flex flex-col items-start">
         {previewImg || imageUrl && 

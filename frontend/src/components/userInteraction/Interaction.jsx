@@ -8,6 +8,7 @@ import { FaCommentDots } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
 import WhoLiked from './WhoLiked';
 import { useResponseStore } from '@/store/responseStore';
+import WhoResponded from './WhoResponded';
 export const Interaction = ({templateId,setShowComments}) => {
     const {comments} = useCommentStore();
     const {user} = useAuthStore();
@@ -37,8 +38,7 @@ export const Interaction = ({templateId,setShowComments}) => {
                 <FaCommentDots className='size-5 text-gray-500 cursor-pointer hover:opacity-80 ' />
             </div>
             <div className="flex items-center justify-center gap-2">
-                {responses?.length>0 && <span className='text-gray-500  cursor-pointer hover:opacity-80 hover:underline text-sm'>{responses?.length} 
-                  <span className='hidden md:inline'> Responses</span></span>}
+                {responses?.length>0 && <WhoResponded />}
                 <IoStatsChart className='size-5 text-gray-500 cursor-pointer hover:opacity-80 ' />
             </div>
         </div>

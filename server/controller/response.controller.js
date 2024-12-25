@@ -39,8 +39,12 @@ export const  getResponses = async (req, res) => {
       },
       select:{
         id: true,
-        userId: true,
         createdAt: true,
+        user: {
+          select: {
+            username: true,
+          },
+        },
       }
     });
 
