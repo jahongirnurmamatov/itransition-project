@@ -4,10 +4,52 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { useTemplateStore } from "@/store/templateStore";
 import { BsChatLeftQuote } from "react-icons/bs";
 import Tags from "./Tags";
+import { Button } from "../ui/button";
+import { useState } from "react";
 
 const PreviewComponent = () => {
   const {title,topic,imageUrl,forms,tags,description,previewImg} = useTemplateStore();
 
+  const [selectValues, setSelectValues] = useState({}); 
+
+  const handleSelectChange = (formId, value) => {
+    setSelectValues((prev) => ({
+      ...prev,
+      [formId]: value, 
+    }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const answers = forms.map((form) => {
+      const value = (() => {
+        switch (form.type) {
+          case 'number':
+            return document.getElementById(`question-${form.id}`).value;
+          case 'checkbox':
+            return form.options
+              .filter((_, i) => document.getElementById(`checkbox-${form.id}-${i}`).checked)
+              .join(',');
+          case 'radio':
+            return document.querySelector(`input[name="radio-${form.id}"]:checked`)?.value;
+          case 'textarea':
+            return document.getElementById(`question-${form.id}`).value;
+          case 'select':
+            return selectValues[form.id] || null;
+          default:
+            return null;
+        }
+      })();
+  
+      return {
+        questionId: form.id,
+        value,
+      };
+    });
+  
+    console.log(answers);
+  };
+
+  console.log(forms)
   return (
     <div className="w-full  min-h-screen flex flex-col items-start">
         {previewImg || imageUrl && 
@@ -27,7 +69,7 @@ const PreviewComponent = () => {
 
       {description && <p className="text-sm font-light text-gray-500">{description}</p>}
        
-        <div className="flex flex-col gap-4 my-5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 my-5">
           {forms.map((form) => (
             <div
               key={form.id}
@@ -54,65 +96,58 @@ const PreviewComponent = () => {
                         {form.label}
                       </h1>
                     );
-                  case 'number':
-                    return (
-                         <Input
-                            type="number"
-                            placeholder="Type a number here"
-                            className="w-2/3 p-2"
+                    case 'number':
+                      return (
+                        <Input
+                          id={`question-${form.id}`}
+                          type="number"
+                          placeholder="Type a number here"
+                          className="w-2/3 p-2"
                         />
-                    );
-                  case 'checkbox':
-                    return (
-                        form.options.map((option,index)=>(
-                            <div key={index} className="">
-                                 <Checkbox id="terms" />
-                                     <label
-                                       htmlFor="terms"
-                                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                     >
-                                      {option}
-                                    </label>
-                            </div>
-                        ))
-                    )
-                  case 'radio-group':
-                    return (
-                        <RadioGroup>
-                            {form.options.map((option,index)=>
-                                <FormControlLabel key={index} value={option} control={<Radio />} label={option} />
-                            )}
+                      );
+                    case 'checkbox':
+                      return form.options.map((option, index) => (
+                        <div key={index}>
+                          <Checkbox id={`checkbox-${form.id}-${index}`} />
+                          <label htmlFor={`checkbox-${form.id}-${index}`}>{option}</label>
+                        </div>
+                      ));
+                    case 'radio':
+                      return (
+                        <RadioGroup name={`radio-${form.id}`}>
+                          {form.options.map((option, index) => (
+                            <FormControlLabel  key={index} value={option} control={<Radio />} label={option} />
+                          ))}
                         </RadioGroup>
-                    )
-                  case 'textarea':
-                    return (
-                      <TextField
-                        id="standard-multiline-static"
-                        label='Write your text here...'
-                        multiline
-                        rows={4}
-                        variant="standard"
+                      );
+                    case 'textarea':
+                      return (
+                        <TextField
+                          id={`question-${form.id}`}
+                          multiline
+                          rows={4}
+                          variant="standard"
                         />
-                    );
-                  case 'select':
-                    return (
-                        <Select >
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                            <SelectContent>
-                               <SelectGroup  >
-                                {
-                                  form.options.map((option,index) => (
-                                    <SelectItem key={index} value={option} >
-                                      {option}
-                                    </SelectItem>
-                                  ))
-                                }
-                                </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                    )
+                      );
+                    case 'select':
+                      return (
+                        <Select  value={selectValues[form.id] || ""}
+                        onValueChange={(value) => handleSelectChange(form.id, value)}
+                        id={`question-${form.id}`}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              {form.options.map((option, index) => (
+                                <SelectItem key={index} value={option}>
+                                  {option}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      );
                   case 'image':
                     return (<ImageUpload />);
                   case 'paragraph':
@@ -127,7 +162,10 @@ const PreviewComponent = () => {
               })()}
             </div>
           ))}
+          <div className="flex items-center justify-center">
+          <Button type="submit"	 variant="contained" className=" w-[200px] bg-primary mx-auto text-center">Submit Form</Button>
         </div>
+        </form>
         {
           tags.length>0 && <Tags tags={tags} />
         }

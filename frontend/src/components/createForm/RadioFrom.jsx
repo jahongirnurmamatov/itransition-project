@@ -31,7 +31,7 @@ const RadioForm = ({ id, editing, setEditing }) => {
     });
     setForms(updatedForms);
     if (selectedOption === optionToRemove) {
-      setSelectedOption(''); // Reset selected option if it's removed
+      setSelectedOption(''); 
     }
   };
 
@@ -66,10 +66,10 @@ const RadioForm = ({ id, editing, setEditing }) => {
             value={newOption}
             onChange={(e) => setNewOption(e.target.value)}
             placeholder="Add new option"
-            className="p-2 border border-gray-300 rounded-md"
+            className="p-2 border border-gray-300 rounded-md  bg-inherit"
           />
           <IconButton size="small" onClick={handleAddOption}>
-            <IoAddCircleSharp className="text-slate-900 size-7" />
+            <IoAddCircleSharp className="text-primary size-7" />
           </IconButton>
         </div>
       )}

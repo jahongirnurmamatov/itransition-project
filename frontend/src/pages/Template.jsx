@@ -35,9 +35,7 @@ const Template = () => {
   return (
     <div className="flex flex-col gap-3 mb-10">
         <PreviewComponent />
-        <div className="flex items-center justify-center">
-          <Button variant="contained" className=" w-[200px] mx-auto text-center">Submit Form</Button>
-        </div>
+        
         <div className="flex flex-col gap-2 lg:px-40 md:px-20 px-10  ">
             <Separator className="my-5"	 />
             <Interaction templateId={templateId} setShowComments={setShowComments}/>

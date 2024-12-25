@@ -15,11 +15,13 @@ import { FaRegCopy } from "react-icons/fa";
 import { useTemplateStore } from '@/store/templateStore';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 const CreateTemplate = () => {
   const {  image,setPreviewImg,previewImg,forms,setForms,createTemplate } = useTemplateStore();
   const [formType, setFormType] = useState('');
   const [editing, setEditing] = useState(false);
-  const { toast } = useToast()
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (image) {
@@ -95,8 +97,8 @@ const CreateTemplate = () => {
   const handleSubmit = ()=>{
     if(forms.length>0){
       createTemplate();
+      navigate('/my-templates');
     }else{
-      
       toast({
         variant: "destructive",
         title: "Something went wrong.",
