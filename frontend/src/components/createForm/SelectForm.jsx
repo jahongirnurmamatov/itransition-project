@@ -4,6 +4,7 @@ import { IconButton } from '@mui/material';
 import { IoAddCircleSharp } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { useTemplateStore } from '@/store/templateStore';
+import { Input } from '../ui/input';
 
 export default function SelectForm({id,editing}) {
   const [newOption, setNewOption] = useState('');
@@ -68,16 +69,16 @@ export default function SelectForm({id,editing}) {
             ))
           }
           <div className="flex gap-2">
-            <input
+            <Input
             id="newOption"
             type="text"
             value={newOption}
             onChange={(e) => setNewOption(e.target.value)}
             placeholder="Add new option"
-            className="p-2 border border-gray-300 rounded-md"
+            className="p-2 border border-primary rounded-md"
             />
            <IconButton  size="small" onClick={handleAddOption}>
-            <IoAddCircleSharp  className='text-slate-900 size-7'/> 
+            <IoAddCircleSharp  className='text-primary size-7'/> 
           </IconButton>
           </div>
         </div>    

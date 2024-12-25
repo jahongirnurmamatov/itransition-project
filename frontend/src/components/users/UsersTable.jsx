@@ -95,7 +95,7 @@ const UsersTable = () => {
   };
 
   return (
-    <div className="w-full bg-white rounded-lg px-5 py-3 shadow-md">
+    <div className="w-full bg-primary-foreground rounded-lg px-5 py-3 shadow-md">
       <form onSubmit={(e) => e.preventDefault()} className="relative">
         <Input
           value={searchInput}

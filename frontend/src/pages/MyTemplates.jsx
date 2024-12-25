@@ -14,9 +14,9 @@ const MyTemplates = () => {
     return <div>{error}</div>
   }
   return (
-    <div className='w-full bg-slate-100 min-h-screen flex items-start justify-center'>
+    <div className='w-full min-h-screen flex items-start justify-center'>
       <div className="mx-auto w-4/5 my-6">
-        <h1 className='text-2xl font-bold text-center text-slate-800 mb-10'>MyTemplates</h1>
+        <h1 className='text-2xl font-bold text-center text-primary mb-10'>MyTemplates</h1>
         <TabelForms  data={tableData} />
       </div>
     </div>

@@ -107,10 +107,10 @@ const CreateTemplate = () => {
   
   return (
   <DragDropContext onDragEnd={onDragEnd}>
-    <div className="w-full bg-slate-100 min-h-screen flex items-start justify-center">
+    <div className="w-full  min-h-screen flex items-start justify-center">
       <div className="mx-auto w-4/5 my-6">
         
-        <h1 className="text-2xl  font-bold text-center text-slate-800">
+        <h1 className="text-2xl  font-bold text-center text-primary">
           Create Your Template           
         </h1>
         {previewImg && 
@@ -137,7 +137,7 @@ const CreateTemplate = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className="w-full relative bg-white rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md"
+                        className="w-full relative bg-primary-foreground rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md"
                       > 
                       <div className="absolute top-2 right-2 flex gap-2 items-center justify-center">
                         <FaRegCopy 

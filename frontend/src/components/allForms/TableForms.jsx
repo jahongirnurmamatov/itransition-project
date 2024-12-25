@@ -22,6 +22,7 @@ import { Input } from "../ui/input";
 import { ArrowDownNarrowWide, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTemplateStore } from "@/store/templateStore";
+import { Label } from "../ui/label";
 
 const TabelForms = ({ data }) => {
   const [sortTitle, setSortTitle] = useState("asc");
@@ -34,9 +35,9 @@ const TabelForms = ({ data }) => {
   },[])
 
   return (
-    <div className="w-full bg-white rounded-lg px-5 py-3 shadow-md">
+    <div className="w-full bg-primary-foreground rounded-lg px-5 py-3 shadow-md">
       <div className="relative">
-        <Input placeholder="Search" className='w-1/2 pl-5 mx-2 my-4 px-10 outline-none' />
+        <Input placeholder="Search" className='w-1/2 pl-5 mx-2 my-4 px-10 outline-none text-input' />
         <Search className="absolute top-2 left-4 size-5 text-gray-400" />
       </div>
       <Table>
@@ -72,7 +73,7 @@ const TabelForms = ({ data }) => {
                   to={`/templates/${template.id}`}
                   className="hover:text-blue-500 hover:underline"
                 >
-                  {index+1}
+                 <Label>{index+1}</Label> 
                 </Link>
               </TableCell>
               <TableCell className="font-medium cursor-pointer" >
