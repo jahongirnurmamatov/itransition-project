@@ -1,33 +1,27 @@
 import { Checkbox, FormControlLabel, Input, Radio, RadioGroup, TextField } from "@mui/material";
 import ImageUpload from "./ImageUpload";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { IoMdPricetag } from "react-icons/io";
 import { useTemplateStore } from "@/store/templateStore";
 import { BsChatLeftQuote } from "react-icons/bs";
-import { Separator } from "../ui/separator";
-import { Interaction } from "../userInteraction/Interaction";
-import CommentBox from "../userInteraction/CommentBox";
-import Comments from "../userInteraction/Comments";
-
-const tagColors = ["bg-red-200", "bg-green-200", "bg-blue-200", "bg-yellow-200", "bg-purple-200"];
+import Tags from "./Tags";
 
 const PreviewComponent = () => {
   const {title,topic,imageUrl,forms,tags,description,previewImg} = useTemplateStore();
 
   return (
-    <div className="w-full bg-slate-100 min-h-screen flex flex-col items-start">
+    <div className="w-full  min-h-screen flex flex-col items-start">
         {previewImg || imageUrl && 
           <div className="flex items-center justify-center h-[300px] w-[100%] top-0">
             <img src={previewImg||imageUrl} alt="" className='h-[200px] w-[100%] overflow-hidden object-cover' />
           </div>
         }
       <div className="mx-auto w-4/5 my-6">
-      <h1 className="text-2xl text-center font-bold text-slate-900">{title}</h1>
+      <h1 className="text-2xl text-center font-bold text-primary">{title}</h1>
         
       <div className="flex justify-end my-2">
         {topic && <div className="flex gap-2">
           <BsChatLeftQuote className="size-5 text-gray-500 " />
-          <p className="text-sm text-gray-500">{topic}</p>
+          <p className="text-sm text-secondary">{topic}</p>
         </div>}
       </div>
 
@@ -37,7 +31,7 @@ const PreviewComponent = () => {
           {forms.map((form) => (
             <div
               key={form.id}
-              className="w-full bg-white rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md"
+              className="w-full bg-primary-foreground rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md"
             >
                 {
                     form.type !== 'header' && form.type !== 'paragraph' && (<>
@@ -135,19 +129,7 @@ const PreviewComponent = () => {
           ))}
         </div>
         {
-          tags.length>0 && (
-            <div className="flex items-start justify-start gap-2">
-              <IoMdPricetag className="size-5 text-gray-500" />
-              {tags.map((tag, index) => (
-                <p
-                  key={index}
-                  className={`text-sm text-gray-700 px-2 py-1 rounded ${tagColors[index % tagColors.length]}`}
-                >
-                  {tag}
-                </p>
-              ))}
-            </div>
-         )
+          tags.length>0 && <Tags tags={tags} />
         }
        
       </div>
