@@ -7,11 +7,14 @@ import Tags from "./Tags";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { useResponseStore } from "@/store/responseStore";
+import { ImSpinner } from "react-icons/im";
+import { useToast } from "@/hooks/use-toast";
 
 
 const PreviewComponent = ({templateId}) => {
   const {title,topic,imageUrl,forms,tags,description,previewImg} = useTemplateStore();
   const {addResponse,isAddingResponse,responseError} = useResponseStore();
+  const {toast} = useToast();
 
   const [selectValues, setSelectValues] = useState({}); 
 
@@ -49,6 +52,15 @@ const PreviewComponent = ({templateId}) => {
       };
     });
     addResponse(templateId,answers);
+    if(responseError){
+      toast({
+        title: 'Error',
+        description: responseError,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   console.log(forms)
@@ -165,7 +177,9 @@ const PreviewComponent = ({templateId}) => {
             </div>
           ))}
           <div className="flex items-center justify-center">
-          <Button type="submit"	 variant="contained" className=" w-[200px] bg-primary mx-auto text-center">Submit Form</Button>
+          <Button type="submit"	 variant="contained" className=" w-[200px] bg-primary mx-auto text-center">
+            {isAddingResponse ? <ImSpinner className="animate-spin mx-auto" /> : 'Submit'}
+          </Button>
         </div>
         </form>
         {
