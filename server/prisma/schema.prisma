@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,49 +8,52 @@ datasource db {
 }
 
 model User {
-  id        Int   @id @default(autoincrement())
-  username  String   @unique
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  email     String    @unique
   avatar    String?
   password  String
+  role      Role      @default(USER)
+  templates Template[]
+  responses Response[]
   comments  Comment[]
   likes     Like[]
-  templates Template[]
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
 }
+
 enum Role {
   ADMIN
   USER
 }
-
 
 model Template {
   id          Int        @id @default(autoincrement())
   title       String
   topic       String
   description String?
-  imageUrl    String?   
+  imageUrl    String?
   tags        String[]   @default([])
   userId      Int
   user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  questions   Question[] 
-  comments    Comment[]  
+  questions   Question[]
+  responses   Response[]
+  comments    Comment[]
   likes       Like[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
 
 model Question {
-  id          Int            @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   templateId  Int
-  type        QuestionType    
-  label       String        
-  description String?        
-  required    Boolean         @default(false) 
-  orderIndex  Int             
-  options     Option[]        
-  template    Template        @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  type        QuestionType
+  label       String
+  description String?
+  required    Boolean       @default(false)
+  orderIndex  Int
+  options     Option[]
+  answers     Answer[]
+  template    Template      @relation(fields: [templateId], references: [id], onDelete: Cascade)
 }
 
 enum QuestionType {
@@ -72,26 +74,46 @@ model Option {
   question   Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }
 
+model Response {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  templateId Int
+  template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  answers    Answer[]
+  createdAt  DateTime @default(now())
+}
+
+model Answer {
+  id          Int         @id @default(autoincrement())
+  questionId  Int
+  question    Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  responseId  Int
+  response    Response    @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  value       String?    
+  createdAt   DateTime    @default(now())
+}
+
 model Comment {
   id          Int      @id @default(autoincrement())
   content     String
   userId      Int
-  user        User @relation(fields: [userId],references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   templateId  Int
   template    Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
-model Like{
-  id          Int   @id @default(autoincrement())
-  userId      Int 
-  user        User @relation(fields: [userId],references: [id], onDelete: Cascade)
+
+model Like {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   templateId  Int
   template    Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, templateId]) 
+  @@unique([userId, templateId])
 }
-
 
 enum QuestionState {
   NOT_PRESENT
