@@ -2,7 +2,6 @@ import prisma from "../db/prisma.js";
 
 export const addResponse =async (req, res) => {  
     try {
-        console.log('called')
         const userId = req.userId;
         const { templateId } = req.params; 
         const { answers } = req.body;
@@ -30,3 +29,23 @@ export const addResponse =async (req, res) => {
         res.status(500).json({ error: "An error occurred while submitting the response." });
       }
 }   
+
+export const  getResponses = async (req, res) => {
+  try {
+    const { templateId } = req.params;
+    const responses = await prisma.response.findMany({
+      where: {
+        templateId: parseInt(templateId, 10),
+      },
+      select:{
+        id: true,
+        userId: true,
+        createdAt: true,
+      }
+    });
+
+    res.status(200).json({succes:true, responses });
+  } catch (error) {
+    
+  }
+}
