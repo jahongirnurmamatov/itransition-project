@@ -73,7 +73,7 @@ export const getAllUsers = async (req, res) => {
   };
 
 export const searchUsers = async (req, res) => {
-    const { query } = req.body;
+    const {query} = req.query;
   if (!query || query.length < 2) {
         return res.json([]);
     }

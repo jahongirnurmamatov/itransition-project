@@ -1,50 +1,67 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { Label } from '../ui/label';
 import { Autocomplete, Chip, Stack, TextField } from '@mui/material';
+import { useUsersStore } from '@/store/usersStore';
+import debounce from 'lodash/debounce'; // Install lodash if not already done
+import { useTemplateStore } from '@/store/templateStore';
 
 const ShareWith = () => {
+  const { users, searchUsers } = useUsersStore();
+  const { setSharedWith, sharedWith } = useTemplateStore();
+  const [inputValue, setInputValue] = useState('');
+
+  const debouncedSearch = debounce((value) => {
+    searchUsers(value);
+  }, 500);
+
+  useEffect(() => {
+    if (inputValue) {
+      debouncedSearch(inputValue);
+    }
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [inputValue]);
+
   return (
-    <div className='grid grid-cols-4 w-full items-center gap-4'>
-        <Label>Select Visibility</Label>
-        <Stack spacing={3} sx={{ width: 500 }}>
-            <Autocomplete
-            multiple
-            id="tags-filled"
-            options={top100Films.map((option) => option.title)}
-            freeSolo
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => {
-                const { key, ...tagProps } = getTagProps({ index });
-                return (
-                  <Chip variant="outlined" label={option} key={key} {...tagProps} />
-                );
-              })
-            }
-            renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="filled"
-            label="freeSolo"
-            placeholder="Favorites"
+    <div className="grid grid-cols-4 w-full items-center gap-4">
+      <Label>Select Visibility</Label>
+      <Stack className="col-span-3" spacing={3}>
+        <Autocomplete
+          multiple
+          id="tags-standard"
+          options={users || []} // Use the full user objects as options
+          value={sharedWith} // Store full user objects in sharedWith
+          onChange={(event, newValue) => setSharedWith(newValue)} // Update sharedWith in the store
+          inputValue={inputValue}
+          onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
+          getOptionLabel={(option) => option.username || option.email} // Display username or email
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => {
+              const { key, ...tagProps } = getTagProps({ index });
+              return (
+                <Chip
+                  variant="outlined"
+                  label={option.username || option.email} // Show the username or email in the tag
+                  key={option.id} // Use unique user ID as the key
+                  {...tagProps}
+                />
+              );
+            })
+          }
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Search Users"
+              placeholder="Type to search"
+              className="w-1/2"
             />
-        )}
+          )}
         />
-        </Stack>
+      </Stack>
     </div>
-  )
-}
+  );
+};
 
-export default ShareWith
-
-const top100Films = [
-    { title: 'The Shawshank Redemption', year: 1994 },
-    { title: 'The Godfather', year: 1972 },
-    { title: 'The Godfather: Part II', year: 1974 },
-    { title: 'The Dark Knight', year: 2008 },
-    { title: '12 Angry Men', year: 1957 },
-    { title: "Schindler's List", year: 1993 },
-    { title: 'Pulp Fiction', year: 1994 },
-    {
-      title: 'The Lord of the Rings: The Return of the King',
-      year: 2003,
-    } ]
+export default ShareWith;

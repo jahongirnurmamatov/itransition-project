@@ -125,7 +125,7 @@ export function TitleSheet() {
             </Stack>
           </div>
           <SelectVisibilty />
-         {visibility==='Private' && <ShareWith  />}
+         {visibility==='PRIVATE' && <ShareWith  />}
         </div>
       </SheetContent>
     </Sheet>

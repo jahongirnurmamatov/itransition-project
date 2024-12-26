@@ -14,7 +14,9 @@ export const useTemplateStore = create((set,get) => ({
     imageUrl:'',
     userId: null,
     likes : [],
-    visibility: "Public",
+    visibility: "PUBLIC",
+    sharedWith: [],
+    setSharedWith: (sharedWith) => set({ sharedWith }),
     setVisibility: (visibility) => set({ visibility }),
     setImageURL:(imageUrl) => set({ imageUrl }),
     setTags: (tags) => set({ tags }),
@@ -26,8 +28,8 @@ export const useTemplateStore = create((set,get) => ({
     setTopic: (topic) => set({ topic }),
     setImage: (image) => set({ image }),
 
-    createTemplate: () => {
-        const { title, topic, description, imageUrl, forms, tags } = get();
+    createTemplate: async () => {
+        const { title, topic, description, imageUrl, forms, tags,visibility,sharedWith } = get();
         const template = {
             title,
             topic,
@@ -35,14 +37,15 @@ export const useTemplateStore = create((set,get) => ({
             imageUrl,
             forms,
             tags,
+            sharedWith,
+            visibility,
         };
         try {
             set({isLoading:true, error:null});
-            const res = axiosInstance.post('/template/create', template);
+            const res = await axiosInstance.post('/template/create', template);
             set({ isLoading:false});
         } catch (error) {
             set({error:error.response.data.message, isLoading:false});
-            throw Error(error);
         }      
     },
     uploadToCloudinary: async (file) => {

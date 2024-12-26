@@ -6,6 +6,7 @@ export const useUsersStore = create((set) => ({
     isLoading: false,
     error: null,
     totalPages: 1,
+
     getAllUsers: async (searchKey, page, usernameOrder, emailOrder, createdAtOrder) => {
         try {
             set({ isLoading: true, error: null });
@@ -19,6 +20,17 @@ export const useUsersStore = create((set) => ({
                 },
             });
             set({ users: res.data.users, isLoading: false, totalPages: res.data.totalPages });
+        } catch (error) {
+            set({ error: error.response?.data?.message || 'Failed to fetch users.', isLoading: false });
+            throw error;
+        }
+    },
+
+    searchUsers: async (searchKey) => {
+        try {
+            set({ isLoading: true, error: null });
+            const res = await axiosInstance.get('/user/search-users',{params: { query: searchKey }});
+            set({ users: res.data.users, isLoading: false });
         } catch (error) {
             set({ error: error.response?.data?.message || 'Failed to fetch users.', isLoading: false });
             throw error;

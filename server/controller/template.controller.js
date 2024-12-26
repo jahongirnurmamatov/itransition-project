@@ -3,16 +3,18 @@ import prisma from "../db/prisma.js";
 
 export const createTemplate = async (req, res) => {
   try {
-    const { title, topic, description, imageUrl, forms, tags } = req.body;
+    const { title, topic, description, imageUrl, forms, tags,sharedWith, visibility } = req.body;
 
     const sharedWithData = 
-      visibility === 'PRIVATE' && sharedWith?.length
+      visibility.toUpperCase() === 'PRIVATE' && sharedWith?.length
         ? {
             create: sharedWith.map((user) => ({
               userId: user.id,
             })),
           }
         : undefined;
+     
+    
 
     const template = await prisma.template.create({
       data: {
@@ -21,7 +23,7 @@ export const createTemplate = async (req, res) => {
         description,
         imageUrl,
         tags,
-        visibility,
+        visibility:visibility.toUpperCase(),
         sharedWith: sharedWithData,
         userId: req.userId, 
         questions: {

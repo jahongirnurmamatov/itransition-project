@@ -3,7 +3,6 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
@@ -21,12 +20,12 @@ import { useTemplateStore } from "@/store/templateStore";
           onValueChange={(value) => setVisibility(value)}
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Public" />
+            <SelectValue placeholder="PUBLIC" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="Public">Public</SelectItem>
-              <SelectItem value="Private">Private</SelectItem>
+              <SelectItem value="PUBLIC">Public</SelectItem>
+              <SelectItem value="PRIVATE">Private</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
