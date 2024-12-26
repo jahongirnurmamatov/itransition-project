@@ -14,6 +14,8 @@ export const useTemplateStore = create((set,get) => ({
     imageUrl:'',
     userId: null,
     likes : [],
+    visibility: "Public",
+    setVisibility: (visibility) => set({ visibility }),
     setImageURL:(imageUrl) => set({ imageUrl }),
     setTags: (tags) => set({ tags }),
     setDescription: (description) => set({ description }),

@@ -29,9 +29,11 @@ import { useTemplateStore } from "@/store/templateStore"
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import SelectVisibilty from "./SelectVisibilty"
+import ShareWith from "./ShareWith"
 export function TitleSheet() {
   const {title,setTitle, topic,setImage, setTopic,tags,setTags,image,
-    uploadToCloudinary,description,setDescription,isLoading} = useTemplateStore()
+    uploadToCloudinary,description,setDescription,isLoading,visibility} = useTemplateStore()
   
     const handleUpload = async() => {
       const form = new FormData();
@@ -122,7 +124,8 @@ export function TitleSheet() {
 
             </Stack>
           </div>
-         
+          <SelectVisibilty />
+         {visibility==='Private' && <ShareWith  />}
         </div>
       </SheetContent>
     </Sheet>
