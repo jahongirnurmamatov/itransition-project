@@ -71,3 +71,23 @@ export const getAllUsers = async (req, res) => {
       res.status(500).json({ success: false, message: error.message });
     }
   };
+
+export const searchUsers = async (req, res) => {
+    const { query } = req.body;
+  if (!query || query.length < 2) {
+        return res.json([]);
+    }
+  try {
+    const users = await prisma.$queryRaw`
+    SELECT id, username, email
+    FROM "User"
+    WHERE username ILIKE '%' || ${query} || '%' OR email ILIKE '%' || ${query} || '%'
+    ORDER BY similarity(username, ${query}) DESC, similarity(email, ${query}) DESC
+    LIMIT 10;
+  `;
+   res.status(200).json({users})
+  } catch (error) {
+    console.error('Error searching users:', error);
+    res.status(500).json({ error: 'Error fetching users' });
+  }
+}
