@@ -112,4 +112,15 @@ export const useTemplateStore = create((set,get) => ({
         }
       },
 
+    getPopularTemplates: async () => {
+        try {
+          set({ isLoading: true, error: null });
+          const res = await axiosInstance.get('/template/popular');
+          set({ templates: res.data.templates, isLoading: false });
+        } catch (error) {
+          set({ error: error.response?.data?.message || 'Failed to fetch popular templates.', isLoading: false });
+          throw error;
+        }
+      },
+
 }))

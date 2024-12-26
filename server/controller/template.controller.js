@@ -209,7 +209,7 @@ export const getPopularTemplates = async (req, res) => {
           _count: 'desc', // Order by response count in descending order
         },
       },
-      take: 2, 
+      take: 5, 
     });
 
     res.status(200).json({ templates });

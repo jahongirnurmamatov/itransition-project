@@ -2,9 +2,16 @@ import ScrollAwareHeader from '@/components/header/Header';
 import About from '@/components/landingPage/About';
 import Contact from '@/components/landingPage/Contact';
 import Hero from '@/components/landingPage/Hero';
-import React from 'react';
+import Popular from '@/components/landingPage/Popular';
+import { useTemplateStore } from '@/store/templateStore';
+import React, { useEffect } from 'react';
 
 const LandingPage = () => {
+  const {getPopularTemplates} = useTemplateStore();
+  useEffect(()=>{
+    getPopularTemplates();
+  },[]);
+
   return (
     <div className="landing-page w-full h-[300vh]">
       <ScrollAwareHeader initialBg="bg-transparent" scrolledBg="bg-gray-900" />
@@ -13,6 +20,9 @@ const LandingPage = () => {
       </section>
       <section id='about' className="w-full h-[100vh]">
         <About />
+      </section>
+      <section id='popular' className="w-full h-[100vh]">
+        <Popular />
       </section>
       <section id='contact' className="w-full mt-40 ">
          <Contact />
