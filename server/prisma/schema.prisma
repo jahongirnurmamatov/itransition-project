@@ -76,7 +76,7 @@ model Option {
 
 model Response {
   id         Int      @id @default(autoincrement())
-  userId     Int
+  userId     Int      
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   templateId Int
   template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)

@@ -9,6 +9,16 @@ export const addResponse =async (req, res) => {
         if (!answers || !Array.isArray(answers)) {
           return res.status(400).json({ error: "No valid answer provided" });
         }
+        const existingResponse = await prisma.response.findFirst({
+          where: {
+            userId: parseInt(userId, 10),
+            templateId: parseInt(templateId, 10),
+          },
+        });
+      
+        if (existingResponse) {
+          throw new Error('User has already responded to this template.');
+        }
 
         const newResponse = await prisma.response.create({
           data: {
