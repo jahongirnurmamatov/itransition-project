@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 const CreateTemplate = () => {
-  const {  image,setPreviewImg,previewImg,forms,setForms,createTemplate } = useTemplateStore();
+  const {  image,setPreviewImg,previewImg,forms,setForms,createTemplate,getMyTemplates } = useTemplateStore();
   const [formType, setFormType] = useState('');
   const [editing, setEditing] = useState(false);
   const { toast } = useToast();
@@ -98,6 +98,7 @@ const CreateTemplate = () => {
     if(forms.length>0){
       createTemplate();
       navigate('/my-templates');
+      getMyTemplates();
     }else{
       toast({
         variant: "destructive",

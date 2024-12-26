@@ -9,12 +9,14 @@ import { useState } from "react";
 import { useResponseStore } from "@/store/responseStore";
 import { ImSpinner } from "react-icons/im";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 
 const PreviewComponent = ({templateId}) => {
   const {title,topic,imageUrl,forms,tags,description,previewImg} = useTemplateStore();
   const {addResponse,isAddingResponse,responseError} = useResponseStore();
   const {toast} = useToast();
+  const {navigate} = useNavigate();
 
   const [selectValues, setSelectValues] = useState({}); 
 
@@ -61,6 +63,7 @@ const PreviewComponent = ({templateId}) => {
         isClosable: true,
       });
     }
+    navigate(`/`);
   };
 
   return (

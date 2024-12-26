@@ -5,6 +5,15 @@ export const createTemplate = async (req, res) => {
   try {
     const { title, topic, description, imageUrl, forms, tags } = req.body;
 
+    const sharedWithData = 
+      visibility === 'PRIVATE' && sharedWith?.length
+        ? {
+            create: sharedWith.map((user) => ({
+              userId: user.id,
+            })),
+          }
+        : undefined;
+
     const template = await prisma.template.create({
       data: {
         title,
@@ -12,6 +21,8 @@ export const createTemplate = async (req, res) => {
         description,
         imageUrl,
         tags,
+        visibility,
+        sharedWith: sharedWithData,
         userId: req.userId, 
         questions: {
           create: forms.map((form, index) => ({

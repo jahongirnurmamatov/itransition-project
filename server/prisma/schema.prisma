@@ -42,10 +42,18 @@ model Template {
   comments    Comment[]
   likes       Like[]
   visibility  Visibility @default(PRIVATE)
-  sharedWith  Int[]      @default([]) 
+  sharedWith  TemplateAccess[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
+model TemplateAccess {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  templateId Int
+  template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  @@unique([userId, templateId]) 
+}
+
 enum Visibility {
   PRIVATE
   PUBLIC
