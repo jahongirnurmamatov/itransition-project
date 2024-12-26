@@ -1,10 +1,12 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  extensions = [pg_trgm]
 }
 
 model User {
@@ -39,8 +41,14 @@ model Template {
   responses   Response[]
   comments    Comment[]
   likes       Like[]
+  visibility  Visibility @default(PRIVATE)
+  sharedWith  Int[]      @default([]) 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+}
+enum Visibility {
+  PRIVATE
+  PUBLIC
 }
 
 model Question {
