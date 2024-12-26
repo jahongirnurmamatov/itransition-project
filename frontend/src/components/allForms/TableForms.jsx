@@ -7,22 +7,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { format } from 'date-fns';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import {  formatDistanceToNow } from 'date-fns';
+
 import { Link } from "react-router-dom";
 import { Input } from "../ui/input";
 import { ArrowDownNarrowWide, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTemplateStore } from "@/store/templateStore";
 import { Label } from "../ui/label";
+import PaginationComponent from "../users/PaginationComponent";
 
 const TabelForms = ({ data }) => {
   const [sortTitle, setSortTitle] = useState("asc");
@@ -37,7 +30,7 @@ const TabelForms = ({ data }) => {
   return (
     <div className="w-full bg-primary-foreground rounded-lg px-5 py-3 shadow-md">
       <div className="relative">
-        <Input placeholder="Search" className='w-1/2 pl-5 mx-2 my-4 px-10 outline-none text-input' />
+        <Input placeholder="Search" className='w-1/2 pl-5 mx-2 my-4 px-10 outline-none text-gray-500' />
         <Search className="absolute top-2 left-4 size-5 text-gray-400" />
       </div>
       <Table>
@@ -63,6 +56,7 @@ const TabelForms = ({ data }) => {
             </TableHead>
             <TableHead>Topic</TableHead>
             <TableHead>Description</TableHead>
+            <TableHead>Visibility</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -79,36 +73,27 @@ const TabelForms = ({ data }) => {
               <TableCell className="font-medium cursor-pointer" >
                 <Link
                   to={`/templates/${template.id}`}
-                  className="hover:text-blue-500 hover:underline"
-                >
-                  {template.title}
+                  className="hover:text-blue-500 hover:underline flex items-center gap-5"
+                > 
+                <div className="w-20 h-10">
+                  <img 
+                  className="object-cover  w-full h-full rounded-lg"
+                  src={template.imageUrl||"https://www.shutterstock.com/image-photo/clipboard-blank-sheet-on-isolated-600nw-1896725329.jpg"} alt="" />
+                </div>
+                  <p className="overflow-hidden max-w-[150px] max-h-[50px]">{template.title}</p>
                 </Link>
               </TableCell>
-              <TableCell>{format(template.createdAt, 'dd/MM/yyyy ')}</TableCell>
+              <TableCell>{formatDistanceToNow(template.createdAt)} ago</TableCell>
               <TableCell>{template.topic}</TableCell>
               <TableCell>{template.description||"-"}</TableCell>
+              <TableCell>
+                <div className={`px-2 py-1 text-center rounded-full ${template.visibility === "PUBLIC" ? "bg-green-400" : "bg-red-400"} bg-red-400 text-white`}>{template.visibility}</div>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Pagination className={"mt-4"}>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-            <PaginationLink href="#">2</PaginationLink>
-            <PaginationLink href="#">3</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <PaginationComponent />
     </div>
   );
 };

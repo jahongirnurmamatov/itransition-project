@@ -123,6 +123,12 @@ export const getMyTemplates = async (req, res) => {
         topic: true, 
         description: true, 
         imageUrl: true, 
+        visibility: true,
+        sharedWith: {
+          select: {
+            userId: true,
+          },
+        },
         createdAt: true, 
         updatedAt: true, 
       },
