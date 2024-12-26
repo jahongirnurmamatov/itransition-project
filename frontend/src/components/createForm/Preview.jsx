@@ -57,7 +57,7 @@ const PreviewComponent = ({templateId}) => {
     if(responseError){
       toast({
         title: 'Error',
-        description: 'You already submitted your answer',
+        description: 'You submitted your answer before',
         status: 'error',
         duration: 5000,
         isClosable: true,

@@ -26,7 +26,7 @@ const Template = () => {
       getComments(templateId);
       getResponses(templateId);
     }
-  }, [templateId]);
+  }, [templateId, getTemplateById, getComments, getResponses]);
 
   if (isLoading) {
     return <Loading />;

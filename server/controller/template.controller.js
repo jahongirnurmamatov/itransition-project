@@ -194,3 +194,28 @@ export const likeUnlike   = async (req, res) => {
       res.status(500).json({ success: false, message: error.message });
   }
 }
+
+
+export const getPopularTemplates = async (req, res) => {
+  try {
+    const templates = await prisma.template.findMany({
+      include: {
+        _count: {
+          select: { responses: true }, // Count responses associated with each template
+        },
+      },
+      orderBy: {
+        responses: {
+          _count: 'desc', // Order by response count in descending order
+        },
+      },
+      take: 2, 
+    });
+
+    res.status(200).json({ templates });
+  } catch (error) {
+    console.error('Error fetching popular templates:', error);
+    res.status(500).json({ error: 'Error fetching popular templates.' });
+  }
+};
+
