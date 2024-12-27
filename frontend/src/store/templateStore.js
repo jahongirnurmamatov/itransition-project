@@ -16,6 +16,7 @@ export const useTemplateStore = create((set,get) => ({
     likes : [],
     visibility: "PUBLIC",
     sharedWith: [],
+    totalPages: 1,
     setSharedWith: (sharedWith) => set({ sharedWith }),
     setVisibility: (visibility) => set({ visibility }),
     setImageURL:(imageUrl) => set({ imageUrl }),
@@ -96,7 +97,6 @@ export const useTemplateStore = create((set,get) => ({
     getMyTemplates: async (searchKey,page, titleOrder,createdAtOrder, topicOrder ) => {
         try {
           set({ isLoading: true, error: null });
-          console.log(createdAtOrder)
           const res = await axiosInstance.get('/template/get-my-templates',{
             params: {
               searchKey,              
@@ -106,7 +106,7 @@ export const useTemplateStore = create((set,get) => ({
               topicOrder,
             },
           });
-          set({ templates: res.data.templates, isLoading: false });
+          set({ templates: res.data.templates, isLoading: false, totalPages: res.data.totalPages });
         } catch (error) {
           set({ error: error.response?.data?.message || 'Failed to fetch templates.', isLoading: false });
           throw error;

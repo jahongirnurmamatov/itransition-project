@@ -199,7 +199,7 @@ const UsersTable = () => {
           ))}
         </TableBody>
       </Table>
-      <PaginationComponent totalPages={totalPages} page={page} />
+      <PaginationComponent totalPages={totalPages} page={page} webkey={'users'} />
       
 
     </div>

@@ -19,7 +19,7 @@ import PaginationComponent from "../users/PaginationComponent";
 import { useToast } from "@/hooks/use-toast";
 
 const TabelForms = ({ data }) => {
-  const {templates,getMyTemplates,error} = useTemplateStore();
+  const {templates,getMyTemplates,error,totalPages} = useTemplateStore();
   const { toast } = useToast();
   const [searchParams, setSearchParams] = useSearchParams();
   const searchKey = searchParams.get("searchKey") || "";
@@ -153,7 +153,7 @@ const handleSearchSubmit = () => {
           ))}
         </TableBody>
       </Table>
-      <PaginationComponent />
+      <PaginationComponent page={page} totalPages={totalPages} webkey={'my-templates'}/>
     </div>
   );
 };

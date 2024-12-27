@@ -8,13 +8,13 @@ import {
 } from "@/components/ui/pagination";
 import { Link } from "react-router-dom";
 
-const PaginationComponent = ({totalPages,page}) => {
+const PaginationComponent = ({totalPages,page,webkey}) => {
   return (
     <Pagination className="mt-4">
         <PaginationContent>
           <PaginationItem>
             <Link
-              to={`/users?page=${Math.max(parseInt(page) - 1, 1)}`}
+              to={`/${webkey}?page=${Math.max(parseInt(page) - 1, 1)}`}
               className={page == 1 ? 'opacity-50 cursor-not-allowed' : ''}
               aria-disabled={page == 1} 
             >
@@ -26,7 +26,7 @@ const PaginationComponent = ({totalPages,page}) => {
             {Array.from({ length: totalPages }, (_, i) => (
               <PaginationLink key={i}>
                 <Link
-                  to={`/users?page=${i + 1}`}
+                  to={`/${webkey}?page=${i + 1}`}
                   className={`px-3 py-1 rounded-lg mx-1 ${
                     parseInt(page) === i + 1 ? 'bg-blue-500 text-white' : 'bg-white text-gray-500'
                   }`}
@@ -38,7 +38,7 @@ const PaginationComponent = ({totalPages,page}) => {
           </PaginationItem>
           <PaginationItem>
             <Link
-              to={`/users?page=${Math.min(parseInt(page) + 1, totalPages)}`}
+              to={`/${webkey}?page=${Math.min(parseInt(page) + 1, totalPages)}`}
               className={page == totalPages ? 'opacity-50 cursor-not-allowed' : ''}
               aria-disabled={page == totalPages} 
             >

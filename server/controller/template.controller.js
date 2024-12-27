@@ -122,7 +122,6 @@ export const getMyTemplates = async (req, res) => {
       page = 1,
       limit = 5,
   } = req.query;
-  console.log(req.query)
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
@@ -136,13 +135,11 @@ export const getMyTemplates = async (req, res) => {
         },
     ],
   };
-  console.log(createdAtOrder)
 
   const orderBy = [];
   if (titleOrder) orderBy.push({ title: titleOrder });
   if (topicOrder) orderBy.push({ topic: topicOrder });
   if (createdAtOrder) orderBy.push({ createdAt: createdAtOrder });
-  console.log(orderBy)
   const templates = await prisma.template.findMany({
       select: {
         id: true,
@@ -164,9 +161,13 @@ export const getMyTemplates = async (req, res) => {
       skip,
       take: parseInt(limit),
     });
+
+    const totalTemplates = await prisma.template.count({ where });
+    
     res.status(200).json({
       success: true,
       templates,
+      totalPages: Math.ceil(totalTemplates / parseInt(limit)),
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
