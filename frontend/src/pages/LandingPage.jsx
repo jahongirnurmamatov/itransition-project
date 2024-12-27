@@ -3,6 +3,7 @@ import About from '@/components/landingPage/About';
 import Contact from '@/components/landingPage/Contact';
 import Hero from '@/components/landingPage/Hero';
 import Popular from '@/components/landingPage/Popular';
+import Recent from '@/components/landingPage/Recent';
 import { useTemplateStore } from '@/store/templateStore';
 import React, { useEffect } from 'react';
 
@@ -13,7 +14,7 @@ const LandingPage = () => {
   },[]);
 
   return (
-    <div className="landing-page w-full h-[300vh]">
+    <div className="landing-page w-full h-[500vh]">
       <ScrollAwareHeader initialBg="bg-transparent" scrolledBg="bg-gray-900" />
       <section id='hero' className="w-full h-[100vh]">
          <Hero />
@@ -23,6 +24,9 @@ const LandingPage = () => {
       </section>
       <section id='popular' className="w-full h-[100vh]">
         <Popular />
+      </section>
+      <section id='recent' className="w-full h-[100vh]">
+        <Recent />
       </section>
       <section id='contact' className="w-full mt-40 ">
          <Contact />

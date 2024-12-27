@@ -68,6 +68,16 @@ const ScrollAwareHeader = ({ initialBg, scrolledBg }) => {
               Popular
             </a>
             <a
+              href="#recent"
+              className={`font-semibold px-4 py-2 rounded-md ${
+                activeSection === "recent"
+                  ? "text-white bg-blue-600"
+                  : "text-gray-300 hover:text-white"
+              }`}
+            >
+              Recent
+            </a>
+            <a
               href="#contact"
               className={`font-semibold px-4 py-2 rounded-md ${
                 activeSection === "contact"
