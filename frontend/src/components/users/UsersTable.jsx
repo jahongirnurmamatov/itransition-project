@@ -199,8 +199,11 @@ const UsersTable = () => {
           ))}
         </TableBody>
       </Table>
-      <PaginationComponent totalPages={totalPages} page={page} webkey={'users'} />
-      
+      <PaginationComponent 
+      totalPages={totalPages} 
+      page={page} webkey={'users'}
+      searchParams={searchParams} 
+      setSearchParams={setSearchParams} />
 
     </div>
   );
