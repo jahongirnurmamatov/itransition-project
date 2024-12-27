@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 
 export default function Contact() {
   return (
-    <div className="bg-transparent text-gray-300 py-8">
+    <div className="bg-transparent text-gray-300 py-8 px-32">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4 flex flex-col  items-start justify-start "> 
           <h3 className="text-lg font-semibold mb-2">MyForms Co. Ltd.</h3>
@@ -22,21 +22,21 @@ export default function Contact() {
               <Label htmlFor="name" >
                 Name
               </Label>
-              <Input id="name" placeholder="Your Name" className="w-full" />
+              <Input id="name" placeholder="Your Name" className="w-full border-[1px] border-orange-500" />
             </div>
             <div className="space-y-1">
               <Label htmlFor="email">
                 Email
               </Label>
-              <Input id="email" placeholder="Your Email" className="w-full" />
+              <Input id="email" placeholder="Your Email" className="w-full border-[1px] border-orange-500" />
             </div>
             <div className="space-y-1">
               <Label htmlFor="message" >
                 Message
               </Label>
-              <Textarea id="message" placeholder="Your Message" className="w-full min-h-[100px]" />
+              <Textarea id="message" placeholder="Your Message" className="w-full min-h-[100px] border-[1px] border-orange-500" />
             </div>
-            <Button type="submit" className="w-full md:w-auto">
+            <Button type="submit" className="w-full md:w-auto text-white">
               Submit
             </Button>
           </form>

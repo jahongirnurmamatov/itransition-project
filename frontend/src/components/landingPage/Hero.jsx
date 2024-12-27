@@ -6,20 +6,18 @@ const Hero = () => {
     const navigate =useNavigate();
   return (
     <div className=" w-full min-h-[100vh] flex items-center justify-center">
-      <div className="flex gap-5 px-20 ">
-        <div className="w-1/2 flex flex-col justify-center items-start">
-          <h1 className="text-5xl font-bold text-gray-100">Start creating <br /> Your Forms...</h1>
-          <p className="mt-4 text-lg text-gray-300">
+      <div className="sm:flex sm:flex-row flex-col gap-5 md:px-20 px-5 ">
+        <div className="sm:w-1/2 h-1/2 sm:h-full flex flex-col justify-center items-start">
+          <h1 className="lg:text-5xl md:text-4xl font-bold text-gray-100">Start creating <br /> Your Forms...</h1>
+          <p className="mt-4 lg:text-lg md:text-md text-gray-300">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam ipsum impedit repudiandae incidunt assumenda
             laboriosam, itaque, earum aspernatur temporibus cupiditate obcaecati!
           </p>
           <Button onClick={() => {navigate('/login')}} className="w-[200px] mt-6 hover:opacity-80">Get Started</Button>
         </div>
-        <div className="w-1/2">
-          <div className="w-full h-[300px] bg-transparent rounded-lg">
-           <div className="w-[90%] h-full mx-auto -mt-28">
-                <img className='object-cover rounded-lg' src="/heroImg.webp" alt="" />
-           </div>
+        <div className="sm:w-1/2 h-1/2 sm:h-full flex items-center justify-center">
+          <div className="w-full h-[300px]  bg-transparent rounded-lg flex items-center justify-center">
+                <img className='object-cover rounded-lg lg:w-[80%] md:w-[90%] h-[90%]  sm:h-[100%] sm:w-full' src="/heroImg.webp" alt="" />
           </div>
         </div>
       </div>
