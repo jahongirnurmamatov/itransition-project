@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 import {  formatDistanceToNow } from 'date-fns';
 
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
 import { ArrowDownNarrowWide, Search } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -18,19 +18,59 @@ import { Label } from "../ui/label";
 import PaginationComponent from "../users/PaginationComponent";
 
 const TabelForms = ({ data }) => {
-  const [sortTitle, setSortTitle] = useState("asc");
-  const [sortDate, setSortDate] = useState("asc");
-
   const {templates,getMyTemplates} = useTemplateStore();
+ 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchKey = searchParams.get("searchKey") || "";
+  const titleOrder = searchParams.get("titleOrder") || null;
+  const topicOrder = searchParams.get("topicOrder") || null;
+  const createdAtOrder = searchParams.get("createdAtOrder") || null;
+  const [searchInput, setSearchInput] = useState(searchKey);
+
 
   useEffect(()=>{
     getMyTemplates();
-  },[])
+  },[]);
 
+  
+  const handleSortChange = (field, currentOrder) => {
+    const newOrder = currentOrder === "asc" ? "desc" : "asc";
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (field === "title") {
+        newParams.set("titleOrder", newOrder);
+        newParams.delete("createdAtOrder");
+        newParams.delete("topicOrder");
+    } else if (field === "createdAt") {
+        newParams.set("createdAtOrder", newOrder);
+        newParams.delete("titleOrder");
+        newParams.delete("topicOrder");
+    } else if (field === "topic") {
+        newParams.set("topicOrder", newOrder);
+        newParams.delete("createdAtOrder");
+        newParams.delete("titleOrder");
+    } 
+    newParams.set("page", "1"); 
+    setSearchParams(newParams);
+};
+
+const handleKeyDown = (e) => {
+  if (e.key === "Enter") {
+    handleSearchSubmit();
+  }
+};
+
+const handleSearchSubmit = () => {
+  const newParams = new URLSearchParams(searchParams.toString());
+  newParams.set("searchKey", searchInput);
+  setSearchParams(newParams);
+};
   return (
     <div className="w-full bg-primary-foreground rounded-lg px-5 py-3 shadow-md">
       <div className="relative">
-        <Input placeholder="Search" className='w-1/2 pl-5 mx-2 my-4 px-10 outline-none text-gray-500' />
+        <Input placeholder="Search" 
+         onChange={(e) => setSearchInput(e.target.value)}
+         onKeyDown={handleKeyDown}
+        className='w-1/2 pl-5 mx-2 my-4 px-10 outline-none text-gray-500' />
         <Search className="absolute top-2 left-4 size-5 text-gray-400" />
       </div>
       <Table>
@@ -39,22 +79,33 @@ const TabelForms = ({ data }) => {
           <TableRow>
             <TableHead >#</TableHead>
             <TableHead 
-             onClick={() => setSortTitle(sortTitle === "asc" ? "desc" : "asc")}
            	>
-              <div  className="flex gap-3 items-center justify-start cursor-pointer">
+              <div 
+              onClick={() => handleSortChange("title", titleOrder)}
+              className="flex gap-3 items-center justify-start cursor-pointer">
                 Title 
-                <ArrowDownNarrowWide className={`size-4 text-gray-500 ${sortTitle === "desc" ? "rotate-180" : ""}`} /> 
+                <ArrowDownNarrowWide className={`size-4 text-gray-500 ${titleOrder === "desc" ? "rotate-180" : ""}`} /> 
               </div>
             </TableHead>
             <TableHead
-            onClick={() => setSortDate(sortDate === "asc" ? "desc" : "asc")}
            >
-            <div  className="flex gap-3 items-center justify-start cursor-pointer">
+            <div
+            onClick={() => handleSortChange("createdAt", createdAtOrder)}
+            className="flex gap-3 items-center justify-start cursor-pointer">
               Date 
-              <ArrowDownNarrowWide className={`size-4 text-gray-500 ${sortDate === "desc" ? "rotate-180" : ""}`}  />
+              <ArrowDownNarrowWide
+               className={`size-4 text-gray-500 ${createdAtOrder === "desc" ? "rotate-180" : ""}`} />
             </div>
             </TableHead>
-            <TableHead>Topic</TableHead>
+            <TableHead>
+              <div 
+               onClick={() => handleSortChange("topic", topicOrder)}
+               className="flex gap-3 items-center justify-start cursor-pointer">
+                Topic
+                <ArrowDownNarrowWide
+                className={`size-4 text-gray-500 ${topicOrder === "desc" ? "rotate-180" : ""}`} />
+              </div>
+            </TableHead>
             <TableHead>Description</TableHead>
             <TableHead>Visibility</TableHead>
           </TableRow>
@@ -87,7 +138,7 @@ const TabelForms = ({ data }) => {
               <TableCell>{template.topic}</TableCell>
               <TableCell>{template.description||"-"}</TableCell>
               <TableCell>
-                <div className={`px-2 py-1 text-center rounded-full ${template.visibility === "PUBLIC" ? "bg-green-400" : "bg-red-400"} bg-red-400 text-white`}>{template.visibility}</div>
+                <div className={`px-2 py-1 text-center rounded-full ${template.visibility === "PUBLIC" ? "bg-green-500" : "bg-red-500"} bg-red-400 text-white`}>{template.visibility}</div>
               </TableCell>
             </TableRow>
           ))}

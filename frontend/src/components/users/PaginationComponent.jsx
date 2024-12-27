@@ -9,7 +9,6 @@ import {
 import { Link } from "react-router-dom";
 
 const PaginationComponent = ({totalPages,page}) => {
-  console.log(totalPages,page)
   return (
     <Pagination className="mt-4">
         <PaginationContent>
