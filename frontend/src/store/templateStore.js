@@ -91,10 +91,21 @@ export const useTemplateStore = create((set,get) => ({
           throw error;
         }
       },
-    getMyTemplates: async () => {
+
+
+    getMyTemplates: async (searchKey,page, titleOrder,createdAtOrder, topicOrder ) => {
         try {
           set({ isLoading: true, error: null });
-          const res = await axiosInstance.get('/template/get-my-templates');
+          console.log(createdAtOrder)
+          const res = await axiosInstance.get('/template/get-my-templates',{
+            params: {
+              searchKey,              
+              page,
+              titleOrder,
+              createdAtOrder,
+              topicOrder,
+            },
+          });
           set({ templates: res.data.templates, isLoading: false });
         } catch (error) {
           set({ error: error.response?.data?.message || 'Failed to fetch templates.', isLoading: false });

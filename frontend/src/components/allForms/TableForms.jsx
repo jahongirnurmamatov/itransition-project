@@ -16,21 +16,30 @@ import { useEffect, useState } from "react";
 import { useTemplateStore } from "@/store/templateStore";
 import { Label } from "../ui/label";
 import PaginationComponent from "../users/PaginationComponent";
+import { useToast } from "@/hooks/use-toast";
 
 const TabelForms = ({ data }) => {
-  const {templates,getMyTemplates} = useTemplateStore();
- 
+  const {templates,getMyTemplates,error} = useTemplateStore();
+  const { toast } = useToast();
   const [searchParams, setSearchParams] = useSearchParams();
   const searchKey = searchParams.get("searchKey") || "";
   const titleOrder = searchParams.get("titleOrder") || null;
   const topicOrder = searchParams.get("topicOrder") || null;
   const createdAtOrder = searchParams.get("createdAtOrder") || null;
   const [searchInput, setSearchInput] = useState(searchKey);
+  const page = searchParams.get("page") || 1;
 
 
-  useEffect(()=>{
-    getMyTemplates();
-  },[]);
+  useEffect(() => {
+    getMyTemplates(searchKey,page, titleOrder,createdAtOrder, topicOrder );
+    if (error) {
+      toast({
+        title: "Error",
+        description: error,
+        status: "error",
+      });
+    }
+  }, [getMyTemplates, searchKey,  titleOrder,page, topicOrder, createdAtOrder]);
 
   
   const handleSortChange = (field, currentOrder) => {

@@ -114,9 +114,36 @@ export const deleteTemplate = async (req, res) => {
 
 export const getMyTemplates = async (req, res) => {
   try {
-    const userId = req.userId;
-    const templates = await prisma.template.findMany({
-      where: { userId },
+    const {
+      searchKey = "",
+      titleOrder,
+      topicOrder,
+      createdAtOrder,
+      page = 1,
+      limit = 5,
+  } = req.query;
+  console.log(req.query)
+
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+
+    const where = {
+      AND: [
+        {
+            OR: [
+                { title: { contains: searchKey, mode: 'insensitive' } },
+                { topic: { contains: searchKey, mode: 'insensitive' } },
+            ],
+        },
+    ],
+  };
+  console.log(createdAtOrder)
+
+  const orderBy = [];
+  if (titleOrder) orderBy.push({ title: titleOrder });
+  if (topicOrder) orderBy.push({ topic: topicOrder });
+  if (createdAtOrder) orderBy.push({ createdAt: createdAtOrder });
+  console.log(orderBy)
+  const templates = await prisma.template.findMany({
       select: {
         id: true,
         title: true, 
@@ -132,6 +159,10 @@ export const getMyTemplates = async (req, res) => {
         createdAt: true, 
         updatedAt: true, 
       },
+      where,
+      orderBy,
+      skip,
+      take: parseInt(limit),
     });
     res.status(200).json({
       success: true,
