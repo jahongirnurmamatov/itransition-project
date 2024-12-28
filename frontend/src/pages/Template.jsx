@@ -7,11 +7,10 @@ import { Separator } from "@/components/ui/separator";
 import { Interaction } from "@/components/userInteraction/Interaction";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
 import Loading from "@/components/loading/Loading";
 import { useCommentStore } from "@/store/commentStore";
-import { use } from "react";
 import { useResponseStore } from "@/store/responseStore";
+import ToggleTab from "@/components/template/ToggleTab";
 
 const Template = () => {
   const {  getTemplateById, isLoading, error } = useTemplateStore();
@@ -38,6 +37,9 @@ const Template = () => {
 
   return (
     <div className="flex flex-col gap-3 mb-10">
+        <div className="flex justify-end items-center mr-20">
+          <ToggleTab />
+        </div>
         <PreviewComponent  templateId={templateId}/>
         
         <div className="flex flex-col gap-2 lg:px-40 md:px-20 px-10  ">
