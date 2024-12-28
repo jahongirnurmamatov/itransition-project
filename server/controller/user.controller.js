@@ -103,8 +103,26 @@ export const deleteUsers = async(req,res)=>{
     }
 }
 export const blockUsers = async(req,res)=>{
-    
+    try {
+        const {userIds} = req.body;
+        await prisma.user.updateMany({
+            where: { id: { in: userIds } },
+            data: { status: "BLOCKED" },
+        });
+        res.status(200).json({ success: true, message: "Users blocked successfully." });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
 }
 export const unBlockUsers = async(req,res)=>{
-
+    try {
+        const {userIds} = req.body;
+        await prisma.user.updateMany({
+            where: { id: { in: userIds } },
+            data: { status: "ACTIVE" },
+        });
+        res.status(200).json({ success: true, message: "Users blocked successfully." });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
 }
