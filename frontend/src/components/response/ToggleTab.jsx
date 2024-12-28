@@ -5,7 +5,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useState } from "react";
 
-export default function ToggleTab() {
+export default function ToggleTab({setShowRight}) {
   const [alignment, setAlignment] = useState('left');
 
 
@@ -23,10 +23,17 @@ export default function ToggleTab() {
         onChange={handleAlignment}
         aria-label="text alignment"
       >
-        <ToggleButton value="left" aria-label="left aligned">
+        <ToggleButton 
+         onClick={()=>{
+          setShowRight(false);
+        }}
+        value="left" aria-label="left aligned">
           <FaWpforms className="text-primary"/>
         </ToggleButton>
-        <ToggleButton value="right" aria-label="right aligned">
+        <ToggleButton onClick={()=>{
+          setShowRight(true);
+        }}
+        value="right" aria-label="right aligned">
           <FaChartPie className="text-primary" />
         </ToggleButton>
       </ToggleButtonGroup>

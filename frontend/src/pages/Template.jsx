@@ -10,7 +10,8 @@ import { useEffect, useState } from "react";
 import Loading from "@/components/loading/Loading";
 import { useCommentStore } from "@/store/commentStore";
 import { useResponseStore } from "@/store/responseStore";
-import ToggleTab from "@/components/template/ToggleTab";
+import ToggleTab from "@/components/response/ToggleTab";
+import AggregatedView from "@/components/response/AggregatedView";
 
 const Template = () => {
   const {  getTemplateById, isLoading, error } = useTemplateStore();
@@ -18,6 +19,7 @@ const Template = () => {
   const [showComments,setShowComments] = useState(false);
   const {getComments} = useCommentStore();
   const {getResponses} = useResponseStore();
+  const [showRight, setShowRight] = useState(false);
 
   useEffect(() => {
     if (templateId) {
@@ -38,21 +40,24 @@ const Template = () => {
   return (
     <div className="flex flex-col gap-3 mb-10">
         <div className="flex justify-end items-center mr-20">
-          <ToggleTab />
+          <ToggleTab setShowRight={setShowRight} />
         </div>
-        <PreviewComponent  templateId={templateId}/>
-        
-        <div className="flex flex-col gap-2 lg:px-40 md:px-20 px-10  ">
-            <Separator className="my-5"	 />
-            <Interaction templateId={templateId} setShowComments={setShowComments}/>
-          {
-            showComments && <>
-            <Separator className="my-5"	 />
-            <CommentBox />
-            <Comments /></>
-          }
-            
-        </div>
+        {
+          !showRight ? 
+          <div className="flex flex-col gap-3 mb-10">
+            <PreviewComponent  templateId={templateId}/>
+            <div className="flex flex-col gap-2 lg:px-40 md:px-20 px-10  ">
+              <Separator className="my-5"	 />
+              <Interaction templateId={templateId} setShowComments={setShowComments}/>
+            {
+              showComments && <>
+              <Separator className="my-5"	 />
+              <CommentBox />
+              <Comments /></>
+            }
+           </div>
+          </div> : <AggregatedView />
+        }
     </div>
   );
 };
