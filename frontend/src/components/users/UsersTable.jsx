@@ -131,7 +131,7 @@ const UsersTable = () => {
             className="absolute top-6 left-4 size-5 text-gray-400 cursor-pointer hover:scale-110"
           />
         </div>
-        <UserActionButtons />
+        <UserActionButtons selectedUsers={selectedUsers}/>
       </form>
       <Table>
         <TableCaption>A list of users.</TableCaption>

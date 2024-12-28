@@ -36,5 +36,32 @@ export const useUsersStore = create((set) => ({
             throw error;
         }
     },
+    deleteUsers:async(userIds)=>{
+        try {
+            const res = await axiosInstance.delete('/user/delete', {userIds})
+            set({ isLoading: false});    
+        } catch (error) {
+            set({ error: error.response?.data?.message || 'Failed to delete users.', isLoading: false });    
+            throw error;
+        }
+    },
+    blockUsers: async (userIds) => {
+        try {
+            const res = await axiosInstance.put('/user/block', { userIds });
+            set({ isLoading: false });
+        } catch (error) {
+            set({ error: error.response?.data?.message || 'Failed to block users.', isLoading: false });
+            throw error;
+        }
+    },
+    unBlockUsers: async (userIds) => {
+        try {
+            const res = await axiosInstance.put('/user/unblock', { userIds });
+            set({ isLoading: false });
+        } catch (error) {
+            set({ error: error.response?.data?.message || 'Failed to unblock users.', isLoading: false });
+            throw error;
+        }
+    },
 
 }));
