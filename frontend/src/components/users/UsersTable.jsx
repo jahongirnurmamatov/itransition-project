@@ -17,11 +17,15 @@ import { useAuthStore } from "@/store/authStore";
 import { useUsersStore } from "@/store/usersStore";
 import { useToast } from "@/hooks/use-toast";
 import PaginationComponent from "./PaginationComponent";
+import { Checkbox } from "../ui/checkbox";
+import UserActionButtons from "./UserActionButtons";
 
 const UsersTable = () => {
   const { userRoleChange } = useAuthStore();
   const { users, getAllUsers, error,totalPages } = useUsersStore();
   const { toast } = useToast();
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [allSelected, setAllSelected] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -94,26 +98,49 @@ const UsersTable = () => {
     setSearchParams(newParams);
   };
 
+  const handleSelectAll = () => {
+    if (allSelected) {
+      setSelectedUsers([]);
+    } else {
+      setSelectedUsers(users.map((user) => user.id));
+    }
+    setAllSelected(!allSelected);
+  };
+
+  const handleSelectUser = (userId) => {
+    if (selectedUsers.includes(userId)) {
+      setSelectedUsers(selectedUsers.filter((id) => id !== userId));
+    } else {
+      setSelectedUsers([...selectedUsers, userId]);
+    }
+  };
+
   return (
     <div className="w-full bg-primary-foreground rounded-lg px-5 py-3 shadow-md">
-      <form onSubmit={(e) => e.preventDefault()} className="relative">
-        <Input
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Search"
-          className="w-1/2 pl-5 mx-2 my-4 px-10 outline-none"
-        />
-        <Search
-          onClick={handleSearchSubmit}
-          className="absolute top-2 left-4 size-5 text-gray-400 cursor-pointer hover:scale-110"
-        />
+      <form onSubmit={(e) => e.preventDefault()} className="flex items-center justify-between">
+        <div className="relative">
+          <Input
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Search"
+            className="flex-1 pl-5 mx-2 my-4 px-10 outline-none"
+            />
+          <Search
+            onClick={handleSearchSubmit}
+            className="absolute top-6 left-4 size-5 text-gray-400 cursor-pointer hover:scale-110"
+          />
+        </div>
+        <UserActionButtons />
       </form>
       <Table>
         <TableCaption>A list of users.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>#</TableHead>
+            <TableHead>
+              <Checkbox  checked={allSelected}
+                        onCheckedChange={handleSelectAll } />
+            </TableHead>
             <TableHead>
               <div
                 onClick={() => handleSortChange("username", usernameOrder)}
@@ -154,9 +181,10 @@ const UsersTable = () => {
           {users.map((user, index) => (
             <TableRow key={user.id}>
               <TableCell className="font-medium cursor-pointer">
-                <Link to={`/users/${user.id}`} className="hover:text-blue-500 hover:underline">
-                  {index + 1}
-                </Link>
+                <Checkbox 
+                 checked={selectedUsers.includes(user.id)}
+                 onCheckedChange={() => handleSelectUser(user.id)}
+                />
               </TableCell>
               <TableCell className="font-medium cursor-pointer">
                 <Link
