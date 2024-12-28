@@ -40,7 +40,7 @@ export const addResponse =async (req, res) => {
       }
 }   
 
-export const  getResponses = async (req, res) => {
+export const  getResponders = async (req, res) => {
   try {
     const { templateId } = req.params;
     const responses = await prisma.response.findMany({
@@ -57,9 +57,62 @@ export const  getResponses = async (req, res) => {
         },
       }
     });
-
     res.status(200).json({succes:true, responses });
   } catch (error) {
     
   }
 }
+
+export const getResponses = async (req, res) => {
+  try {
+    const { templateId } = req.params;
+
+    if (!templateId || isNaN(templateId)) {
+      return res.status(400).json({ success: false, message: "Invalid template ID" });
+    }
+
+    const responses = await prisma.response.findMany({
+      where: {
+        templateId: parseInt(templateId, 10),
+      },
+      select: {
+        id: true,
+        createdAt: true,
+        user: {
+          select: {
+            username: true,
+          },
+        },
+        answers: {
+          select: {
+            value: true,
+            question: {
+              select: {
+                label: true,
+                description: true,
+                type: true,
+                options: {
+                  select: {
+                    value: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (responses.length === 0) {
+      return res.status(404).json({ success: false, message: "No responses found for this template" });
+    }
+    res.status(200).json({
+      success: true,
+      responses,
+    });
+  } catch (error) {
+    console.error("Error fetching responses:", error);
+    res.status(500).json({ success: false, message: "An error occurred while fetching responses" });
+  }
+};
+
