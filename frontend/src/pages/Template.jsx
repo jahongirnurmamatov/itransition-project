@@ -18,7 +18,7 @@ const Template = () => {
   const { templateId } = useParams();
   const [showComments,setShowComments] = useState(false);
   const {getComments} = useCommentStore();
-  const {getResponders} = useResponseStore();
+  const {getResponders,getAggregates} = useResponseStore();
   const [showRight, setShowRight] = useState(false);
 
   useEffect(() => {
@@ -26,8 +26,9 @@ const Template = () => {
       getTemplateById(templateId);
       getComments(templateId);
       getResponders(templateId);
+      getAggregates(templateId);
     }
-  }, [templateId, getTemplateById, getComments, getResponders]);
+  }, [templateId, getTemplateById, getComments, getResponders,getAggregates]);
 
   if (isLoading) {
     return <Loading />;

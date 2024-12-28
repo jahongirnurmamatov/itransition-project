@@ -3,6 +3,7 @@ import {create} from 'zustand';
 
 export const useResponseStore = create((set) => ({
     response: null,
+    responses:[],
     isLoading: false,
     responders: [],
     error: null,
@@ -32,7 +33,7 @@ export const useResponseStore = create((set) => ({
         try {
             set({ isLoading: true, error: null });
             const res = await axiosInstance.get(`/response/${templateId}/get-aggregates`);
-            set({ responses: res.data.responses, isLoading: false });
+            set({ responses: res.data.results, isLoading: false });
         } catch (error) {
             set({ error: error.response.data.error, isLoading: false });
             throw Error(error);

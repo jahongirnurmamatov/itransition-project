@@ -241,12 +241,6 @@ export const getAggregates = async (req, res) => {
       _count: { responseId: true },
     });
 
-    const textResults = textAggregates.map((text) => ({
-      questionId: text.questionId,
-      label: questionMap[text.questionId]?.label,
-      description: questionMap[text.questionId]?.description,
-      responseCount: text._count.responseId,
-    }));
     //sorting and combining all results
 const combinedResults = [];
 // Process Numeric Questions
@@ -268,9 +262,7 @@ singleSelectResults.forEach((singleSelect) => {
     label: singleSelect.label,
     description: singleSelect.description,
     type: "radio",
-    data: {
-      options: singleSelect.options,
-    },
+    options: singleSelect.options,
   });
 });
 // Process Multi-Select Questions
@@ -280,9 +272,7 @@ totalMultiSelectResponses.forEach((multiSelect) => {
     label: multiSelect.label,
     description: multiSelect.description,
     type: "checkbox",
-    data: {
-      options: multiSelect.options,
-    },
+    options: multiSelect.options,
   });
 });
 // Process Text-Based Questions

@@ -1,9 +1,14 @@
+import { useResponseStore } from '@/store/responseStore';
 import { useTemplateStore } from '@/store/templateStore';
 import React from 'react'
 import { BsChatLeftQuote } from 'react-icons/bs';
+import PieChartView from './BarChartView';
+import BarChartView from './BarChartView';
 
 const AggregatedView = () => {
-    const {title,topic,imageUrl,forms,tags,description,previewImg} = useTemplateStore();
+    const {title,topic,imageUrl,description,previewImg} = useTemplateStore();
+    const {responses} = useResponseStore();
+    console.log(responses )
   return (
     <div className="flex flex-col gap-3 mb-10">
         <div className="w-full  min-h-screen flex flex-col items-start">
@@ -21,8 +26,35 @@ const AggregatedView = () => {
                         </div>}
                 </div>
                 {description && <p className="text-sm font-light text-gray-500">{description}</p>}
-
-                {/* here goes aggregated form of responses */}
+                  <div className="flex flex-col gap-4 my-5">
+                  {
+                    responses.length>0 && responses.map((response,idx) => (
+                      <div className="w-full bg-primary-foreground rounded-lg flex flex-col gap-3 px-5 py-3 shadow-md" key={idx}>
+                        <p className="text-lg font-semibold font-sans">{response.label}</p>
+                        {response.description &&  
+                          <p className="text-sm font-light text-gray-500">
+                              {response.description}
+                          </p>
+                        }
+                        <div className="w-[80%] mx-auto">
+                        {
+                          ['checkbox','radio'].includes(response.type) &&
+                              <BarChartView options={response.options}
+                               description={'Chart shows how many times user selected these options'} />
+                        }
+                        </div>
+                        {
+                          response.type === 'number' && 
+                          <p className='text-sm font-bold'><span className='text-gray-500'>Average:</span>{response.data.average}</p>
+                        }
+                        {
+                          ['textarea','image'].includes(response.type) &&
+                          <p className='text-sm font-bold'><span className='text-gray-500'>Total Responses:</span>{response._count.responseId}</p>
+                        }
+                      </div>
+                    ))
+                  }
+                  </div>
             </div>
         </div>
     </div>
