@@ -91,3 +91,12 @@ export const searchUsers = async (req, res) => {
     res.status(500).json({ error: 'Error fetching users' });
   }
 }
+export const deleteUsers = async(req,res)=>{
+    
+}
+export const blockUsers = async(req,res)=>{
+
+}
+export const unBlockUsers = async(req,res)=>{
+
+}

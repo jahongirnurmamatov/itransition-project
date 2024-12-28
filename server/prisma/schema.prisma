@@ -16,13 +16,17 @@ model User {
   avatar    String?
   password  String
   role      Role      @default(USER)
+  status    Status    @default(ACTIVE)
   templates Template[]
   responses Response[]
   comments  Comment[]
   likes     Like[]
   createdAt DateTime  @default(now())
 }
-
+enum Status {
+  ACTIVE
+  BLOCKED
+}
 enum Role {
   ADMIN
   USER
