@@ -41,7 +41,6 @@ const TabelForms = ({ data }) => {
     }
   }, [getMyTemplates, searchKey,  titleOrder,page, topicOrder, createdAtOrder]);
 
-  
   const handleSortChange = (field, currentOrder) => {
     const newOrder = currentOrder === "asc" ? "desc" : "asc";
     const newParams = new URLSearchParams(searchParams.toString());
@@ -86,7 +85,7 @@ const handleSearchSubmit = () => {
         <TableCaption>A list of your all templates.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead >#</TableHead>
+            <TableHead ># </TableHead>
             <TableHead 
            	>
               <div 
@@ -131,7 +130,7 @@ const handleSearchSubmit = () => {
                 to={`/templates/${template.id}`}
                 className="hover:text-blue-500 hover:underline"
               >
-               <Label>{index+1}</Label> 
+               <Label> <Checkbox/> {index+1}</Label> 
               </Link>
             </TableCell>
             <TableCell className="font-medium cursor-pointer" >
@@ -151,7 +150,7 @@ const handleSearchSubmit = () => {
             <TableCell>{template.topic}</TableCell>
             <TableCell>{template.description||"-"}</TableCell>
             <TableCell>
-              <div className={`px-2 py-1 text-center rounded-full ${template.visibility === "PUBLIC" ? "bg-green-500" : "bg-red-500"} bg-red-400 text-white`}>{template.visibility}</div>
+              <div className={`px-2 py-1 text-center rounded-full ${template?.visibility === "PUBLIC" ? "bg-green-500" : "bg-red-500"} text-white`}>{template.visibility}</div>
             </TableCell>
           </TableRow>
         ))}
