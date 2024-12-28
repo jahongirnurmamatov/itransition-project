@@ -163,6 +163,7 @@ const UsersTable = () => {
                 />
               </div>
             </TableHead>
+            <TableHead>Status</TableHead> 
             <TableHead>
               <div
                 onClick={() => handleSortChange("createdAt", createdAtOrder)}
@@ -197,6 +198,11 @@ const UsersTable = () => {
               </TableCell>
               <TableCell>
                 <span className="font-semibold text-slate-700">{user.email}</span>
+              </TableCell>
+              <TableCell >
+                <span className={` rounded-full px-3 py-1 ${user?.status === "ACTIVE" 
+                  ? "bg-green-200 text-green-600" : "bg-red-200 text-red-600"}`}>
+                    {user?.status}</span>
               </TableCell>
               <TableCell>
                 <span className="text-gray-500">

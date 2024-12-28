@@ -1,7 +1,7 @@
 import axiosInstance from '@/lib/axiosInstance';
 import {create} from 'zustand';
 
-export const useUsersStore = create((set) => ({ 
+export const useUsersStore = create((set,get) => ({ 
     users: [],
     isLoading: false,
     error: null,
@@ -30,15 +30,18 @@ export const useUsersStore = create((set) => ({
         try {
             set({ isLoading: true, error: null });
             const res = await axiosInstance.get('/user/search-users',{params: { query: searchKey }});
+            await get().getAllUsers()
             set({ users: res.data.users, isLoading: false });
         } catch (error) {
             set({ error: error.response?.data?.message || 'Failed to fetch users.', isLoading: false });
             throw error;
         }
     },
+
     deleteUsers:async(userIds)=>{
         try {
-            const res = await axiosInstance.delete('/user/delete', {userIds})
+            const res = await axiosInstance.delete('/user/delete', {userIds});
+            await get().getAllUsers()
             set({ isLoading: false});    
         } catch (error) {
             set({ error: error.response?.data?.message || 'Failed to delete users.', isLoading: false });    
@@ -48,6 +51,7 @@ export const useUsersStore = create((set) => ({
     blockUsers: async (userIds) => {
         try {
             const res = await axiosInstance.put('/user/block', { userIds });
+            await get().getAllUsers()
             set({ isLoading: false });
         } catch (error) {
             set({ error: error.response?.data?.message || 'Failed to block users.', isLoading: false });
@@ -57,6 +61,7 @@ export const useUsersStore = create((set) => ({
     unBlockUsers: async (userIds) => {
         try {
             const res = await axiosInstance.put('/user/unblock', { userIds });
+            await get().getAllUsers()
             set({ isLoading: false });
         } catch (error) {
             set({ error: error.response?.data?.message || 'Failed to unblock users.', isLoading: false });

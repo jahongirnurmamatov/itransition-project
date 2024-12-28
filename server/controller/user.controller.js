@@ -50,6 +50,7 @@ export const getAllUsers = async (req, res) => {
                 email: true,
                 username: true,
                 role: true,
+                status:true,
                 avatar: true,
                 createdAt: true,
             },

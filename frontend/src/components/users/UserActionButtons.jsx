@@ -8,27 +8,24 @@ import { toast } from '@/hooks/use-toast';
 
 
 const UserActionButtons = ({selectedUsers}) => {
-  const {deleteUsers, blockUsers, unBlockUsers} = useUsersStore();
+  const {deleteUsers, blockUsers, unBlockUsers,getAllUsers} = useUsersStore();
   
-  const handleBlock = () => {
-    blockUsers(selectedUsers);
-    getAllUsers();
+  const handleBlock = async() => {
+    await blockUsers(selectedUsers);
     toast({
       title: "Success",
       description: "Users blocked successfully",
     })
   }
-  const handleUnlock = () => {
-    unBlockUsers(selectedUsers);
-    getAllUsers();
+  const handleUnlock = async() => {
+    await unBlockUsers(selectedUsers);
     toast({
       title: "Success",
       description: "Users unblocked successfully",
     })
   }
-  const handleDelte = () => {
-    deleteUsers(selectedUsers);
-    getAllUsers();
+  const handleDelte = async() => {
+    await deleteUsers(selectedUsers);
     toast({
       title: "Success",
       description: "Users deleted successfully",
