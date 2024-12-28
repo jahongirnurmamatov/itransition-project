@@ -12,6 +12,7 @@ import { useCommentStore } from "@/store/commentStore";
 import { useResponseStore } from "@/store/responseStore";
 import ToggleTab from "@/components/response/ToggleTab";
 import AggregatedView from "@/components/response/AggregatedView";
+import { ShareButton } from "@/components/template/ShareButton";
 
 const Template = () => {
   const {  getTemplateById, isLoading, error } = useTemplateStore();
@@ -20,6 +21,8 @@ const Template = () => {
   const {getComments} = useCommentStore();
   const {getResponders,getAggregates} = useResponseStore();
   const [showRight, setShowRight] = useState(false);
+  // getting url 
+  const url = window.location.href;
 
   useEffect(() => {
     if (templateId) {
@@ -41,7 +44,10 @@ const Template = () => {
   return (
     <div className="flex flex-col gap-3 mb-10">
         <div className="flex justify-end items-center mr-20">
-          <ToggleTab setShowRight={setShowRight} />
+          <div className="flex items-center justify-center gap-2">
+            <ToggleTab setShowRight={setShowRight} />
+            <ShareButton url={url}/>
+          </div>
         </div>
         {
           !showRight ? 

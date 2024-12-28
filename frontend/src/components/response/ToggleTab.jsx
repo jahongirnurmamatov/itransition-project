@@ -22,6 +22,7 @@ export default function ToggleTab({setShowRight}) {
         exclusive
         onChange={handleAlignment}
         aria-label="text alignment"
+        className="bg-primary-foreground"
       >
         <ToggleButton 
          onClick={()=>{

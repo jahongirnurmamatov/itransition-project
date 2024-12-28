@@ -67,7 +67,7 @@ const PreviewComponent = ({templateId}) => {
   };
 
   return (
-    <div className="w-full  min-h-screen flex flex-col items-start">
+    <div className="w-full   flex flex-col items-start">
         {previewImg || imageUrl && 
           <div className="flex items-center justify-center h-[300px] w-[100%] top-0">
             <img src={previewImg||imageUrl} alt="" className='h-[200px] w-[100%] overflow-hidden object-cover' />
