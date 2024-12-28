@@ -5,20 +5,20 @@ import { useResponseStore } from '@/store/responseStore';
 
 
 const WhoResponded = () => {
-    const {responses} = useResponseStore();
+    const {responders} = useResponseStore();
     
  return (
         <HoverCard >
             <HoverCardTrigger>
-                <span className='text-gray-500 text-sm hover:underline cursor-pointer'>{responses.length} 
+                <span className='text-gray-500 text-sm hover:underline cursor-pointer'>{responders.length} 
                     <span className='hidden md:inline'> Responses</span> 
                 </span>
             </HoverCardTrigger>
             <HoverCardContent>
                 <div className="text-sm"></div>
                 <div className="flex flex-col gap-1 items-start justify-center">
-                    {responses.map((response,idx) => (
-                        <p className="text-sm font-bold" key={idx}>{response?.user?.username}</p>
+                    {responders.map((responder,idx) => (
+                        <p className="text-sm font-bold" key={idx}>{responder?.user?.username}</p>
                     ))}
                 </div>
             </HoverCardContent>

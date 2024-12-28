@@ -4,6 +4,7 @@ import {create} from 'zustand';
 export const useResponseStore = create((set) => ({
     response: null,
     isLoading: false,
+    responders: [],
     error: null,
     isAddingResponse: false,
     responseError: null,
@@ -17,6 +18,16 @@ export const useResponseStore = create((set) => ({
             throw Error(error);     
         }
     }, 
+    getResponders: async (templateId) => {
+        try {
+            set({ isLoading: true, error: null });
+            const res = await axiosInstance.get(`/response/${templateId}/get-responders`);
+            set({ responders: res.data.responses, isLoading: false });
+        } catch (error) {
+            set({ error: error.response.data.error, isLoading: false });
+            throw Error(error);
+        }
+    },
     getResponses: async (templateId) => {
         try {
             set({ isLoading: true, error: null });
@@ -26,5 +37,5 @@ export const useResponseStore = create((set) => ({
             set({ error: error.response.data.error, isLoading: false });
             throw Error(error);
         }
-    }
+    },
 }));

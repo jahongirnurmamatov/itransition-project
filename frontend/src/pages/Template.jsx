@@ -18,16 +18,16 @@ const Template = () => {
   const { templateId } = useParams();
   const [showComments,setShowComments] = useState(false);
   const {getComments} = useCommentStore();
-  const {getResponses} = useResponseStore();
+  const {getResponders} = useResponseStore();
   const [showRight, setShowRight] = useState(false);
 
   useEffect(() => {
     if (templateId) {
       getTemplateById(templateId);
       getComments(templateId);
-      getResponses(templateId);
+      getResponders(templateId);
     }
-  }, [templateId, getTemplateById, getComments, getResponses]);
+  }, [templateId, getTemplateById, getComments, getResponders]);
 
   if (isLoading) {
     return <Loading />;
