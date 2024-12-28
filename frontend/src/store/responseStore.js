@@ -28,10 +28,10 @@ export const useResponseStore = create((set) => ({
             throw Error(error);
         }
     },
-    getResponses: async (templateId) => {
+    getAggregates: async (templateId) => {
         try {
             set({ isLoading: true, error: null });
-            const res = await axiosInstance.get(`/response/${templateId}/get-responders`);
+            const res = await axiosInstance.get(`/response/${templateId}/get-aggregates`);
             set({ responses: res.data.responses, isLoading: false });
         } catch (error) {
             set({ error: error.response.data.error, isLoading: false });

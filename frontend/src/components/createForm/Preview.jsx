@@ -63,7 +63,7 @@ const PreviewComponent = ({templateId}) => {
         isClosable: true,
       });
     }
-    navigate(`/`);
+    navigate(`/`, { replace: true });
   };
 
   return (
