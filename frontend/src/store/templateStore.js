@@ -44,6 +44,7 @@ export const useTemplateStore = create((set,get) => ({
         try {
             set({isLoading:true, error:null});
             const res = await axiosInstance.post('/template/create', template);
+            await get().getAllTemplates();
             set({ isLoading:false});
         } catch (error) {
             set({error:error.response.data.message, isLoading:false});

@@ -11,25 +11,50 @@ const UserActionButtons = ({selectedUsers}) => {
   const {deleteUsers, blockUsers, unBlockUsers,getAllUsers} = useUsersStore();
   
   const handleBlock = async() => {
-    await blockUsers(selectedUsers);
-    toast({
-      title: "Success",
-      description: "Users blocked successfully",
-    })
+    if(selectedUsers.length === 0) {
+      toast({
+        title: "Error",
+        variant: "destructive",
+        description: "Please select at least one user",
+      })
+    }else{
+      await blockUsers(selectedUsers);
+      toast({
+        title: "Success",
+        description: "Users blocked successfully",
+      })
+    }
   }
   const handleUnlock = async() => {
-    await unBlockUsers(selectedUsers);
-    toast({
-      title: "Success",
-      description: "Users unblocked successfully",
-    })
+    if(selectedUsers.length === 0) {
+      toast({
+        title: "Error",
+        variant: "destructive",
+        description: "Please select at least one user",
+      })
+    }else{
+      await unBlockUsers(selectedUsers);
+      toast({
+        title: "Success",
+        description: "Users unblocked successfully",
+      })
+    }
   }
   const handleDelte = async() => {
-    await deleteUsers(selectedUsers);
-    toast({
+    if(selectedUsers.length === 0) {
+      toast({
+        title: "Error",
+        variant: "destructive",
+        description: "Please select at least one user",
+      })
+    }else{
+      await deleteUsers(selectedUsers);
+      toast({
       title: "Success",
+      variant:'outline',
       description: "Users deleted successfully",
     })
+    }
   }
   return (
     <div className='flex gap-1'>

@@ -215,7 +215,7 @@ const UsersTable = () => {
                   onValueChange={(value) => handleRoleChange(user.id, value)}
                 >
                   <SelectTrigger
-                    className={`w-24 bg-slate-100 ${
+                    className={`w-24 bg-primary-foreground ${
                       user.role === "ADMIN" ? "text-red-500" : "text-blue-500"
                     }`}
                   >

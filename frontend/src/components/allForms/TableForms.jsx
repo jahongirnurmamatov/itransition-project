@@ -1,15 +1,13 @@
 import {
   Table,
-  TableBody,
   TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {  formatDistanceToNow } from 'date-fns';
 
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
 import { ArrowDownNarrowWide, Search } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -17,6 +15,8 @@ import { useTemplateStore } from "@/store/templateStore";
 import { Label } from "../ui/label";
 import PaginationComponent from "../users/PaginationComponent";
 import { useToast } from "@/hooks/use-toast";
+import TemplateTableBody from "./TemplateTableBody";
+import { Checkbox } from "../ui/checkbox";
 
 const TabelForms = ({ data }) => {
   const {templates,getMyTemplates,error,totalPages} = useTemplateStore();
@@ -29,6 +29,8 @@ const TabelForms = ({ data }) => {
   const [searchInput, setSearchInput] = useState(searchKey);
   const page = searchParams.get("page") || 1;
 
+  const [selectedTemplates, setSelectedTemplates] = useState([]);
+  const [allSelected, setAllSelected] = useState(false);
 
   useEffect(() => {
     getMyTemplates(searchKey,page, titleOrder,createdAtOrder, topicOrder );
@@ -72,6 +74,23 @@ const handleSearchSubmit = () => {
   newParams.set("searchKey", searchInput);
   setSearchParams(newParams);
 };
+
+const handleSelectAll = () => {
+  if (allSelected) {
+    setSelectedTemplates([]);
+  } else {
+    setSelectedTemplates(templates.map((template) => template.id));
+  }
+  setAllSelected(!allSelected);
+};
+
+const handleSelectTemplate = (templateId) => {
+  if (selectedTemplates.includes(templateId)) {
+    setSelectedTemplates(selectedTemplates.filter((id) => id !== templateId));
+  } else {
+    setSelectedTemplates([...selectedTemplates, templateId]);
+  }
+};
   return (
     <div className="w-full bg-primary-foreground rounded-lg px-5 py-3 shadow-md">
       <div className="relative">
@@ -85,17 +104,19 @@ const handleSearchSubmit = () => {
         <TableCaption>A list of your all templates.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead ># </TableHead>
-            <TableHead 
-           	>
-              <div 
-              onClick={() => handleSortChange("title", titleOrder)}
-              className="flex gap-3 items-center justify-start cursor-pointer">
-                Title 
-                <ArrowDownNarrowWide className={`size-4 text-gray-500 ${titleOrder === "desc" ? "rotate-180" : ""}`} /> 
-              </div>
-            </TableHead>
-            <TableHead
+              <TableHead>
+                <Checkbox  checked={allSelected}
+                          onCheckedChange={handleSelectAll } />
+              </TableHead>
+              <TableHead>
+                <div 
+                onClick={() => handleSortChange("title", titleOrder)}
+                className="flex gap-3 items-center justify-start cursor-pointer ml-3">
+                  Title 
+                  <ArrowDownNarrowWide className={`size-4 text-gray-500 ${titleOrder === "desc" ? "rotate-180" : ""}`} /> 
+                </div>
+              </TableHead>
+              <TableHead
            >
             <div
             onClick={() => handleSortChange("createdAt", createdAtOrder)}
@@ -104,8 +125,8 @@ const handleSearchSubmit = () => {
               <ArrowDownNarrowWide
                className={`size-4 text-gray-500 ${createdAtOrder === "desc" ? "rotate-180" : ""}`} />
             </div>
-            </TableHead>
-            <TableHead>
+              </TableHead>
+              <TableHead>
               <div 
                onClick={() => handleSortChange("topic", topicOrder)}
                className="flex gap-3 items-center justify-start cursor-pointer">
@@ -113,56 +134,26 @@ const handleSearchSubmit = () => {
                 <ArrowDownNarrowWide
                 className={`size-4 text-gray-500 ${topicOrder === "desc" ? "rotate-180" : ""}`} />
               </div>
-            </TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Visibility</TableHead>
-          </TableRow>
-        </TableHeader>
-        {searchKey && templates.length === 0 ? 
-        <TableCell colSpan="6" className="text-center">
-          <Label className='text-md text-gray-500 italic'>No templates found.</Label>
-        </TableCell> :
-        <TableBody>
-        {templates.map((template,index) => (
-          <TableRow key={template.id}>
-            <TableCell className="font-medium cursor-pointer">
-              <Link
-                to={`/templates/${template.id}`}
-                className="hover:text-blue-500 hover:underline"
-              >
-               <Label> <Checkbox/> {index+1}</Label> 
-              </Link>
-            </TableCell>
-            <TableCell className="font-medium cursor-pointer" >
-              <Link
-                to={`/templates/${template.id}`}
-                className="hover:text-blue-500 hover:underline flex items-center gap-5"
-              > 
-              <div className="w-16 h-12">
-                <img 
-                className="object-cover  w-full h-full rounded-lg"
-                src={template.imageUrl||"https://form-publisher.com/blog/content/images/size/w1200/2023/01/How-to-Make-your-own-Google-Form.png"} alt="" />
-              </div>
-                <p className="overflow-hidden max-w-[100px] max-h-[40px]">{template.title}</p>
-              </Link>
-            </TableCell>
-            <TableCell>{formatDistanceToNow(template.createdAt)} ago</TableCell>
-            <TableCell>{template.topic}</TableCell>
-            <TableCell>{template.description||"-"}</TableCell>
-            <TableCell>
-              <div className={`px-2 py-1 text-center rounded-full ${template?.visibility === "PUBLIC" ? "bg-green-500" : "bg-red-500"} text-white`}>{template.visibility}</div>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>  
-      }
-      </Table>
-      <PaginationComponent page={page} totalPages={totalPages} 
-      searchParams={searchParams}
-      setSearchParams={setSearchParams}
-      webkey={'my-templates'}/>
-    </div>
-  );
+              </TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Visibility</TableHead>
+            </TableRow>
+          </TableHeader>
+            {searchKey && templates.length === 0 ? 
+            <TableCell colSpan="6" className="text-center">
+              <Label className='text-md text-gray-500 italic'>No templates found.</Label>
+            </TableCell> 
+            : <TemplateTableBody handleSelectTemplate={handleSelectTemplate}
+                                  selectedTemplates={selectedTemplates}
+            />
+          }
+          </Table>
+          <PaginationComponent page={page} totalPages={totalPages} 
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+          webkey={'my-templates'}/>
+        </div>
+      );
 };
 
 export default TabelForms;
