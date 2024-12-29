@@ -41,7 +41,9 @@ const Comments = () => {
   return (
     <div className="my-4">
       <h1 className="text-xl font-bold">Comments</h1>
-      <div className="flex flex-col items-start justify-start gap-4 my-5 ">
+      {
+        comments.length === 0 ? <p className='text-center italic text-gray-500 mt-5'>No comments yet</p>:
+        <div className="flex flex-col items-start justify-start gap-4 my-5 ">
         {comments.map((comment, index) => (
           <div key={index} className="flex justify-start gap-3">
             <div className="flex">
@@ -99,6 +101,7 @@ const Comments = () => {
           </div>
         ))}
       </div>
+      }
     </div>
   );
 };

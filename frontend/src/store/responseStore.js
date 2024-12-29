@@ -13,6 +13,7 @@ export const useResponseStore = create((set) => ({
         try {
             set({ isAddingResponse: true, responseError: null });
             const res = await axiosInstance.post(`/response/${templateId}/submit`, { answers });
+            await get().getResponders(templateId);
             set({ response: res.data.response, isAddingResponse: false });    
         } catch (error) {
             set({ responseError: error.response.data.error, isAddingResponse: false });

@@ -179,7 +179,7 @@ const PreviewComponent = ({templateId}) => {
             </div>
           ))}
           <div className="flex items-center justify-center">
-          <Button type="submit"	 variant="contained" className=" w-[200px] bg-primary mx-auto text-center">
+          <Button type="submit"	 variant="contained" className=" w-[200px] bg-primary mx-auto text-center text-white">
             {isAddingResponse ? <ImSpinner className="animate-spin mx-auto" /> : 'Submit'}
           </Button>
         </div>

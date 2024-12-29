@@ -21,6 +21,7 @@ export const useCommentStore = create((set,get) => ({
         try {
             set({isCommentAdding: true, commentError: null});
             const res = await axiosInstance.post(`/comment/${templateID}/add-comment`, {content});
+            await get().getComments(templateID);
             set({ isCommentAdding: false});
         } catch (error) {
             set({commentError: error.response.data.message, isCommentAdding: false});
