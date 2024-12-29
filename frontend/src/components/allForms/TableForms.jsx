@@ -2,25 +2,23 @@ import {
   Table,
   TableCaption,
   TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
 } from "@/components/ui/table";
+import { AiFillDelete } from "react-icons/ai";
 
 import { useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
-import { ArrowDownNarrowWide, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTemplateStore } from "@/store/templateStore";
 import { Label } from "../ui/label";
 import PaginationComponent from "../users/PaginationComponent";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
 import TemplateTableBody from "./TemplateTableBody";
-import { Checkbox } from "../ui/checkbox";
+import { Button } from "../ui/button";
+import TemplateTableHeader from "./TemplateTableHeader";
+import { Search } from "lucide-react";
 
 const TabelForms = ({ data }) => {
-  const {templates,getMyTemplates,error,totalPages} = useTemplateStore();
-  const { toast } = useToast();
+  const {templates,getMyTemplates,error,totalPages,deleteManyTemplates} = useTemplateStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const searchKey = searchParams.get("searchKey") || "";
   const titleOrder = searchParams.get("titleOrder") || null;
@@ -91,54 +89,44 @@ const handleSelectTemplate = (templateId) => {
     setSelectedTemplates([...selectedTemplates, templateId]);
   }
 };
+
+const handleDeleteMany = ()=>{
+  if(selectedTemplates.length > 0){
+    deleteManyTemplates(selectedTemplates);
+    setSelectedTemplates([]);
+  }else{
+    toast({
+      title: "Error",
+      variant: "destructive",
+      description: "Please select at least one template.",
+    })
+  }
+}
   return (
     <div className="w-full bg-primary-foreground rounded-lg px-5 py-3 shadow-md">
-      <div className="relative">
-        <Input placeholder="Search" 
-         onChange={(e) => setSearchInput(e.target.value)}
-         onKeyDown={handleKeyDown}
-        className='w-1/2 pl-5 mx-2 my-4 px-10 outline-none text-gray-500' />
-        <Search className="absolute top-2 left-4 size-5 text-gray-400" />
+      <div className="flex items-center justify-between">
+        <div className="relative flex-1">
+          <Input placeholder="Search" 
+           onChange={(e) => setSearchInput(e.target.value)}
+           onKeyDown={handleKeyDown}
+            className='w-1/2 pl-5  mx-2 my-4 px-10 outline-none text-gray-500' />
+          <Search className="absolute top-6 left-4 size-5 text-gray-400" />
+        </div>
+        <Button variant='outline' 
+        onClick={handleDeleteMany} className='mx-2 my-4 bg-primary-foreground'>
+          <AiFillDelete className="text-red-500"/>
+        </Button>
       </div>
       <Table>
         <TableCaption>A list of your all templates.</TableCaption>
-        <TableHeader>
-          <TableRow>
-              <TableHead>
-                <Checkbox  checked={allSelected}
-                          onCheckedChange={handleSelectAll } />
-              </TableHead>
-              <TableHead>
-                <div 
-                onClick={() => handleSortChange("title", titleOrder)}
-                className="flex gap-3 items-center justify-start cursor-pointer ml-3">
-                  Title 
-                  <ArrowDownNarrowWide className={`size-4 text-gray-500 ${titleOrder === "desc" ? "rotate-180" : ""}`} /> 
-                </div>
-              </TableHead>
-              <TableHead
-           >
-            <div
-            onClick={() => handleSortChange("createdAt", createdAtOrder)}
-            className="flex gap-3 items-center justify-start cursor-pointer">
-              Date 
-              <ArrowDownNarrowWide
-               className={`size-4 text-gray-500 ${createdAtOrder === "desc" ? "rotate-180" : ""}`} />
-            </div>
-              </TableHead>
-              <TableHead>
-              <div 
-               onClick={() => handleSortChange("topic", topicOrder)}
-               className="flex gap-3 items-center justify-start cursor-pointer">
-                Topic
-                <ArrowDownNarrowWide
-                className={`size-4 text-gray-500 ${topicOrder === "desc" ? "rotate-180" : ""}`} />
-              </div>
-              </TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Visibility</TableHead>
-            </TableRow>
-          </TableHeader>
+            <TemplateTableHeader 
+                handleSortChange={handleSortChange}
+                titleOrder={titleOrder}
+                createdAtOrder={createdAtOrder}
+                topicOrder={topicOrder}
+                allSelected={allSelected}
+                handleSelectAll={handleSelectAll}
+                />
             {searchKey && templates.length === 0 ? 
             <TableCell colSpan="6" className="text-center">
               <Label className='text-md text-gray-500 italic'>No templates found.</Label>

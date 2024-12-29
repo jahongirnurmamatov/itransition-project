@@ -1,3 +1,4 @@
+import { toast } from '@/hooks/use-toast';
 import axiosInstance from '@/lib/axiosInstance';
 import {create} from 'zustand'
 
@@ -44,10 +45,10 @@ export const useTemplateStore = create((set,get) => ({
         try {
             set({isLoading:true, error:null});
             const res = await axiosInstance.post('/template/create', template);
-            await get().getAllTemplates();
+            await get().getMyTemplates();
             set({ isLoading:false});
         } catch (error) {
-            set({error:error.response.data.message, isLoading:false});
+          set({ error: error.response?.data?.message || 'Failed to create template.', isLoading: false });
         }      
     },
     uploadToCloudinary: async (file) => {
@@ -94,7 +95,6 @@ export const useTemplateStore = create((set,get) => ({
         }
       },
 
-
     getMyTemplates: async (searchKey,page, titleOrder,createdAtOrder, topicOrder ) => {
         try {
           set({ isLoading: true, error: null });
@@ -134,5 +134,19 @@ export const useTemplateStore = create((set,get) => ({
           throw error;
         }
       },
-
+    deleteManyTemplates: async (templateIds) => {
+        try {
+          set({ isLoading: true, error: null });
+          const res = await axiosInstance.delete('/template/delete-templates', { data: { templateIds } });
+          toast({
+            title: 'Success',
+            description: res.data.message,
+          })
+          await get().getMyTemplates();
+          set({ isLoading: false });
+        } catch (error) {
+          set({ error: error.response?.data?.message || 'Failed to delete templates.', isLoading: false });
+          throw error;
+        }
+    },
 }))

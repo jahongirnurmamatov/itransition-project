@@ -9,7 +9,7 @@ router.post('/create', verifyToken,createTemplate);
 router.get('/get-my-templates', verifyToken,getMyTemplates);
 router.get('/popular',getPopularTemplates);
 router.get('/:id',  getTemplateById);
-router.delete('/delete-templates', verifyAdmin, deleteManyTemplates);
+router.delete('/delete-templates',verifyToken, verifyAdmin, deleteManyTemplates);
 router.post('/:id/like-unlike', verifyToken, likeUnlike);
 
 export default router;

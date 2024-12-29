@@ -2,7 +2,6 @@ import prisma from "../db/prisma.js";
 
 export const verifyAdmin = async(req, res, next) => {  
     try {
-        // Check if the user is an admin
         const   currentUser = await prisma.user.findUnique({ where: { id: req.userId } });
         if (currentUser.role.toUpperCase() !== "ADMIN") {
             return res.status(403).json({ success: false, message: "Unauthorized, you are not an admin" });

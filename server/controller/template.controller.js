@@ -83,9 +83,16 @@ export const getTemplateById = async (req, res) => {
 
 export const deleteManyTemplates = async (req, res) => {
   try {
-    const { templateIds } = req.body; 
+    const { templateIds } = req.body;
 
-    await prisma.template.deleteMany({
+    if (!Array.isArray(templateIds) || templateIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'templateIds must be a non-empty array.',
+      });
+    }
+
+    const result = await prisma.template.deleteMany({
       where: {
         id: {
           in: templateIds,
@@ -93,14 +100,15 @@ export const deleteManyTemplates = async (req, res) => {
       },
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
-      message: 'Templates have been deleted successfully.',
+      message: `${result.count} template(s) have been deleted successfully.`,
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 export const getMyTemplates = async (req, res) => {
   try {
