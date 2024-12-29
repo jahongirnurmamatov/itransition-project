@@ -81,31 +81,21 @@ export const getTemplateById = async (req, res) => {
   }
 };
 
-export const deleteTemplate = async (req, res) => {
+export const deleteManyTemplates = async (req, res) => {
   try {
-    const { id } = req.params; 
-    const userId = req.userId; 
+    const { templateIds } = req.body; 
 
-    const template = await prisma.template.findUnique({
-      where: { id: parseInt(id) },
-      include: { questions: true }, 
-    });
-
-    if (!template) {
-      return res.status(404).json({success:false, message:'Template not found.'});
-    }
-
-    if (template.userId !== userId) {
-      return res.status(404).json({success:false, message:"Forbidden - You don't have permission to delete this template."});
-    }
-
-    await prisma.template.delete({
-      where: { id: parseInt(id) },
+    await prisma.template.deleteMany({
+      where: {
+        id: {
+          in: templateIds,
+        },
+      },
     });
 
     res.status(200).json({
       success: true,
-      message: 'Template deleted successfully.',
+      message: 'Templates have been deleted successfully.',
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
