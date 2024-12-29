@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useAuthStore } from "@/store/authStore"
 import { FaCircleUser } from "react-icons/fa6";
+import { Link } from "react-router-dom"
 
 export function NavUser() {
   const {logout} = useAuthStore();
@@ -77,7 +78,9 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
-                Account
+                    <Link to={`/profile/${user?.id}`}>
+                      Account
+                    </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />

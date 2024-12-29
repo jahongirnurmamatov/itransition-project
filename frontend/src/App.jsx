@@ -10,6 +10,7 @@ import Loading from "./components/loading/Loading";
 import Template from "./pages/Template";
 import NotFound from "./pages/NotFound";
 import Users from "./pages/Users";
+import Profile from "./pages/Profile";
 
 const App = () => {
   const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore();
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/template/create" element={<CreateTemplate />} />
         <Route path="/templates/:templateId" element={<Template />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/profile/:userId" element={<Profile />} />
       </Route>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
