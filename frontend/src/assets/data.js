@@ -188,3 +188,30 @@ export const data = {
       { title: "Personal Development", id: 36 },
       { title: "Lifestyle", id: 37 }
     ];
+
+export const activities = [
+  {
+    time: "2024-12-27 10:00 AM",
+    type: "comment",
+    title: "Commented on Template",
+    description: "John commented on 'Feedback Survey'.",
+  },
+  {
+    time: "2024-12-27 11:00 AM",
+    type: "like",
+    title: "Liked a Template",
+    description: "Jane liked 'Market Research Form'.",
+  },
+  {
+    time: "2024-12-28 09:00 AM",
+    type: "template",
+    title: "Created a Template",
+    description: "Alice created 'Employee Review Form'.",
+  },
+  {
+    time: "2024-12-28 10:30 AM",
+    type: "comment",
+    title: "Commented on Template",
+    description: "Bob commented on 'Customer Feedback'.",
+  },
+];
