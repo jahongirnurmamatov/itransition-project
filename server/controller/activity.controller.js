@@ -34,37 +34,24 @@ export const getRecentActivities = async (req, res) => {
 
     const activities = [
       ...templates.map((template) => ({
-        type: 'Created Template',
+        type: 'Create',
         time: template.createdAt,
-        details: {
-          title: template.title,
-          user: template.user.username,
-        },
+        description:`${template.user.username} created ${template.title}.`,
       })),
       ...comments.map((comment) => ({
-        type: 'Commented',
+        type: 'Comment',
         time: comment.createdAt,
-        details: {
-          content: comment.content,
-          user: comment.user.username,
-          template: comment.template.title,
-        },
+        description: `${comment.user.username} commented: ${comment.content}.`,
       })),
       ...likes.map((like) => ({
-        type: 'Liked Template',
+        type: 'Like',
         time: like.template.createdAt,
-        details: {
-          user: like.user.username,
-          template: like.template.title,
-        },
+        description:  `${like.user.username} liked ${like.template.title} template.`,
       })),
       ...responses.map((response) => ({
-        type: 'Response',
+        type: 'Respond',
         time: response.createdAt,
-        details: {
-          user: response.user.username,
-          template: response.template.title,
-        },
+        description: `${response.user.username} responded to ${response.template.title}.`,
       })),
     ];
 
@@ -74,7 +61,7 @@ export const getRecentActivities = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: recentActivities,
+      activities: recentActivities,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

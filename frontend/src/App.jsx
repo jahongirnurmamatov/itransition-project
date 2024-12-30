@@ -30,7 +30,8 @@ const App = () => {
         <Route path="/template/create" element={<CreateTemplate />} />
         <Route path="/templates/:templateId" element={<Template />} />
         <Route path="/users" element={<Users />} />
-        <Route path="/profile/:userId" element={<Profile />} />
+        <Route path="/users/:id" element={<Profile />} />
+        <Route path="/my-profile" element={<Profile userId={user.id} />} />
       </Route>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />

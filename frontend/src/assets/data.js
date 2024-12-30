@@ -61,7 +61,7 @@ export const data = {
         icon: UserRoundPen,
         items: [
           {
-            title: "Edit Profile",
+            title: "My Account",
             url: "/my-profile",
           },
           {
