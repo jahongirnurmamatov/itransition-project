@@ -4,6 +4,7 @@ import { tableData } from '@/assets/data'
 import {  formatDistanceToNow } from 'date-fns';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from 'react-router-dom';
+import { PiFolderSimplePlus } from "react-icons/pi";
 
 const TemplateCard = () => {
   return (
@@ -28,6 +29,16 @@ const TemplateCard = () => {
           </Link>
         ))
        }
+       <Link to={`url-to-templates-of-user`}>
+            <Card className="w-[300px] h-[200px] bg-primary-foreground flex items-center justify-center">
+            <CardContent className=''>
+              <div className='flex gap-4 text-gray-500'>
+                <p className='font-bold'>Browse more ...</p>
+                <PiFolderSimplePlus className='text-2xl' />
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
     </div>
   )
 }
