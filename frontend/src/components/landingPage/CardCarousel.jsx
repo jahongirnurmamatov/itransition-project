@@ -17,7 +17,8 @@ const CardCarousel = ({templates}) => {
           infiniteLoop
         >
           {templates.map((template) => (
-            <Link to={`/templates/${template.id}`} key={template.id}>
+            <Link to={`/template/${template.id}`} key={template.id}>
+
             <Card
               key={template.id} 
               className="w-[90%] h-[350px] overflow-hidden bg-primary-foreground rounded-lg shadow-md mx-auto"

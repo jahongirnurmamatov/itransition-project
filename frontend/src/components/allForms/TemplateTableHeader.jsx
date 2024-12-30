@@ -1,5 +1,5 @@
 import { Checkbox } from "../ui/checkbox";
-import { ArrowDownNarrowWide } from "lucide-react";
+import { ArrowDownNarrowWide, Search } from "lucide-react";
 import {
     TableHead,
     TableHeader,

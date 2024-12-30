@@ -43,11 +43,11 @@ export default function ActivityTimeline() {
             <TimelineDot>{getIcon(activity.type)}</TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
-          <TimelineContent sx={{ py: '12px', px: 2 }} variant='body2'>
+          <TimelineContent sx={{ py: '12px', px: 2 }} >
             <Typography variant="h6" component="span">
-              {activity.title}
+              <p className='text-md'>{activity.title}</p>
             </Typography>
-            <Typography>{activity.description}</Typography>
+            <Typography><p className='text-sm'>{activity.description}</p></Typography>
           </TimelineContent>
         </TimelineItem>
       ))}
