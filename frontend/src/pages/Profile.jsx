@@ -7,7 +7,7 @@ import React from 'react'
 
 const Profile = () => {
   return (
-    <div className='w-[100%] min-h-screen flex flex-col lg:px-20 md:px-10 px-2  '>
+    <div className='w-[100%] min-h-screen flex flex-col lg:px-10 md:px-10 px-2  '>
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-0">
             <div className="flex items-center justify-center">
                 <UserCard />

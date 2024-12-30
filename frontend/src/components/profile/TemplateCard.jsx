@@ -5,10 +5,12 @@ import {  formatDistanceToNow } from 'date-fns';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from 'react-router-dom';
 import { PiFolderSimplePlus } from "react-icons/pi";
+import { useSidebar } from '../ui/sidebar';
 
 const TemplateCard = () => {
+    const {open} = useSidebar();
   return (
-    <div className='w-full grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-10'>
+    <div className={`grid gap-4 ${open ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
        {
         tableData.map((item) => (
             <Link to={`/template/4`}>
@@ -16,11 +18,9 @@ const TemplateCard = () => {
                 <CardHeader>
                      <p className='font-bold'>{item.title}</p>
                  </CardHeader>
-            <CardContent>
-              <div className="flex flex-col justify-between ">
+            <CardContent className='flex justify-between  flex-col'>
                 <p className="italic">{item.description}</p>
-                <p className='text-gray-500 '>{formatDistanceToNow(item.date)}</p>
-              </div>
+                <p className='text-gray-500 '>{formatDistanceToNow(item.date)} ago</p>
             </CardContent>
             <CardFooter >
                 <p className='font-bold'>Responses: <span className='font-light'>4</span> </p>
