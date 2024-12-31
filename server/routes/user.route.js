@@ -11,6 +11,6 @@ router.put('/unblock',verifyToken,verifyAdmin,unBlockUsers);
 router.delete('/delete',verifyToken,verifyAdmin,deleteUsers);
 router.get('/get-users',verifyToken,verifyAdmin,getAllUsers);
 router.get('/search-users',verifyToken,searchUsers);
-router.get('/:userId',getUserById);
+router.get('/:userId',verifyToken,getUserById);
 
 export default router;

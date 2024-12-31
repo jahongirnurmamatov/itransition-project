@@ -145,6 +145,11 @@ export const getMyTemplates = async (req, res) => {
         topic: true, 
         description: true, 
         imageUrl: true, 
+        user: {
+          select: {
+            username: true,
+          },
+        },
         visibility: true,
         sharedWith: {
           select: {

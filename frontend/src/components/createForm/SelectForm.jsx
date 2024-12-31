@@ -9,6 +9,7 @@ import { Input } from '../ui/input';
 export default function SelectForm({id,editing}) {
   const [newOption, setNewOption] = useState('');
   const {forms,setForms} = useTemplateStore();
+  const [editingOption, setEditingOption] = useState(false);
       const handleAddOption = () => {
         if (newOption.trim()) {
           const updatedForms = forms.map((form) => {

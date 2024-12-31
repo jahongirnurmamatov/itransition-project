@@ -31,9 +31,9 @@ const TemplateTableBody = ({handleSelectTemplate,selectedTemplates}) => {
                 <p className="overflow-hidden max-w-[100px] max-h-[40px]">{template.title}</p>
               </Link>
             </TableCell>
+            <TableCell>{template.user.username}</TableCell>
             <TableCell>{formatDistanceToNow(template.createdAt)} ago</TableCell>
-            <TableCell>{template.topic}</TableCell>
-            <TableCell>{template.description||"-"}</TableCell>
+            <TableCell>{template.topic||"None"}</TableCell>
             <TableCell>
               <div className={`px-2 py-1 text-center rounded-full ${template?.visibility === "PUBLIC" ? "bg-green-500" : "bg-red-500"} text-white`}>{template.visibility}</div>
             </TableCell>

@@ -28,7 +28,7 @@ const Login = () => {
           title: 'Success',
           description :"You have successfully logged in",
         });
-      navigate('/my-templates')
+      navigate('/my-profile')
       
     }else{
       await signup(email,username,password);
@@ -36,7 +36,7 @@ const Login = () => {
         title: 'Success',
         description :"You have successfully registered",
       });
-      navigate('/my-templates')
+      navigate('/my-profile')
     }
   }
 
