@@ -147,6 +147,11 @@ export const getUserById = async (req, res) => {
               title: true,
               description: true,
               createdAt: true,
+              responses: {
+                select: {
+                  id: true,
+                },
+              }
             },
             orderBy: {
               createdAt: 'desc',

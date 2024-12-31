@@ -13,7 +13,7 @@ const TemplateCard = ({templates}) => {
     <div className={`grid gap-4 ${open ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
        {
         templates?.map((item) => (
-            <Link to={`/template/4`}>
+            <Link key={item.id} to={`/template/4`}>
             <Card className="w-[300px] h-[200px] bg-primary-foreground ">
                 <CardHeader>
                      <p className='font-bold'>{item.title}</p>
@@ -23,7 +23,7 @@ const TemplateCard = ({templates}) => {
                 <p className='text-gray-500 '>{formatDistanceToNow(item.createdAt)} ago</p>
             </CardContent>
             <CardFooter >
-                <p className='font-bold'>Responses: <span className='font-light'>4</span> </p>
+                <p className='font-bold'>Responses: <span className='font-light'>{item.responses.length}</span> </p>
             </CardFooter>
           </Card>
           </Link>
