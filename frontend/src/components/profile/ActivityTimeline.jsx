@@ -51,7 +51,7 @@ export default function ActivityTimeline({userId}) {
             variant="body2"
             color="text.primary"
           >
-            <p className='text-gray-700'>{formatDistanceToNow(activity.time)} ago</p>
+            <span className='text-gray-700'>{formatDistanceToNow(activity.time)} ago</span>
           </TimelineOppositeContent>
           <TimelineSeparator>
             <TimelineConnector />
@@ -60,9 +60,9 @@ export default function ActivityTimeline({userId}) {
           </TimelineSeparator>
           <TimelineContent sx={{ py: '12px', px: 2 }} >
             <Typography variant="h6" component="span">
-              <p className='text-md'>{activity.type}</p>
+              <span className='text-md'>{activity.type}</span>
             </Typography>
-            <Typography><p className='text-sm text-gray-500 italic'>{activity.description}</p></Typography>
+            <Typography><span className='text-sm text-gray-500 italic'>{activity.description}</span></Typography>
           </TimelineContent>
         </TimelineItem>
       ))}

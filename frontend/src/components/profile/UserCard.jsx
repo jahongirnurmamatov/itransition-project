@@ -31,17 +31,17 @@ const UserCard = ({user}) => {
        <div className="flex flex-col gap-10">
        <div className="flex h-5 items-center justify-center space-x-4 mt-10">
           <div className="flex flex-col items-center justify-center gap-0">
-            <p className="font-bold">{user.counts.templates}</p>
+            <p className="font-bold">{user?.counts?.templates}</p>
             <p className="text-sm text-gray-500">Templates</p>
           </div>
           <Separator orientation="vertical" />
           <div className="flex flex-col items-center justify-center gap-0">
-            <p className="font-bold">{user.counts.responses}</p>
+            <p className="font-bold">{user?.counts?.responses}</p>
             <p className="text-sm text-gray-500">Responses</p>
           </div>
           <Separator orientation="vertical" />
           <div className="flex flex-col items-center justify-center gap-0">
-            <p className="font-bold">{user.counts.comments}</p>
+            <p className="font-bold">{user?.counts?.comments}</p>
             <p className="text-sm text-gray-500">Comments</p>
           </div>
         </div>

@@ -26,7 +26,7 @@ const Profile = ({userId}) => {
             </div>
         </div>
         <div className="mt-10">
-            <p className='text-2xl font-bold text-primary text-start my-10'>Recent Templates</p>
+            <p className='text-2xl font-bold text-primary text-center my-10'>Recent Templates</p>
             <div className="flex justify-center">
                 <TemplateCard templates={user?.templates}/>
             </div>
