@@ -1,11 +1,13 @@
 import axiosInstance from '@/lib/axiosInstance';
 import {create} from 'zustand';
+import { getUserById } from '../../../server/controller/user.controller';
 
 export const useUsersStore = create((set,get) => ({ 
     users: [],
     isLoading: false,
     error: null,
     totalPages: 1,
+    user: null,
 
     getAllUsers: async (searchKey, page, usernameOrder, emailOrder, createdAtOrder) => {
         try {
@@ -69,4 +71,14 @@ export const useUsersStore = create((set,get) => ({
         }
     },
 
+    getUserById: async (userId) => {
+        try {
+            set({ isLoading: true, error: null });
+            const res = await axiosInstance.get(`/user/${userId}`);
+            set({ user: res.data.user, isLoading: false });
+        } catch (error) {
+            set({ error: error.response?.data?.message || 'Failed to fetch user.', isLoading: false });
+            throw error;
+        }
+    },
 }));
