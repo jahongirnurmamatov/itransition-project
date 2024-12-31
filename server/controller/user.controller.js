@@ -127,3 +127,57 @@ export const unBlockUsers = async(req,res)=>{
         res.status(500).json({ success: false, message: error.message });
     }
 }
+
+export const getUserById = async (req, res) => {
+    try {
+      const { userId } = req.params;
+  
+      const user = await prisma.user.findUnique({
+        where: { id: parseInt(userId) },
+        select: {
+          email: true,
+          username: true,
+          role: true,
+          status: true,
+          avatar: true,
+          createdAt: true,
+          templates: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              createdAt: true,
+            },
+            orderBy: {
+              createdAt: 'desc',
+            },
+            take: 4,
+          },
+        },
+      });
+  
+      if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
+  
+      const [templateCount, responseCount, commentCount] = await Promise.all([
+        prisma.template.count({ where: { userId: parseInt(userId) } }),
+        prisma.response.count({ where: { userId: parseInt(userId) } }),
+        prisma.comment.count({ where: { userId: parseInt(userId) } }),
+      ]);
+  
+      const userWithCounts = {
+        ...user,
+        counts: {
+          templates: templateCount,
+          responses: responseCount,
+          comments: commentCount,
+        },
+      };
+  
+      res.status(200).json({ success: true, user: userWithCounts });
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  };
+  

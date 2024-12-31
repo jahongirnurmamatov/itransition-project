@@ -1,5 +1,5 @@
 import express from 'express';
-import { blockUsers, deleteUsers, getAllUsers, searchUsers, unBlockUsers, userRoleChange } from '../controller/user.controller.js';
+import { blockUsers, deleteUsers, getAllUsers, getUserById, searchUsers, unBlockUsers, userRoleChange } from '../controller/user.controller.js';
 import { verifyToken } from '../middleware/verifyToken.js';
 import { verifyAdmin } from '../middleware/verifyAdmin.js';
 
@@ -11,5 +11,6 @@ router.put('/unblock',verifyToken,verifyAdmin,unBlockUsers);
 router.delete('/delete',verifyToken,verifyAdmin,deleteUsers);
 router.get('/get-users',verifyToken,verifyAdmin,getAllUsers);
 router.get('/search-users',verifyToken,searchUsers);
+router.get('/:userId',getUserById);
 
 export default router;
