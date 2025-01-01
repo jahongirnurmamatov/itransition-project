@@ -9,7 +9,7 @@ const AggregatedView = () => {
     const {title,topic,imageUrl,description,previewImg} = useTemplateStore();
     const {responses} = useResponseStore();
 
-    if(responses.length === 0) {
+    if(responses?.length === 0) {
       return (
         <div className="flex justify-center items-center h-[80vh]">
           <div className="flex flex-col items-center gap-4">

@@ -10,11 +10,14 @@ import { useResponseStore } from "@/store/responseStore";
 import { ImSpinner } from "react-icons/im";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/store/authStore";
 
 
 const PreviewComponent = ({templateId}) => {
   const {title,topic,imageUrl,forms,tags,description,previewImg} = useTemplateStore();
-  const {addResponse,isAddingResponse,responseError} = useResponseStore();
+  const {addResponse,isAddingResponse,responseError,responders} = useResponseStore();
+  const {authUser} = useAuthStore();
+  const [isSubmitted, setIsSubmitted] = useState(responders.map(responder => responder.user.id).includes(authUser.id));
   const {toast} = useToast();
   const {navigate} = useNavigate();
 
@@ -54,18 +57,9 @@ const PreviewComponent = ({templateId}) => {
       };
     });
     addResponse(templateId,answers);
-    if(responseError){
-      toast({
-        title: 'Error',
-        description: 'You submitted your answer before',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
+    setIsSubmitted(true);
     navigate(`/`, { replace: true });
   };
-
   return (
     <div className="w-full   flex flex-col items-start">
         {previewImg || imageUrl && 
@@ -79,7 +73,7 @@ const PreviewComponent = ({templateId}) => {
       <div className="flex justify-end my-2">
         {topic && <div className="flex gap-2">
           <BsChatLeftQuote className="size-5 text-gray-500 " />
-          <p className="text-sm text-secondary">{topic}</p>
+          <p className="text-sm text-gray-600">{topic}</p>
         </div>}
       </div>
 
@@ -179,8 +173,9 @@ const PreviewComponent = ({templateId}) => {
             </div>
           ))}
           <div className="flex items-center justify-center">
-          <Button type="submit"	 variant="contained" className=" w-[200px] bg-primary mx-auto text-center text-white">
-            {isAddingResponse ? <ImSpinner className="animate-spin mx-auto" /> : 'Submit'}
+          <Button type="submit"	 variant="contained" className={`w-1/3 text-white bg-primary  ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}`}
+             disabled={isSubmitted || isAddingResponse}>
+            {isAddingResponse ? <ImSpinner className="animate-spin mx-auto" /> : isSubmitted ? 'Already Submitted' : 'Submit'}
           </Button>
         </div>
         </form>

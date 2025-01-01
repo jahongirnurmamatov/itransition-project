@@ -52,6 +52,7 @@ export const  getResponders = async (req, res) => {
         createdAt: true,
         user: {
           select: {
+            id: true,
             username: true,
           },
         },
@@ -72,6 +73,13 @@ export const getAggregates = async (req, res) => {
     }
 
     const templateIdParsed = parseInt(templateId, 10);
+
+    const responses = await prisma.response.findMany({
+      where: { templateId: templateIdParsed },
+    });
+    if(responses.length === 0){
+      return res.status(404).json({ success: false, message: "No responses found for the template" });
+    }
 
     // Fetch all questions related to the template upfront
     const questions = await prisma.question.findMany({
