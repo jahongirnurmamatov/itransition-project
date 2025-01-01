@@ -13,9 +13,13 @@ import { useResponseStore } from "@/store/responseStore";
 import ToggleTab from "@/components/response/ToggleTab";
 import AggregatedView from "@/components/response/AggregatedView";
 import { ShareButton } from "@/components/template/ShareButton";
+import { useAuthStore } from "@/store/authStore";
+import { FaEdit } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import EditButton from "@/components/template/EditButton";
 
 const Template = () => {
-  const {  getTemplateById, isLoading, error } = useTemplateStore();
+  const {  getTemplateById, isLoading, error,templateOwner } = useTemplateStore();
   const { templateId } = useParams();
   const [showComments,setShowComments] = useState(false);
   const {getComments} = useCommentStore();
@@ -23,6 +27,8 @@ const Template = () => {
   const [showRight, setShowRight] = useState(false);
   // getting url 
   const url = window.location.href;
+
+  const {authUser} = useAuthStore();
 
   useEffect(() => {
     if (templateId) {
@@ -45,8 +51,12 @@ const Template = () => {
     <div className="flex flex-col gap-3 mb-10">
         <div className="flex justify-end items-center mr-20">
           <div className="flex items-center justify-center gap-2">
+          
             <ToggleTab setShowRight={setShowRight} />
             <ShareButton url={url}/>
+            {
+            templateOwner?.id === authUser?.id && <EditButton  templateId={templateId}/>    
+          }
           </div>
         </div>
         {

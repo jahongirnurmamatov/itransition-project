@@ -65,6 +65,13 @@ export const getTemplateById = async (req, res) => {
             user: { select: { username: true } },
           },
         },
+        user: {
+          select: {
+            username: true,
+            id:true,
+            avatar: true,
+          },
+        },
       },
     });
 

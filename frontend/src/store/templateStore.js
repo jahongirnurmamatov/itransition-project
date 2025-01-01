@@ -13,11 +13,11 @@ export const useTemplateStore = create((set,get) => ({
     description: '',
     tags: [],
     imageUrl:'',
-    userId: null,
     likes : [],
     visibility: "PUBLIC",
     sharedWith: [],
     totalPages: 1,
+    templateOwner:null,
     setSharedWith: (sharedWith) => set({ sharedWith }),
     setVisibility: (visibility) => set({ visibility }),
     setImageURL:(imageUrl) => set({ imageUrl }),
@@ -66,7 +66,7 @@ export const useTemplateStore = create((set,get) => ({
         try {
           set({ isLoading: true, error: null });
           const res = await axiosInstance.get(`/template/${templateId}`);
-          const { title, topic, description, imageUrl, tags, questions,userId,likes,visibility,sharedWith  } = res.data.template;
+          const { title, topic, description, imageUrl, tags, questions,likes,visibility,sharedWith,user  } = res.data.template;
           const forms = questions.map((q) => ({
             id: q.id,
             type: q.type,
@@ -84,10 +84,10 @@ export const useTemplateStore = create((set,get) => ({
             tags,
             forms,
             isLoading: false,
-            userId,
             likes,
             visibility,
-            sharedWith
+            sharedWith,
+            templateOwner:user
           });
         } catch (error) {
           set({ error: error.response?.data?.message || 'Failed to fetch template.', isLoading: false });
