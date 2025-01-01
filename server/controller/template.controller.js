@@ -59,7 +59,7 @@ export const getTemplateById = async (req, res) => {
         questions: {
           include: { options: true },
         },
-        likes: {
+        likes: { 
           select: {
             userId: true,
             user: { select: { username: true } },

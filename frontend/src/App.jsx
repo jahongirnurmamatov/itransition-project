@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import Users from "./pages/Users";
 import Profile from "./pages/Profile";
 import UserTemplates from "./pages/UserTemplates";
+import EditTemplate from "./pages/EditTemplate";
 
 const App = () => {
   const { isCheckingAuth, checkAuth, isAuthenticated, authUser } = useAuthStore();
@@ -29,6 +30,7 @@ const App = () => {
       <Route element={ isAuthenticated ? <Layout /> :  < Navigate to="/login" />}>
         <Route path="/my-templates" element={<MyTemplates />} />
         <Route path="/template/create" element={<CreateTemplate />} />
+        <Route path="/template/edit/:templateId" element={<EditTemplate/>} />
         <Route path="/templates/:templateId" element={<Template />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<Profile />} />

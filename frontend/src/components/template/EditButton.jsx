@@ -16,7 +16,7 @@ const EditButton = ({templateId}) => {
       <TooltipTrigger asChild>
         <Button variant="outline"
             onClick={() => {
-                navigate(`/edit/${templateId}`);
+                navigate(`/template/edit/${templateId}`);
             }}
         >
             <FaEdit className="text-xl cursor-pointer text-primary" />
