@@ -14,8 +14,6 @@ import ToggleTab from "@/components/response/ToggleTab";
 import AggregatedView from "@/components/response/AggregatedView";
 import { ShareButton } from "@/components/template/ShareButton";
 import { useAuthStore } from "@/store/authStore";
-import { FaEdit } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
 import EditButton from "@/components/template/EditButton";
 
 const Template = () => {
@@ -23,12 +21,14 @@ const Template = () => {
   const { templateId } = useParams();
   const [showComments,setShowComments] = useState(false);
   const {getComments} = useCommentStore();
-  const {getResponders,getAggregates} = useResponseStore();
+  const {getResponders,getAggregates,responders,getMyresponse,response} = useResponseStore();
   const [showRight, setShowRight] = useState(false);
   // getting url 
   const url = window.location.href;
-
   const {authUser} = useAuthStore();
+  const [isSubmitted, setIsSubmitted] = useState(responders.map(responder => responder.user.id).includes(authUser.id));
+
+
 
   useEffect(() => {
     if (templateId) {
@@ -36,6 +36,9 @@ const Template = () => {
       getComments(templateId);
       getResponders(templateId);
       getAggregates(templateId);
+    }
+    if(isSubmitted){
+      getMyresponse(templateId);
     }
   }, [templateId, getTemplateById, getComments, getResponders,getAggregates]);
 
@@ -62,7 +65,11 @@ const Template = () => {
         {
           !showRight ? 
           <div className="flex flex-col gap-3 mb-10">
-            <PreviewComponent  templateId={templateId}/>
+            <PreviewComponent  templateId={templateId}
+            isSubmitted={isSubmitted}
+            setIsSubmitted={setIsSubmitted}
+            response={response}
+            />
             <div className="flex flex-col gap-2 lg:px-40 md:px-20 px-10  ">
               <Separator className="my-5"	 />
               <Interaction templateId={templateId} setShowComments={setShowComments}/>

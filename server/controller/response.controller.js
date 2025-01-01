@@ -305,6 +305,40 @@ res.status(200).json({ success: true, results: combinedResults });
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
+export const getMyResponse = async (req, res) => {
+  try { 
+    const userId = req.userId;
+    const { templateId } = req.params;
+    const template = await prisma.template.findUnique({
+      where: { id: parseInt(templateId) },
+    });
+    if (!template) {
+      return res.status(404).json({ success: false, message: "Template not found" });
+    }
+    const answers = await prisma.answer.findMany({
+      where: {
+        response: {
+          userId: parseInt(userId),
+          templateId: parseInt(templateId),
+        },
+      },
+      select: {
+        questionId: true,
+        value: true,
+      },
+    });
+    const response = answers.reduce((acc, answer) => {
+      acc[answer.questionId] = answer.value;
+      return acc;
+    }, {});
+    console.log(response)
+
+    res.status(200).json({ success: true, response });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
 
 
 

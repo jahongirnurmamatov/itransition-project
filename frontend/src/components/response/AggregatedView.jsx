@@ -32,7 +32,7 @@ const AggregatedView = () => {
                 <div className="flex justify-end my-2">
                         {topic.trim('').length > 0 && <div className="flex gap-2">
                           <BsChatLeftQuote className="size-5 text-gray-500 " />
-                          <p className="text-sm text-secondary">{topic}</p>
+                          <p className="text-sm text-gray-600">{topic}</p>
                         </div>}
                 </div>
                 {description && <p className="text-sm font-light text-gray-500">{description}</p>}

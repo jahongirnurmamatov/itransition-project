@@ -40,4 +40,14 @@ export const useResponseStore = create((set) => ({
             throw Error(error);
         }
     },
+    getMyresponse: async (templateId) => {
+        try {
+            set({ isLoading: true, error: null });
+            const res = await axiosInstance.get(`/response/${templateId}/my-response`);
+            set({ response: res.data.response, isLoading: false });
+        } catch (error) {
+            set({ error: error.response.data.error, isLoading: false });
+            throw Error(error);
+        }
+    },
 }));
