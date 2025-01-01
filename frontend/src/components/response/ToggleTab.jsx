@@ -5,6 +5,13 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useState } from "react";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 export default function ToggleTab({setShowRight}) {
   const [alignment, setAlignment] = useState('left');
 
@@ -17,6 +24,7 @@ export default function ToggleTab({setShowRight}) {
 
   return (
     <Stack direction="row" spacing={4}>
+      <TooltipProvider>
       <ToggleButtonGroup
         value={alignment}
         exclusive
@@ -24,20 +32,35 @@ export default function ToggleTab({setShowRight}) {
         aria-label="text alignment"
         className="bg-primary-foreground"
       >
-        <ToggleButton 
-         onClick={()=>{
-          setShowRight(false);
-        }}
-        value="left" aria-label="left aligned">
-          <FaWpforms className="text-primary"/>
-        </ToggleButton>
-        <ToggleButton onClick={()=>{
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <ToggleButton 
+             onClick={()=>{
+               setShowRight(false);
+              }}
+              value="left" aria-label="left aligned">
+              <FaWpforms className="text-primary"/>
+            </ToggleButton>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Forms</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <ToggleButton onClick={()=>{
           setShowRight(true);
         }}
         value="right" aria-label="right aligned">
           <FaChartPie className="text-primary" />
-        </ToggleButton>
+            </ToggleButton> 
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Analytics</p>
+          </TooltipContent>
+        </Tooltip>  
       </ToggleButtonGroup>
+      </TooltipProvider>
     </Stack>
   );
 }
