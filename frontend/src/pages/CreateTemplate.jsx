@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import FormComponent from '@/components/createForm/FormComponent';
-import { update } from 'lodash';
-const CreateTemplate = ({editingTemplate}) => {
-  const {  image,setPreviewImg,previewImg,forms,setForms,createTemplate,getMyTemplates,title,error } = useTemplateStore();
+const CreateTemplate = ({editingTemplate,templateId}) => {
+  const {  image,setPreviewImg,previewImg,forms,setForms,
+         updateTemplate,createTemplate,getMyTemplates,title,error } = useTemplateStore();
   const [formType, setFormType] = useState('');
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -32,6 +32,7 @@ const CreateTemplate = ({editingTemplate}) => {
       options: [],
       required: false,
       description: 'Write small description here...',
+      isNew: true,
     };
     setForms([...forms, newForm]);
   };
@@ -60,7 +61,7 @@ const CreateTemplate = ({editingTemplate}) => {
         return;
       }
       if(editingTemplate){
-        updateTemplate();
+        updateTemplate(templateId);
         toast({
           variant: "default",
           title: "Template updated successfully.",

@@ -12,7 +12,7 @@ const EditTemplate = () => {
 
   return (
     <div className='w-full h-full flex justify-center items-center'>
-        <CreateTemplate editingTemplate={true}/>
+        <CreateTemplate editingTemplate={true} templateId={templateId}/>
     </div>
   )
 }

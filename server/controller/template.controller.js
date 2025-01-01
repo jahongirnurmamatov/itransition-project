@@ -269,67 +269,20 @@ export const getPopularTemplates = async (req, res) => {
 
 export const updateTemplate = async (req, res) => {
   try {
-    const { id } = req.params; 
+    const { id } = req.params;
     const { title, topic, description, imageUrl, forms, tags, sharedWith, visibility } = req.body;
 
-    const sharedWithData = 
+    const sharedWithData =
       visibility.toUpperCase() === 'PRIVATE' && sharedWith?.length
         ? {
             set: sharedWith.map((user) => ({
-              userId: user.id,
+              userId: parseInt(user.id),
             })),
           }
         : undefined;
 
-    const existingTemplate = await prisma.template.findUnique({
-      where: { id },
-      include: { questions: true },
-    });
-
-    if (!existingTemplate) {
-      return res.status(404).json({ success: false, message: 'Template not found' });
-    }
-
-    const updatedQuestions = forms.map((form, index) => {
-      const existingQuestion = existingTemplate.questions.find((q) => q.id === form.id);
-      
-      if (existingQuestion) {
-        return {
-          where: { id: existingQuestion.id },
-          data: {
-            type: form.type,
-            label: form.label,
-            description: form.description,
-            required: form.required,
-            orderIndex: index,
-            options: form.options.length
-              ? {
-                  deleteMany: {}, 
-                  create: form.options.map((option) => ({ value: option })),
-                }
-              : { deleteMany: {} }, 
-          },
-        };
-      } else {
-        return {
-          create: {
-            type: form.type,
-            label: form.label,
-            description: form.description,
-            required: form.required,
-            orderIndex: index,
-            options: form.options.length
-              ? {
-                  create: form.options.map((option) => ({ value: option })),
-                }
-              : undefined,
-          },
-        };
-      }
-    });
-
     const updatedTemplate = await prisma.template.update({
-      where: { id },
+      where: { id: parseInt(id) },
       data: {
         title,
         topic,
@@ -338,16 +291,50 @@ export const updateTemplate = async (req, res) => {
         tags,
         visibility: visibility.toUpperCase(),
         sharedWith: sharedWithData,
-        questions: {
-          upsert: updatedQuestions,
-        },
       },
     });
 
+    for (const [index, form] of forms.entries()) {
+      if (!form.isNew) {
+        console.log(`Updating question with ID: ${form.id}`);
+        await prisma.question.update({
+          where: { id: parseInt(form.id) },
+          data: {
+            type: form.type,
+            label: form.label,
+            description: form.description,
+            required: form.required,
+            orderIndex: index,
+            options: {
+              deleteMany: {}, 
+              create: form.options.map((option) => ({ value: option })),
+            },
+          },
+        });
+      } else {
+        console.log(`Creating new question at index ${index}`);
+        await prisma.question.create({
+          data: {
+            type: form.type,
+            label: form.label,
+            description: form.description,
+            required: form.required,
+            orderIndex: index,
+            options: {
+              create: form.options.map((option) => ({ value: option })),
+            },
+            templateId: parseInt(id),
+          },
+        });
+      }
+    }
+
     res.status(200).json({ success: true, template: updatedTemplate });
   } catch (error) {
+    console.error('Error updating template:', error);
     res.status(500).json({ success: false, message: 'Error updating template', error: error.message });
   }
 };
+
 
 

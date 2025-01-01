@@ -48,7 +48,6 @@ const FormComponent = ({form,forms,setForms,provided}) => {
           setForms(allforms);
         }
       };
-      console.log(form.id)
     
   return (
     <div

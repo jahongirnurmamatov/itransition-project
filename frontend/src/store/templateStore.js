@@ -51,6 +51,28 @@ export const useTemplateStore = create((set,get) => ({
           set({ error: error.response?.data?.message || 'Failed to create template.', isLoading: false });
         }      
     },
+    updateTemplate: async (id) => {
+      const { title, topic, description, imageUrl, forms, tags, visibility, sharedWith } = get();
+      const updatedTemplate = {
+        title,
+        topic,
+        description,
+        imageUrl,
+        forms,
+        tags,
+        visibility,
+        sharedWith,
+      };
+    
+      try {
+        set({ isLoading: true, error: null });
+        const res = await axiosInstance.put(`/template/update/${id}`, updatedTemplate);
+        await get().getMyTemplates();
+        set({ isLoading: false });
+      } catch (error) {
+        set({ error: error.response?.data?.message || 'Failed to update template.', isLoading: false });
+      }
+    },
     uploadToCloudinary: async (file) => {
         try {
           set({isLoading:true, error:null});

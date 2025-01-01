@@ -1,11 +1,12 @@
 import express from 'express';
-import { createTemplate, deleteManyTemplates, getPopularTemplates, getTemplateById, getTemplates, likeUnlike } from '../controller/template.controller.js';
+import { createTemplate, deleteManyTemplates, getPopularTemplates, getTemplateById, getTemplates, likeUnlike, updateTemplate } from '../controller/template.controller.js';
 import { verifyToken } from '../middleware/verifyToken.js';
 import { verifyAdmin } from '../middleware/verifyAdmin.js';
 
 const router = express.Router();
 
 router.post('/create', verifyToken,createTemplate);
+router.put('/update/:id', verifyToken,updateTemplate);
 router.get('/get-templates', verifyToken,getTemplates);
 router.get('/popular',getPopularTemplates);
 router.get('/:id',  getTemplateById);
