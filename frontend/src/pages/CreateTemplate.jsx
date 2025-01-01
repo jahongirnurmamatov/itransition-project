@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import FormComponent from '@/components/createForm/FormComponent';
+import { update } from 'lodash';
 const CreateTemplate = ({editingTemplate}) => {
   const {  image,setPreviewImg,previewImg,forms,setForms,createTemplate,getMyTemplates,title,error } = useTemplateStore();
   const [formType, setFormType] = useState('');
@@ -42,11 +43,9 @@ const CreateTemplate = ({editingTemplate}) => {
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
-
     const reorderedForms = Array.from(forms);
     const [movedForm] = reorderedForms.splice(result.source.index, 1);
     reorderedForms.splice(result.destination.index, 0, movedForm);
-
     setForms(reorderedForms);
   };
 
@@ -60,13 +59,21 @@ const CreateTemplate = ({editingTemplate}) => {
         })
         return;
       }
-      createTemplate();
-      if(!error){
-        getMyTemplates();
+      if(editingTemplate){
+        updateTemplate();
+        toast({
+          variant: "default",
+          title: "Template updated successfully.",
+        })
+      }else{
+        createTemplate();
         toast({
           variant: "default",
           title: "Template created successfully.",
         })
+      }
+      if(!error){
+        getMyTemplates();
         navigate('/my-templates');
       }
     }else{

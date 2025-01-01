@@ -267,3 +267,87 @@ export const getPopularTemplates = async (req, res) => {
   }
 };
 
+export const updateTemplate = async (req, res) => {
+  try {
+    const { id } = req.params; 
+    const { title, topic, description, imageUrl, forms, tags, sharedWith, visibility } = req.body;
+
+    const sharedWithData = 
+      visibility.toUpperCase() === 'PRIVATE' && sharedWith?.length
+        ? {
+            set: sharedWith.map((user) => ({
+              userId: user.id,
+            })),
+          }
+        : undefined;
+
+    const existingTemplate = await prisma.template.findUnique({
+      where: { id },
+      include: { questions: true },
+    });
+
+    if (!existingTemplate) {
+      return res.status(404).json({ success: false, message: 'Template not found' });
+    }
+
+    const updatedQuestions = forms.map((form, index) => {
+      const existingQuestion = existingTemplate.questions.find((q) => q.id === form.id);
+      
+      if (existingQuestion) {
+        return {
+          where: { id: existingQuestion.id },
+          data: {
+            type: form.type,
+            label: form.label,
+            description: form.description,
+            required: form.required,
+            orderIndex: index,
+            options: form.options.length
+              ? {
+                  deleteMany: {}, 
+                  create: form.options.map((option) => ({ value: option })),
+                }
+              : { deleteMany: {} }, 
+          },
+        };
+      } else {
+        return {
+          create: {
+            type: form.type,
+            label: form.label,
+            description: form.description,
+            required: form.required,
+            orderIndex: index,
+            options: form.options.length
+              ? {
+                  create: form.options.map((option) => ({ value: option })),
+                }
+              : undefined,
+          },
+        };
+      }
+    });
+
+    const updatedTemplate = await prisma.template.update({
+      where: { id },
+      data: {
+        title,
+        topic,
+        description,
+        imageUrl,
+        tags,
+        visibility: visibility.toUpperCase(),
+        sharedWith: sharedWithData,
+        questions: {
+          upsert: updatedQuestions,
+        },
+      },
+    });
+
+    res.status(200).json({ success: true, template: updatedTemplate });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error updating template', error: error.message });
+  }
+};
+
+
