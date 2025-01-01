@@ -153,6 +153,7 @@ export const getTemplates = async (req, res) => {
         user: {
           select: {
             username: true,
+            id: true,
           },
         },
         visibility: true,

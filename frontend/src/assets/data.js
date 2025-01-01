@@ -65,7 +65,7 @@ export const data = {
             url: "/my-profile",
           },
           {
-            title: "Allow Users to Edit",
+            title: "All users",
             url: "/users",
           },
         ],

@@ -16,6 +16,7 @@ import TemplateTableBody from "./TemplateTableBody";
 import { Button } from "../ui/button";
 import TemplateTableHeader from "./TemplateTableHeader";
 import { Search } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 
 const TabelForms = ({ userId }) => {
   const {templates,getMyTemplates,error,totalPages,deleteManyTemplates} = useTemplateStore();
@@ -26,6 +27,8 @@ const TabelForms = ({ userId }) => {
   const createdAtOrder = searchParams.get("createdAtOrder") || null;
   const [searchInput, setSearchInput] = useState(searchKey);
   const page = searchParams.get("page") || 1;
+  
+  const {authUser} = useAuthStore();
 
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [allSelected, setAllSelected] = useState(false);
@@ -70,9 +73,6 @@ const handleKeyDown = (e) => {
 const handleSearchSubmit = () => {
   const newParams = new URLSearchParams(searchParams.toString());
   newParams.set("searchKey", searchInput);
-  if(userId){
-    newParams.set("userId", userId);
-  }
   setSearchParams(newParams);
 };
 
@@ -115,10 +115,13 @@ const handleDeleteMany = ()=>{
             className='w-1/2 pl-5  mx-2 my-4 px-10 outline-none text-gray-500' />
           <Search className="absolute top-6 left-4 size-5 text-gray-400" />
         </div>
-        <Button variant='outline' 
-        onClick={handleDeleteMany} className='mx-2 my-4 bg-primary-foreground'>
-          <AiFillDelete className="text-red-500"/>
-        </Button>
+        {
+          authUser?.role === "ADMIN" || userId == templates[0]?.user?.id ? 
+          <Button variant='outline' 
+            onClick={handleDeleteMany} className='mx-2 my-4 bg-primary-foreground'>
+          <AiFillDelete className="text-red-500"/> 
+        </Button> : null
+        }
       </div>
       <Table>
         <TableCaption>A list of your all templates.</TableCaption>

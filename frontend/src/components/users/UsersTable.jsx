@@ -21,8 +21,7 @@ import { Checkbox } from "../ui/checkbox";
 import UserActionButtons from "./UserActionButtons";
 
 const UsersTable = () => {
-  const { userRoleChange } = useAuthStore();
-  const { users, getAllUsers, error,totalPages } = useUsersStore();
+  const { users, getAllUsers, error,totalPages,userRoleChange } = useUsersStore();
   const { toast } = useToast();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [allSelected, setAllSelected] = useState(false);
@@ -36,6 +35,16 @@ const UsersTable = () => {
   const page = searchParams.get("page") || 1;
 
   const [searchInput, setSearchInput] = useState(searchKey);
+
+  const {authUser} = useAuthStore();
+
+  if(authUser?.role !== "ADMIN") {
+    return (
+      <div className="flex justify-center h-screen">
+        <h1 className="text-xl font-semibold text-gray-500">You are not authorized to access this page</h1>
+      </div>
+    )
+  }
 
   useEffect(() => {
     getAllUsers(searchKey, page, usernameOrder, emailOrder, createdAtOrder);
