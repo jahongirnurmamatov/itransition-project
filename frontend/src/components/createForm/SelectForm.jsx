@@ -49,7 +49,6 @@ export default function SelectForm({id,editing}) {
                   <SelectItem key={option} value={option} >
                     {option}
                   </SelectItem>
-                  
                 ))
               }
         

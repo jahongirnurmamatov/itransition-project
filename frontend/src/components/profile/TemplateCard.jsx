@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom';
 import { PiFolderSimplePlus } from "react-icons/pi";
 import { useSidebar } from '../ui/sidebar';
 
-const TemplateCard = ({templates}) => {
+const TemplateCard = ({templates,userId}) => {
     const {open} = useSidebar();
   return (
     <div className={`grid gap-4 ${open ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
        {
         templates?.map((item) => (
-            <Link key={item.id} to={`/template/4`}>
+            <Link key={item.id} to={`/templates/${item.id}`}>
             <Card className="w-[300px] h-[200px] bg-primary-foreground ">
                 <CardHeader>
                      <p className='font-bold'>{item.title}</p>
@@ -29,7 +29,7 @@ const TemplateCard = ({templates}) => {
           </Link>
         ))
        }
-       <Link to={`url-to-templates-of-user`}>
+       <Link to={`/users/:id/user-templates?userId=${userId}`}>
             <Card className="w-[300px] h-[200px] bg-primary-foreground flex items-center justify-center">
             <CardContent className=''>
               <div className='flex gap-4 text-gray-500'>

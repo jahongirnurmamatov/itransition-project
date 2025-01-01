@@ -82,4 +82,15 @@ export const useUsersStore = create((set,get) => ({
             throw error;
         }
     },
+    userRoleChange: async (userId, role) => {
+        try {
+            const res = await axiosInstance.post("/user/role-change", { userId, role });
+            if (res.data.success) {
+                set({ user: res.data.user });
+            }
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
+    },
 }));

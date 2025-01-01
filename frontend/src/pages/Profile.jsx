@@ -12,7 +12,7 @@ const Profile = ({userId}) => {
 
     useEffect(() => {
         getUserById(userId);
-      }, [userId]);
+      }, [userId,getUserById]);
 
   return (
     <div className='w-[100%] min-h-screen flex flex-col lg:px-10 md:px-10 px-2  '>
@@ -28,7 +28,7 @@ const Profile = ({userId}) => {
         <div className="mt-10">
             <p className='text-2xl font-bold text-primary text-center my-10'>Recent Templates</p>
             <div className="flex justify-center">
-                <TemplateCard templates={user?.templates}/>
+                <TemplateCard templates={user?.templates} userId={userId}/>
             </div>
         </div>
     </div>

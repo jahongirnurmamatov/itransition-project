@@ -95,16 +95,17 @@ export const useTemplateStore = create((set,get) => ({
         }
       },
 
-    getMyTemplates: async (searchKey,page, titleOrder,createdAtOrder, topicOrder ) => {
+    getMyTemplates: async (searchKey,page, titleOrder,createdAtOrder, topicOrder,userId ) => {
         try {
           set({ isLoading: true, error: null });
-          const res = await axiosInstance.get('/template/get-my-templates',{
+          const res = await axiosInstance.get('/template/get-templates',{
             params: {
               searchKey,              
               page,
               titleOrder,
               createdAtOrder,
               topicOrder,
+              userId
             },
           });
           set({ templates: res.data.templates, isLoading: false, totalPages: res.data.totalPages });

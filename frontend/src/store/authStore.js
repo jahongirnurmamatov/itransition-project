@@ -2,18 +2,18 @@ import axiosInstance from '@/lib/axiosInstance';
 import {create} from 'zustand';
 
 export const useAuthStore = create((set)=>({
-    user:null,
+    authUser:null,
     isAuthenticated:false,
     error:null,
     isLoading:false,
     isCheckingAuth:true,
-    setUser:(user)=>set({user}),
+    setAuthUser:(authUser)=>set({authUser}),
 
     signup: async(email,username, password)=>{
         set({isLoading:true, error:null});
         try {
             const res = await axiosInstance.post('/auth/signup', {email, password, username});
-            set({user:res.data.user, isAuthenticated:true, isLoading:false});    
+            set({authUser:res.data.user, isAuthenticated:true, isLoading:false});    
         } catch (error) {
             set({error:error.response.data.message, isLoading:false});
             throw Error(error);
@@ -23,7 +23,7 @@ export const useAuthStore = create((set)=>({
         set({isLoading:true, error:null});
         try {
             const res = await axiosInstance.post(`/auth/login`, {email, password});
-            set({user:res.data.user, isAuthenticated:true, isLoading:false});
+            set({authUser:res.data.user, isAuthenticated:true, isLoading:false});
         } catch (error) {
             set({error:error.response.data.message, isLoading:false});
             throw Error(error);
@@ -33,7 +33,7 @@ export const useAuthStore = create((set)=>({
         set({isLoading:true, error:null});
         try {
             await axiosInstance.post(`/auth/logout`);
-            set({user:null, isAuthenticated:false, isLoading:false});
+            set({authUser:null, isAuthenticated:false, isLoading:false});
         } catch (error) {
             set({error:error.response.data.message, isLoading:false});
             throw Error(error);
@@ -44,20 +44,10 @@ export const useAuthStore = create((set)=>({
         set({isCheckingAuth:true, error:null});
         try {
             const res = await axiosInstance.get(`/auth/check-auth`);
-            set({user:res.data.user, isAuthenticated:true, isLoading:false, isCheckingAuth:false});
+            set({authUser:res.data.user, isAuthenticated:true, isLoading:false, isCheckingAuth:false});
         } catch (error) {
             set({error:null, isCheckingAuth:false});
         }
     },
-    userRoleChange: async (userId, role) => {
-        try {
-            const res = await axiosInstance.post("/user/role-change", { userId, role });
-            if (res.data.success) {
-                set({ user: res.data.user });
-            }
-            return { success: true };
-        } catch (error) {
-            return { success: false, message: error.message };
-        }
-    },
+   
 }))

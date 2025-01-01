@@ -31,7 +31,7 @@ import { Link } from "react-router-dom"
 export function NavUser() {
   const {logout} = useAuthStore();
   const { isMobile } = useSidebar()
-  const {user} = useAuthStore();
+  const {authUser:user} = useAuthStore();
   
   return (
     (<SidebarMenu>
@@ -78,7 +78,7 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
-                    <Link to={`/profile/${user?.id}`}>
+                    <Link to={`/users/${user?.id}`}>
                       Account
                     </Link>
               </DropdownMenuItem>

@@ -19,6 +19,8 @@ import {
 import { useAuthStore } from "@/store/authStore"
 import { Separator } from "../ui/separator";
 const UserCard = ({user}) => {
+  const {authUser} = useAuthStore();
+
     
   return (
     <Card className="w-[350px]">
@@ -60,7 +62,7 @@ const UserCard = ({user}) => {
             </div>
             <div className="flex items-center gap-2">
                 <MdOutlineAdminPanelSettings className="text-xl"/>
-                {user?.role==='ADMIN' ? 
+                {authUser?.role==='ADMIN' ? 
                 <Select>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={user?.role} />

@@ -17,7 +17,7 @@ import { Button } from "../ui/button";
 import TemplateTableHeader from "./TemplateTableHeader";
 import { Search } from "lucide-react";
 
-const TabelForms = ({ data }) => {
+const TabelForms = ({ userId }) => {
   const {templates,getMyTemplates,error,totalPages,deleteManyTemplates} = useTemplateStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const searchKey = searchParams.get("searchKey") || "";
@@ -31,7 +31,7 @@ const TabelForms = ({ data }) => {
   const [allSelected, setAllSelected] = useState(false);
 
   useEffect(() => {
-    getMyTemplates(searchKey,page, titleOrder,createdAtOrder, topicOrder );
+    getMyTemplates(searchKey,page, titleOrder,createdAtOrder, topicOrder,userId );
     if (error) {
       toast({
         title: "Error",
@@ -39,7 +39,7 @@ const TabelForms = ({ data }) => {
         status: "error",
       });
     }
-  }, [getMyTemplates, searchKey,  titleOrder,page, topicOrder, createdAtOrder]);
+  }, [getMyTemplates, searchKey,  titleOrder,page, topicOrder, createdAtOrder,userId]);
 
   const handleSortChange = (field, currentOrder) => {
     const newOrder = currentOrder === "asc" ? "desc" : "asc";
@@ -70,6 +70,9 @@ const handleKeyDown = (e) => {
 const handleSearchSubmit = () => {
   const newParams = new URLSearchParams(searchParams.toString());
   newParams.set("searchKey", searchInput);
+  if(userId){
+    newParams.set("userId", userId);
+  }
   setSearchParams(newParams);
 };
 

@@ -110,9 +110,10 @@ export const deleteManyTemplates = async (req, res) => {
 };
 
 
-export const getMyTemplates = async (req, res) => {
+export const getTemplates = async (req, res) => {
   try {
     const {
+      userId =null,
       searchKey = "",
       titleOrder,
       topicOrder,
@@ -131,8 +132,12 @@ export const getMyTemplates = async (req, res) => {
                 { topic: { contains: searchKey, mode: 'insensitive' } },
             ],
         },
+        
     ],
   };
+  if(userId){
+    where.AND.push({ userId: parseInt(userId) });
+  }
 
   const orderBy = [];
   if (titleOrder) orderBy.push({ title: titleOrder });

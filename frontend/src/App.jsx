@@ -11,9 +11,10 @@ import Template from "./pages/Template";
 import NotFound from "./pages/NotFound";
 import Users from "./pages/Users";
 import Profile from "./pages/Profile";
+import UserTemplates from "./pages/UserTemplates";
 
 const App = () => {
-  const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore();
+  const { isCheckingAuth, checkAuth, isAuthenticated, authUser } = useAuthStore();
   
   useEffect(() => {
     checkAuth();
@@ -31,7 +32,8 @@ const App = () => {
         <Route path="/templates/:templateId" element={<Template />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<Profile />} />
-        <Route path="/my-profile" element={<Profile userId={user?.id} />} />
+        <Route path="/users/:id/user-templates" element={<UserTemplates />} />
+        <Route path="/my-profile" element={<Profile userId={authUser?.id} />} />
       </Route>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
