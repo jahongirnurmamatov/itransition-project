@@ -10,7 +10,7 @@ import { useResponseStore } from '@/store/responseStore';
 import WhoResponded from './WhoResponded';
 export const Interaction = ({templateId,setShowComments}) => {
     const {comments} = useCommentStore();
-    const {user} = useAuthStore();
+    const {authUser:user} = useAuthStore();
     const {likes,likeUnlike} = useTemplateStore();
     const {responders} = useResponseStore();
 

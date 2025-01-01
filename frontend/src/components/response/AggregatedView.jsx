@@ -2,13 +2,23 @@ import { useResponseStore } from '@/store/responseStore';
 import { useTemplateStore } from '@/store/templateStore';
 import React from 'react'
 import { BsChatLeftQuote } from 'react-icons/bs';
-import PieChartView from './BarChartView';
+import { TbMoodEmpty } from "react-icons/tb";
 import BarChartView from './BarChartView';
 
 const AggregatedView = () => {
     const {title,topic,imageUrl,description,previewImg} = useTemplateStore();
     const {responses} = useResponseStore();
-    console.log(responses )
+
+    if(responses.length === 0) {
+      return (
+        <div className="flex justify-center items-center h-[80vh]">
+          <div className="flex flex-col items-center gap-4">
+            <TbMoodEmpty className="size-10 text-gray-500" />
+            <h1 className="text-2xl text-gray-500">No Responses Yet</h1>
+          </div>
+        </div>
+      )
+    }
   return (
     <div className="flex flex-col gap-3 mb-10">
         <div className="w-full  min-h-screen flex flex-col items-start">
