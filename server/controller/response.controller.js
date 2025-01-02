@@ -331,8 +331,6 @@ export const getMyResponse = async (req, res) => {
       acc[answer.questionId] = answer.value;
       return acc;
     }, {});
-    console.log(response)
-
     res.status(200).json({ success: true, response });
   } catch (error) {
     console.error(error);

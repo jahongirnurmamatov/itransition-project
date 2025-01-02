@@ -23,7 +23,8 @@ export const signup = async (req, res) => {
     });
     if (user) {
       generatTokenAndSetCookie(res, user.id);
-      return res.status(200).json({ success: true, message: "User created" });
+      const userWithoutPassword = { ...user, password: undefined };
+      return res.status(200).json({ success: true, user: userWithoutPassword });	
     }else{
       return res.status(500).json({ success: false, message: "Invalid user data" });
     }
