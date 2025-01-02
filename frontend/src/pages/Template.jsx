@@ -23,22 +23,22 @@ const Template = () => {
   const {getComments} = useCommentStore();
   const {getResponders,getAggregates,responders,getMyresponse,response} = useResponseStore();
   const [showRight, setShowRight] = useState(false);
+  let isSubmitted = false;
   // getting url 
   const url = window.location.href;
   const {authUser} = useAuthStore();
-  const [isSubmitted, setIsSubmitted] = useState(responders.map(responder => responder.user.id).includes(authUser.id));
-
-
 
   useEffect(() => {
     if (templateId) {
       getTemplateById(templateId);
       getComments(templateId);
-      getResponders(templateId);
+      getResponders(templateId).then((responders) => {
+        isSubmitted = responders.map(responder => responder?.user?.id).includes(authUser?.id); 
+        if(isSubmitted){
+          getMyresponse(templateId);
+        }
+      });
       getAggregates(templateId);
-    }
-    if(isSubmitted){
-      getMyresponse(templateId);
     }
   }, [templateId, getTemplateById, getComments, getResponders,getAggregates]);
 
@@ -67,7 +67,6 @@ const Template = () => {
           <div className="flex flex-col gap-3 mb-10">
             <PreviewComponent  templateId={templateId}
             isSubmitted={isSubmitted}
-            setIsSubmitted={setIsSubmitted}
             response={response}
             />
             <div className="flex flex-col gap-2 lg:px-40 md:px-20 px-10  ">

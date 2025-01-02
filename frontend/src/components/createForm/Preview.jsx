@@ -10,13 +10,12 @@ import { ImSpinner } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 
 
-const PreviewComponent = ({templateId,isSubmitted,setIsSubmitted,response}) => {
+const PreviewComponent = ({templateId,isSubmitted,response}) => {
   const {title,topic,imageUrl,forms,tags,description,previewImg} = useTemplateStore();
   const {addResponse,isAddingResponse} = useResponseStore();
   const {navigate} = useNavigate();
 
   const [selectValues, setSelectValues] = useState({}); 
-
       
   const handleSelectChange = (formId, value) => {
     setSelectValues((prev) => ({
@@ -102,8 +101,8 @@ const PreviewComponent = ({templateId,isSubmitted,setIsSubmitted,response}) => {
                       <Input
                         id={`question-${form.id}`}
                         type="number"
-                        value={response[form.id] || ""}
                         readOnly={isSubmitted}
+                        value={response && response[form.id] || ""}
                         placeholder="Type a number here"
                         className="w-2/3 p-2"
                       />
@@ -113,7 +112,7 @@ const PreviewComponent = ({templateId,isSubmitted,setIsSubmitted,response}) => {
                       <div key={index}>
                         <Checkbox
                           id={`checkbox-${form.id}-${index}`}
-                          checked={response[form.id]?.includes(option) || false}
+                          checked={response && response[form.id]?.includes(option)}
                           disabled={isSubmitted}
                         />
                         <label htmlFor={`checkbox-${form.id}-${index}`}>{option}</label>
@@ -121,7 +120,7 @@ const PreviewComponent = ({templateId,isSubmitted,setIsSubmitted,response}) => {
                     ));
                   case 'radio':
                     return (
-                      <RadioGroup name={`radio-${form.id}`} value={response[form.id] || ""}>
+                      <RadioGroup name={`radio-${form.id}`} value={response && response[form.id] || ""}>
                         {form.options.map((option, index) => (
                           <FormControlLabel
                             key={index}
@@ -140,14 +139,14 @@ const PreviewComponent = ({templateId,isSubmitted,setIsSubmitted,response}) => {
                         multiline
                         rows={4}
                         variant="standard"
-                        value={response[form.id] || ""}
+                        value={response && response[form.id] || ""}
                         readOnly={isSubmitted}
                       />
                     );
                   case 'select':
                     return (
                       <Select
-                        value={response[form.id] || ""}
+                        value={response && response[form.id] || ""}
                         id={`question-${form.id}`}
                         disabled={isSubmitted}
                         onValueChange={(value) => handleSelectChange(form.id, value)}

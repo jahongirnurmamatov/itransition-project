@@ -25,6 +25,7 @@ export const useResponseStore = create((set) => ({
             set({ isLoading: true, error: null });
             const res = await axiosInstance.get(`/response/${templateId}/get-responders`);
             set({ responders: res.data.responses, isLoading: false });
+            return res.data.responses;
         } catch (error) {
             set({ error: error.response.data.error, isLoading: false });
             throw Error(error);
