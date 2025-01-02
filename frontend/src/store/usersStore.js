@@ -1,6 +1,5 @@
 import axiosInstance from '@/lib/axiosInstance';
 import {create} from 'zustand';
-import { getUserById } from '../../../server/controller/user.controller';
 
 export const useUsersStore = create((set,get) => ({ 
     users: [],
