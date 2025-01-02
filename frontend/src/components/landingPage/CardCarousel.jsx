@@ -29,10 +29,10 @@ const CardCarousel = ({templates}) => {
                   alt={template.title}
                   className="w-full h-[200px] object-cover rounded-md mt-3"
                   />
-                <h1 className="text-2xl font-bold text-white mt-4">
+                <h1 className="text-xl font-semibold text-white mt-4">
                   {template.title}
                 </h1>
-                <p className="text-lg font-light text-gray-200 mt-2">
+                <p className="text-md font-light text-gray-200 mt-2">
                   {template.description}
                 </p>
               </CardContent>
