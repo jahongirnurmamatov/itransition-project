@@ -12,11 +12,11 @@ import { FaCrown } from "react-icons/fa";
 import { useListenComments } from '@/hooks/useListenComments';
 
 const Comments = () => {
-  const { user } = useAuthStore();
+  const { authUser:user } = useAuthStore();
   const {  isCommentLoading, commentError, comments, editComment } = useCommentStore();
   const [editCommentId, setEditCommentId] = useState(null);
   const [editedContent, setEditedContent] = useState("");
-  const {userId} = useTemplateStore();
+  const {templateOwner} = useTemplateStore();
 
   useListenComments();
 
@@ -57,11 +57,11 @@ const Comments = () => {
                 <FaCircleUser className="size-8 text-gray-500" />
               )}
             </div>
-            <div className="flex rounded-lg bg-slate-200 py-2 px-4 min-w-100px] items-center gap-10 justify-between">
+            <div className="flex rounded-lg bg-primary/[0.1] py-2 px-4 min-w-100px] items-center gap-10 justify-between">
               <div className="flex flex-col items-start justify-start gap-0">
                 <div className="flex gap-2">
-                  <p className="font-bold">{comment?.user?.username }</p>
-                  {userId===comment?.user?.id &&  <p className='text-gray-500 text-sm flex gap-2 items-center'><FaCrown size={12} /> <span>Author</span></p> }
+                  <p className="font-bold ">{comment?.user?.username }</p>
+                  {templateOwner?.id===comment?.user?.id &&  <p className='text-gray-500 text-sm flex gap-2 items-center'><FaCrown size={12} /> <span>Author</span></p> }
                 </div> 
                 {editCommentId === comment?.id ? (
                   <div className="flex items-center gap-2">

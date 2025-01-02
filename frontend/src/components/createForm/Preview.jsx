@@ -54,6 +54,7 @@ const PreviewComponent = ({templateId,isSubmitted,response}) => {
     setIsSubmitted(true);
     navigate(`/`, { replace: true });
   };
+  console.log(isSubmitted)
   return (
     <div className="w-full   flex flex-col items-start">
         {previewImg || imageUrl && 

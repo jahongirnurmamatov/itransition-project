@@ -15,15 +15,13 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 
 import {labeledTags} from '@/assets/data.js'
 const topics = [
-    "Education",
-    "Health",
-    "Sport",
-    "Politics",
-    "Economy",
-    "Technology",
-    "Entertainment",
-    "Others",
-]
+  "Survey",
+  "Application Form",
+  "Poll",
+  "Quiz",
+  "Registration",
+  "Contact Form" 
+];
 import { MdOutlineEditCalendar } from "react-icons/md";
 import { useTemplateStore } from "@/store/templateStore"
 import Autocomplete from '@mui/material/Autocomplete';
@@ -120,8 +118,6 @@ export function TitleSheet() {
                   />
                 )}
               />
-
-
             </Stack>
           </div>
           <SelectVisibilty />

@@ -38,7 +38,7 @@ const CommentBox = () => {
       >
         <div className="relative">
           <TextField
-            className="w-full"
+            className="w-full bg-primary-foreground text-white"
             id="outlined-multiline-static"
             label="Comment here"
             multiline
@@ -46,6 +46,11 @@ const CommentBox = () => {
             placeholder="Write a comment..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            sx={{
+              "& .MuiInputBase-input": { 
+                color: "#6b7280",
+              },
+            }}
           />
           <button
             type="submit"
