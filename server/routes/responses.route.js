@@ -1,7 +1,6 @@
 import express from 'express';
 import { addResponse, getAggregates, getMyResponse, getResponders } from '../controller/response.controller.js';
 import { verifyToken } from '../middleware/verifyToken.js';
-import { get } from 'mongoose';
 
 const router = express.Router();
 
