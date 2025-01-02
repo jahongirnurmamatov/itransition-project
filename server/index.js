@@ -16,11 +16,16 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ 
-  origin: "https://itransition-project-nine.vercel.app", 
-  credentials: true 
-}));
 
+const allowedOrigins = [
+  "http://localhost:5173", 
+  "https://itransition-project-nine.vercel.app",
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 
 // routes
 app.use("/api/auth", authRoute);

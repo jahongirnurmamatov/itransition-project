@@ -52,8 +52,9 @@ export const login = async (req, res) => {
         .status(401)
         .json({ success: false, message: "Invalid credentials" });
     }
+    const userWithoutPassword = { ...user, password: undefined };
     generatTokenAndSetCookie(res, user.id);
-    return res.status(200).json({ success: true, message: "User logged in" });
+    return res.status(200).json({ success: true, user: userWithoutPassword });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }

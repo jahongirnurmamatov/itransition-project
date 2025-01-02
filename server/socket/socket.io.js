@@ -7,9 +7,10 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
 	cors: {
-		origin: ["https://itransition-project-nine.vercel.app/"],
+		origin: "https://itransition-project-nine.vercel.app", 
 		methods: ["GET", "POST"],
-	},
+		credentials: true,
+	  },
 });
 
 
