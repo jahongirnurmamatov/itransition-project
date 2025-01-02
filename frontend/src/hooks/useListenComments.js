@@ -2,7 +2,11 @@ import { useCommentStore } from "@/store/commentStore";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 
-const socket = io("https://itransition-project-is0a.onrender.com/");
+const socket = io("https://itransition-project-is0a.onrender.com", {
+    withCredentials: true,
+    autoConnect: false,
+  });
+
 
 export const useListenComments = () => {
    const {comments,setComments} = useCommentStore();
