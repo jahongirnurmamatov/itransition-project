@@ -182,6 +182,7 @@ export const getUserById = async (req, res) => {
   
       res.status(200).json({ success: true, user: userWithCounts });
     } catch (error) {
+      console.log(error)
       res.status(500).json({ success: false, message: error.message });
     }
   };

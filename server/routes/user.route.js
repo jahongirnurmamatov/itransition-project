@@ -9,7 +9,7 @@ router.post('/role-change',verifyToken,verifyAdmin,userRoleChange);
 router.put('/block',verifyToken,verifyAdmin,blockUsers);
 router.put('/unblock',verifyToken,verifyAdmin,unBlockUsers);
 router.delete('/delete',verifyToken,verifyAdmin,deleteUsers);
-router.get('/get-users',verifyAdmin,getAllUsers);
+router.get('/get-users',verifyToken,verifyAdmin,getAllUsers);
 router.get('/search-users',verifyToken,searchUsers);
 router.get('/:userId',verifyToken,getUserById);
 
