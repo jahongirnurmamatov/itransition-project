@@ -59,7 +59,7 @@ const Login = () => {
                     <Input 
                     onChange={(e) => setEmail(e.target.value)} 
                     value={email}  
-                    className='px-10' type='email' placeholder='Enter your email' />
+                    className='px-10 text-gray-600' type='email' placeholder='Enter your email' />
                   </div>
                 </div>
                 {
@@ -70,7 +70,7 @@ const Login = () => {
                     <Input  
                     onChange={(e) => setUsername(e.target.value)} 
                     value={username}  
-                    className='px-10' type='text' placeholder='Enter your username' />
+                    className='px-10 text-gray-600' type='text' placeholder='Enter your username' />
                   </div>
                 </div>
                 }
@@ -81,7 +81,7 @@ const Login = () => {
                     <Input  
                     onChange={(e) => setPassword(e.target.value)} 
                     value={password}  
-                    className='px-10' type='password' placeholder='Enter password' />
+                    className='px-10 text-gray-600' type='password' placeholder='Enter password' />
                   </div>
                 </div>
                 <Button disabled={isLoading} className='w-full mt-5'>{state === 'Login' ? 'Login' : 'Register'}</Button>

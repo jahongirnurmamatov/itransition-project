@@ -17,22 +17,22 @@ const CardCarousel = ({templates}) => {
           infiniteLoop
         >
           {templates.map((template) => (
-            <Link to={`/template/${template.id}`} key={template.id}>
+            <Link to={`/templates/${template.id}`} key={template.id}>
 
             <Card
               key={template.id} 
-              className="w-[90%] h-[350px] overflow-hidden bg-primary-foreground rounded-lg shadow-md mx-auto"
+              className="w-[90%] h-[350px] overflow-hidden bg-[#7e40c5] rounded-lg shadow-md mx-auto"
             >
-              <CardContent>
+              <CardContent className="flex flex-col items-center justify-center w-full">
                 <img
-                  src={template.imageUrl || "https://form-publisher.com/blog/content/images/size/w1200/2023/01/How-to-Make-your-own-Google-Form.png"}
+                  src={template.imageUrl || "/form-for-card.png"}
                   alt={template.title}
                   className="w-full h-[200px] object-cover rounded-md mt-3"
                   />
-                <h1 className="text-2xl font-bold text-gray-100 mt-4">
+                <h1 className="text-2xl font-bold text-white mt-4">
                   {template.title}
                 </h1>
-                <p className="text-lg font-light text-gray-500 mt-2">
+                <p className="text-lg font-light text-gray-200 mt-2">
                   {template.description}
                 </p>
               </CardContent>

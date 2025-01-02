@@ -4,7 +4,6 @@ const ScrollAwareHeader = ({ initialBg, scrolledBg }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
-  console.log(activeSection)
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
