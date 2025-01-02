@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import { FaComments } from "react-icons/fa";
 import { AiFillLike } from "react-icons/ai";
 import { LuLayoutTemplate } from "react-icons/lu";
+import { HiTemplate } from "react-icons/hi";
+
 import { useActivityStore } from '@/store/activityStore';
 import { useEffect } from 'react';
 import {  formatDistanceToNow } from 'date-fns';
@@ -22,8 +24,8 @@ const getIcon = (type) => {
       return <AiFillLike className='text-blue-800'/>;
     case "Create":
       return <LuLayoutTemplate className='text-blue-800'/>;
-    default:
-      return <TimelineDot className='text-blue-800'/>;
+    case "Response":
+      return <HiTemplate className='text-blue-800'/>;
   }
 };
 

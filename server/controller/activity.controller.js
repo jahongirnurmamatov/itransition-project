@@ -49,7 +49,7 @@ export const getRecentActivities = async (req, res) => {
         description:  `${like.user.username} liked ${like.template.title} template.`,
       })),
       ...responses.map((response) => ({
-        type: 'Respond',
+        type: 'Response',
         time: response.createdAt,
         description: `${response.user.username} responded to ${response.template.title}.`,
       })),
