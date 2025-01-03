@@ -21,24 +21,31 @@ const Template = () => {
   const { templateId } = useParams();
   const [showComments,setShowComments] = useState(false);
   const {getComments} = useCommentStore();
-  const {getResponders,getAggregates,responders,getMyresponse,response} = useResponseStore();
+  const {getResponders,getAggregates,getMyresponse,response} = useResponseStore();
   const [showRight, setShowRight] = useState(false);
-  let isSubmitted = false;
+  const [isSubmitted, setIsSubmitted] = useState(false);
   // getting url 
   const url = window.location.href;
   const {authUser} = useAuthStore();
 
   useEffect(() => {
     if (templateId) {
-      getTemplateById(templateId);
-      getComments(templateId);
-      getResponders(templateId).then((responders) => {
-        isSubmitted = responders.map(responder => responder?.user?.id).includes(authUser?.id); 
-        if(isSubmitted){
-          getMyresponse(templateId);
+      const fetchData = async () => {
+        await getTemplateById(templateId);
+        await getComments(templateId);
+  
+        const responders = await getResponders(templateId);
+        const submitted = responders
+          .map((responder) => responder?.user?.id)
+          .includes(authUser?.id);
+        setIsSubmitted(submitted);
+        if (submitted) {
+          await getMyresponse(templateId);
         }
-      });
-      getAggregates(templateId);
+        await getAggregates(templateId);
+      };
+  
+      fetchData();
     }
   }, [templateId, getTemplateById, getComments, getResponders,getAggregates]);
 
@@ -67,6 +74,7 @@ const Template = () => {
           <div className="flex flex-col gap-3 mb-10">
             <PreviewComponent  templateId={templateId}
             isSubmitted={isSubmitted}
+            setIsSubmitted={setIsSubmitted}
             response={response}
             />
             <div className="flex flex-col gap-2 lg:px-40 md:px-20 px-10  ">

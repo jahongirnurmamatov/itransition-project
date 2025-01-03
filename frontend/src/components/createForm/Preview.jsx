@@ -18,12 +18,12 @@ import { useTemplateStore } from "@/store/templateStore";
 import { BsChatLeftQuote } from "react-icons/bs";
 import Tags from "./Tags";
 import { Button } from "../ui/button";
-import {  useState } from "react";
+import { useState } from "react";
 import { useResponseStore } from "@/store/responseStore";
 import { ImSpinner } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 
-const PreviewComponent = ({ templateId, isSubmitted, response }) => {
+const PreviewComponent = ({ templateId, isSubmitted, response,setIsSubmitted }) => {
   const { title, topic, imageUrl, forms, tags, description, previewImg } =
     useTemplateStore();
   const { addResponse, isAddingResponse } = useResponseStore();
@@ -37,6 +37,7 @@ const PreviewComponent = ({ templateId, isSubmitted, response }) => {
       [formId]: value,
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const answers = forms.map((form) => {
@@ -135,10 +136,10 @@ const PreviewComponent = ({ templateId, isSubmitted, response }) => {
                       <Input
                         id={`question-${form.id}`}
                         type="number"
-                        value={(response && response[form.id]) || ""}
+                        defaultValue={response?.[form.id] || null}
                         placeholder="Type a number here"
                         className="w-2/3 p-2"
-                        disabled={false}
+                        disabled={isSubmitted}
                       />
                     );
                   case "checkbox":
@@ -146,10 +147,8 @@ const PreviewComponent = ({ templateId, isSubmitted, response }) => {
                       <div key={index}>
                         <Checkbox
                           id={`checkbox-${form.id}-${index}`}
-                          checked={
-                            response && response[form.id]?.includes(option)
-                          }
-                          disabled={false}
+                          defaultChecked={response?.[form.id]?.includes(option)}
+                          disabled={isSubmitted}
                         />
                         <label htmlFor={`checkbox-${form.id}-${index}`}>
                           {option}
@@ -160,13 +159,13 @@ const PreviewComponent = ({ templateId, isSubmitted, response }) => {
                     return (
                       <RadioGroup
                         name={`radio-${form.id}`}
-                        value={(response && response[form.id]) || ""}
+                        defaultValue={response?.[form.id] || ""}
                       >
                         {form.options.map((option, index) => (
                           <FormControlLabel
                             key={index}
                             value={option}
-                            control={<Radio disabled={false} />}
+                            control={<Radio disabled={isSubmitted} />}
                             label={option}
                           />
                         ))}
@@ -179,19 +178,21 @@ const PreviewComponent = ({ templateId, isSubmitted, response }) => {
                         multiline
                         rows={4}
                         variant="standard"
-                        value={(response && response[form.id]) || ""}
-                        disabled={false}
+                        defaultValue={response?.[form.id] || ""}
+                        disabled={isSubmitted}
                       />
                     );
                   case "select":
                     return (
                       <Select
-                        value={(response && response[form.id]) || ""}
+                        value={
+                          selectValues[form.id] || response?.[form.id] || ""
+                        }
                         id={`question-${form.id}`}
                         onValueChange={(value) =>
-                          handleSelectChange(form.id, value)
+                          !isSubmitted && handleSelectChange(form.id, value)
                         }
-                        disabled={false} // Add a disabled prop here
+                        disabled={isSubmitted}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select" />
@@ -219,6 +220,7 @@ const PreviewComponent = ({ templateId, isSubmitted, response }) => {
               })()}
             </div>
           ))}
+
           <div className="flex items-center justify-center">
             <Button
               type="submit"
