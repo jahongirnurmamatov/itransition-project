@@ -4,7 +4,7 @@ import { useAuthStore } from '@/store/authStore'
 import { useTemplateStore } from '@/store/templateStore'
 import React from 'react'
 
-const MyTemplates = () => {
+const AllTemplates = () => {
   const {isLoading,error} = useTemplateStore();
   const {authUser} = useAuthStore();
 
@@ -17,11 +17,11 @@ const MyTemplates = () => {
   return (
     <div className='w-full min-h-screen flex items-start justify-center'>
       <div className="mx-auto w-[90%] my-6">
-        <h1 className='text-2xl font-bold text-center text-primary mb-10'>My Templates</h1>
-        <TabelForms  userId={authUser?.id} />
+        <h1 className='text-2xl font-bold text-center text-primary mb-10'>All Templates</h1>
+        <TabelForms   />
       </div>
     </div>
   )
 }
 
-export default MyTemplates
+export default AllTemplates
