@@ -338,6 +338,30 @@ export const getMyResponse = async (req, res) => {
   }
 };
 
+export const getMyResponses = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const responses = await prisma.response.findMany({
+      where: { userId: parseInt(userId) },
+      select: {
+        id: true,
+        templateId: true,
+        createdAt: true,
+        template: true,
+        answers: {
+          select: {
+            questionId: true,
+            value: true,
+          },
+        },
+      },
+    });
+    res.status(200).json({ success: true, responses });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
 
 
 

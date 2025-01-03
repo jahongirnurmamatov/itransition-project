@@ -10,18 +10,18 @@ export const data = {
   
     navMain: [
       {
-        title: "My Forms",
+        title: "Templates",
         url: "#",
         icon: Folder,
         isActive: true,
         items: [
           {
-            title: "All Forms",
+            title: "My Templates",
             url: "/my-templates",
           },
           {
-            title: "Favoruites",
-            url: "/my-favourites",
+            title: "All Templates",
+            url: "/all-templates",
           },
         ],
       },
