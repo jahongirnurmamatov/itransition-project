@@ -89,7 +89,34 @@ const en = {
   // AggregatedView.jsx
   noSubmissionsYet: "No Submissions Yet",
 
+  // Users.jsx
+  allUsers: "All Users",
 
+  // UserTable.jsx
+  search: "Search",
+  username: "Username",
+  email: "Email",
+  registerd: "Registered",
+  role: "Role",
+  actions: "Actions",
+  userRoleChange: "User Role Change",
+  status: "Status", 
+  listUsers: "List of Users",
+  active: "Active",
+  blocked: "Blocked",
+  user: "User",
+  admin: "Admin",
+  userRoleChanged: "User Role Changed Successfully",
+  userRoleChangeError: "You are not authorized to do this action!",
+
+  // UserActionButtons.jsx
+  selectUser: "Please select at least one user",
+  userBlocked: "Users have been blocked successfully",
+  userUnblocked: "Users have been unblocked successfully",
+  userDeleted: "Users have been deleted successfully",
+  success: "Success",
+  error: "Error",
+  notAuthorized: "You are not authorized to access this page",
 };
 
 export default en;

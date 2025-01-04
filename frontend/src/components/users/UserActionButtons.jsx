@@ -7,52 +7,52 @@ import { useUsersStore } from '@/store/usersStore';
 import { toast } from '@/hooks/use-toast';
 
 
-const UserActionButtons = ({selectedUsers}) => {
+const UserActionButtons = ({selectedUsers,d}) => {
   const {deleteUsers, blockUsers, unBlockUsers,getAllUsers} = useUsersStore();
   
   const handleBlock = async() => {
     if(selectedUsers.length === 0) {
       toast({
-        title: "Error",
+        title: d.error,
         variant: "destructive",
-        description: "Please select at least one user",
+        description: d.pleaseSelect,
       })
     }else{
       await blockUsers(selectedUsers);
       toast({
-        title: "Success",
-        description: "Users blocked successfully",
+        title: d.success,
+        description: d.userBlocked,
       })
     }
   }
   const handleUnlock = async() => {
     if(selectedUsers.length === 0) {
       toast({
-        title: "Error",
+        title:d.error,
         variant: "destructive",
-        description: "Please select at least one user",
+        description: d.pleaseSelect,
       })
     }else{
       await unBlockUsers(selectedUsers);
       toast({
-        title: "Success",
-        description: "Users unblocked successfully",
+        title: d.success,
+        description: d.userUnblocked,
       })
     }
   }
   const handleDelte = async() => {
     if(selectedUsers.length === 0) {
       toast({
-        title: "Error",
+        title: d.error,
         variant: "destructive",
-        description: "Please select at least one user",
+        description: d.pleaseSelect,
       })
     }else{
       await deleteUsers(selectedUsers);
       toast({
-      title: "Success",
+      title: d.success,
       variant:'outline',
-      description: "Users deleted successfully",
+      description: d.userDeleted,
     })
     }
   }

@@ -86,6 +86,37 @@ const ru = {
 
   //AggregatedView.jsx
   noSubmissionsYet: "Пока нет ответов",
+
+  //Users.jsx
+  allUsers: "Все пользователи",
+
+  // UsersTable.jsx
+  users: "Пользователи",
+  search: "Поиск",
+  username: "Имя пользователя",
+  email: "Email",
+  registered: "Зарегистрирован",
+  role: "Роль",
+  actions: "Действия",
+  status: "Статус",
+  listUser: "Список пользователей",
+  active: "Активный",
+  blocked: "Заблокированный",
+  user: "Пользователь",
+  admin: "Админ",
+  noUsersYet: "Пока нет пользователей",
+  userRoleChanged: "Роль пользователя успешно изменена",
+  userRoleChangeError: "У вас нет прав для изменения ролей!",
+
+  // UserActionButtons.jsx
+  selectUser: "Пожалуйста, выберите хотя бы одного пользователя",
+  userBlocked: "Пользователи успешно заблокированы",
+  userUnblocked: "Пользователи успешно разблокированы",
+  userDeleted: "Пользователи успешно удалены",
+  success: "Успешно",
+  error: "Ошибка",
+  notAuthorized: "У вас нет прав для доступа к этой странице",
+
 };
 
 export default ru;

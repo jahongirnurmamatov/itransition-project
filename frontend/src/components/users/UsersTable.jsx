@@ -20,7 +20,7 @@ import PaginationComponent from "./PaginationComponent";
 import { Checkbox } from "../ui/checkbox";
 import UserActionButtons from "./UserActionButtons";
 
-const UsersTable = () => {
+const UsersTable = ({d}) => {
   const { users, getAllUsers, error,totalPages,userRoleChange } = useUsersStore();
   const { toast } = useToast();
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -41,7 +41,7 @@ const UsersTable = () => {
   if(authUser?.role !== "ADMIN") {
     return (
       <div className="flex justify-center h-screen">
-        <h1 className="text-xl font-semibold text-gray-500">You are not authorized to access this page</h1>
+        <h1 className="text-xl font-semibold text-gray-500">{d.notAuthorized}</h1>
       </div>
     )
   }
@@ -62,14 +62,14 @@ const UsersTable = () => {
     if (result.success) {
       getAllUsers();
       toast({
-        title: "Success",
-        description: "User role changed successfully",
+        title: d.success,
+        description: d.userRoleChanged,
       });
     } else {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "You are not authorized!",
+        title: d.error,
+        description: d.userRoleChangeError,
       });
     }
   };
@@ -132,7 +132,7 @@ const UsersTable = () => {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Search"
+            placeholder={d.search}
             className="flex-1 pl-5 mx-2 my-4 px-10 outline-none"
             />
           <Search
@@ -140,10 +140,10 @@ const UsersTable = () => {
             className="absolute top-6 left-4 size-5 text-gray-400 cursor-pointer hover:scale-110"
           />
         </div>
-        <UserActionButtons selectedUsers={selectedUsers}/>
+        <UserActionButtons selectedUsers={selectedUsers} d={d}/>
       </form>
       <Table>
-        <TableCaption>A list of users.</TableCaption>
+        <TableCaption>{d.listUser}</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>
@@ -155,7 +155,7 @@ const UsersTable = () => {
                 onClick={() => handleSortChange("username", usernameOrder)}
                 className="flex gap-3 items-center justify-start cursor-pointer"
               >
-                Username
+                {d.username}
                 <ArrowDownNarrowWide
                   className={`size-4 text-gray-500 ${usernameOrder === "desc" ? "rotate-180" : ""}`}
                 />
@@ -166,25 +166,25 @@ const UsersTable = () => {
                 onClick={() => handleSortChange("email", emailOrder)}
                 className="flex gap-3 items-center justify-start cursor-pointer"
               >
-                Email
+                {d.email}
                 <ArrowDownNarrowWide
                   className={`size-4 text-gray-500 ${emailOrder === "desc" ? "rotate-180" : ""}`}
                 />
               </div>
             </TableHead>
-            <TableHead>Status</TableHead> 
+            <TableHead>{d.status}</TableHead> 
             <TableHead>
               <div
                 onClick={() => handleSortChange("createdAt", createdAtOrder)}
                 className="flex gap-3 items-center justify-start cursor-pointer"
                 >
-                Registered
+                {d.registered}
                 <ArrowDownNarrowWide
                   className={`size-4 text-gray-500 ${createdAtOrder === "desc" ? "rotate-180" : ""}`}
                 />
                 </div>
             </TableHead>
-            <TableHead>Role</TableHead>
+            <TableHead>{d.role}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -211,7 +211,7 @@ const UsersTable = () => {
               <TableCell >
                 <span className={` rounded-full px-3 py-1 ${user?.status === "ACTIVE" 
                   ? "bg-green-200 text-green-600" : "bg-red-200 text-red-600"}`}>
-                    {user?.status}</span>
+                    {user?.status === "ACTIVE" ? d.active : d.blocked	}</span>
               </TableCell>
               <TableCell>
                 <span className="text-gray-500">
@@ -224,16 +224,16 @@ const UsersTable = () => {
                   onValueChange={(value) => handleRoleChange(user.id, value)}
                 >
                   <SelectTrigger
-                    className={`w-24 bg-primary-foreground ${
+                    className={`w-[120px] bg-primary-foreground ${
                       user.role === "ADMIN" ? "text-red-500" : "text-blue-500"
                     }`}
                   >
-                    {user.role}
+                    {user.role === "ADMIN" ? d.admin : d.user}
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="ADMIN">ADMIN</SelectItem>
-                      <SelectItem value="USER">USER</SelectItem>
+                      <SelectItem value="ADMIN">{d.admin}</SelectItem>
+                      <SelectItem value="USER">{d.user}</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
