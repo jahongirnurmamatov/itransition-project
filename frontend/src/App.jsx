@@ -14,10 +14,17 @@ import Profile from "./pages/Profile";
 import UserTemplates from "./pages/UserTemplates";
 import EditTemplate from "./pages/EditTemplate";
 import AllTemplates from "./pages/AllTemplates";
+import { useLanguageStore } from "./store/languageStore";
 
 const App = () => {
   const { isCheckingAuth, checkAuth, isAuthenticated, authUser } = useAuthStore();
   
+  const initializeLanguage = useLanguageStore((state) => state.initializeLanguage);
+
+  useEffect(() => {
+    initializeLanguage(); 
+  }, [initializeLanguage]);
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
