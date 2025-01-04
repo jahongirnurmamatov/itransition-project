@@ -8,12 +8,13 @@ import { IoStatsChart } from "react-icons/io5";
 import WhoLiked from './WhoLiked';
 import { useResponseStore } from '@/store/responseStore';
 import WhoResponded from './WhoResponded';
+import { useLanguageStore } from '@/store/languageStore';
 export const Interaction = ({templateId,setShowComments}) => {
     const {comments} = useCommentStore();
     const {authUser:user} = useAuthStore();
     const {likes,likeUnlike} = useTemplateStore();
     const {responders} = useResponseStore();
-
+   const {dictionary:d} =useLanguageStore();
     const islikedTemplate = likes.some((like) => like?.userId === user?.id);
 
     const handleLikeUnlike =  () => {
@@ -26,18 +27,18 @@ export const Interaction = ({templateId,setShowComments}) => {
             !islikedTemplate ? <AiOutlineLike onClick={handleLikeUnlike} className='size-5 cursor-pointer hover:opacity-80 text-blue-800' />
              : <AiFillLike onClick={handleLikeUnlike} className='size-5 text-blue-800 cursor-pointer hover:opacity-80' />
         } 
-          <WhoLiked />
+          <WhoLiked d={d}/>
         </div>
         <div className="flex items-center justify-center gap-3">
             <div 
             onClick={()=>setShowComments((prev)=>!prev)}
             className="flex items-center justify-center gap-2">
                 {comments?.length>0 && <span className='text-gray-500  cursor-pointer hover:opacity-80 hover:underline text-sm'>{comments.length}
-                   <span className='hidden md:inline'> Comments</span></span>}
+                   <span className='hidden md:inline'> {d.comments}</span></span>}
                 <FaCommentDots className='size-5 text-gray-500 cursor-pointer hover:opacity-80 ' />
             </div> 
             <div className="flex items-center justify-center gap-2">
-                {responders?.length>0 && <WhoResponded />}
+                {responders?.length>0 && <WhoResponded d={d}/>}
                 <IoStatsChart className='size-5 text-gray-500 cursor-pointer hover:opacity-80 ' />
             </div>
         </div>

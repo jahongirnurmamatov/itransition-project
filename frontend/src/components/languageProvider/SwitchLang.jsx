@@ -9,7 +9,6 @@ const flagMap = {
 
 const SwitchLang = () => {
   const { language, setLanguage, dictionary } = useLanguageStore();
-  console.log(language,dictionary)
 
   return (
     <DropdownMenu>

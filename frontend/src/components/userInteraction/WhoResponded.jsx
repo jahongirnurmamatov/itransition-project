@@ -4,14 +4,14 @@ import { useResponseStore } from '@/store/responseStore';
 
 
 
-const WhoResponded = () => {
+const WhoResponded = ({d}) => {
     const {responders} = useResponseStore();
     
  return (
         <HoverCard >
             <HoverCardTrigger>
                 <span className='text-gray-500 text-sm hover:underline cursor-pointer'>{responders.length} 
-                    <span className='hidden md:inline'> Responses</span> 
+                    <span className='hidden md:inline'> {d.responses}</span> 
                 </span>
             </HoverCardTrigger>
             <HoverCardContent>

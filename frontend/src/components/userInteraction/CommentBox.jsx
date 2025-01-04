@@ -5,6 +5,7 @@ import { TextField } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useCommentStore } from '@/store/commentStore';
 import { TbSend2 } from "react-icons/tb";
+import { useLanguageStore } from '@/store/languageStore';
 
 const CommentBox = () => {
   const { user } = useAuthStore();
@@ -18,6 +19,7 @@ const CommentBox = () => {
     addComment(templateId, content);
     setContent("");
   };
+  const {dictionary:d} = useLanguageStore();
 
   return (
     <div className="flex gap-3 items-start justify-start">
@@ -40,10 +42,10 @@ const CommentBox = () => {
           <TextField
             className="w-full bg-primary-foreground text-white"
             id="outlined-multiline-static"
-            label="Comment here"
+            label={d.commentHere}
             multiline
             rows={2}
-            placeholder="Write a comment..."
+            placeholder={d.writeComment}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             sx={{

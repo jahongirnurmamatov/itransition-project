@@ -13,6 +13,7 @@ import { Button } from "../ui/button";
 import TemplateTableHeader from "./TemplateTableHeader";
 import { Search } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
+import { useLanguageStore } from "@/store/languageStore";
 
 const TabelForms = ({ userId }) => {
   const { templates, getMyTemplates, error, totalPages, deleteManyTemplates } =
@@ -26,6 +27,7 @@ const TabelForms = ({ userId }) => {
   const page = searchParams.get("page") || 1;
 
   const { authUser } = useAuthStore();
+  const { dictionary } = useLanguageStore();
 
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [allSelected, setAllSelected] = useState(false);
@@ -140,7 +142,7 @@ const TabelForms = ({ userId }) => {
         ) : null}
       </div>
       <Table>
-        <TableCaption>A list of your all templates.</TableCaption>
+        <TableCaption>{dictionary.tableFooter}</TableCaption>
         <TemplateTableHeader
           handleSortChange={handleSortChange}
           titleOrder={titleOrder}

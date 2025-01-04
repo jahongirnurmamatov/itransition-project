@@ -22,12 +22,14 @@ import { useState } from "react";
 import { useResponseStore } from "@/store/responseStore";
 import { ImSpinner } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
+import { useLanguageStore } from "@/store/languageStore";
 
 const PreviewComponent = ({ templateId, isSubmitted, response,setIsSubmitted }) => {
   const { title, topic, imageUrl, forms, tags, description, previewImg } =
     useTemplateStore();
   const { addResponse, isAddingResponse } = useResponseStore();
   const { navigate } = useNavigate();
+  const {dictionary} = useLanguageStore();
 
   const [selectValues, setSelectValues] = useState({});
 
@@ -231,9 +233,9 @@ const PreviewComponent = ({ templateId, isSubmitted, response,setIsSubmitted }) 
               {isAddingResponse ? (
                 <ImSpinner className="animate-spin mx-auto" />
               ) : isSubmitted ? (
-                "Already Submitted"
+                dictionary.alreadySubmitted
               ) : (
-                "Submit"
+                dictionary.submit
               )}
             </Button>
           </div>

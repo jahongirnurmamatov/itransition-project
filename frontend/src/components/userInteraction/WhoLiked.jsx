@@ -3,13 +3,13 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card'
 
 
 
-const WhoLiked = () => {
+const WhoLiked = ({d}) => {
     const {likes} = useTemplateStore();
  return (
         <HoverCard >
             <HoverCardTrigger>
                 <span className='text-gray-500 text-sm hover:underline cursor-pointer'>{likes.length} 
-                    <span className='hidden md:inline'> Likes</span> 
+                    <span className='hidden md:inline'> {d.likes}</span> 
                 </span>
             </HoverCardTrigger>
             <HoverCardContent>
