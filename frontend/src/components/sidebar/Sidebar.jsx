@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Outlet } from "react-router-dom"
 import { ThemeToggle } from "../themeprovider/ThemeToggle"
+import SwitchLang from "../languageProvider/SwitchLang"
 
 export function Sidebar() {
   return (
@@ -39,7 +40,8 @@ export function Sidebar() {
               </BreadcrumbList>
             </Breadcrumb>
           </div>
-          <div className="mr-10">
+          <div className="flex gap-5 mr-10 items-center">
+            <SwitchLang />
             <ThemeToggle />
           </div>
         </header>
