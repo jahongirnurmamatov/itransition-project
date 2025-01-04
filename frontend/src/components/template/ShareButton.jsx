@@ -14,12 +14,14 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useLanguageStore } from "@/store/languageStore";
 
 export function ShareButton({url}) {
+  const {dictionary:d}= useLanguageStore();
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className='text-primary'>Share 
+        <Button variant="outline" className='text-primary'>{d.share} 
             <RiShareForwardFill className="ml-1" />
         </Button>
       </DialogTrigger>
@@ -33,7 +35,7 @@ export function ShareButton({url}) {
         <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
             <Label htmlFor="link" className="sr-only">
-              Link
+              {d.link}
             </Label>
             <Input
               id="link"
@@ -44,14 +46,14 @@ export function ShareButton({url}) {
           <Button 
           onClick={() =>  navigator.clipboard.writeText(url)}
           type="submit" size="sm" className="px-3">
-            <span className="sr-only">Copy</span>
+            <span className="sr-only">{d.copy}</span>
             <Copy />
           </Button>
         </div>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary">
-              Close
+              {d.close}
             </Button>
           </DialogClose>
         </DialogFooter>

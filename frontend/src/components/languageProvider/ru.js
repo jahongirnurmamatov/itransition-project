@@ -14,6 +14,7 @@ const ru = {
   alreadySubmitted: "Уже отправлено",
   likes: "Нравится",
   comments: "Комментарии",
+  noCommentsYet: "Пока нет комментариев",
   responses: "Ответы",
   writeComment: "Напишите комментарий...",
   commentHere: "Комментарии здесь",
@@ -22,6 +23,57 @@ const ru = {
   save: "Сохранить",
   cancel: "Отмена",
   author: "Автор",
+  template: "Шаблон",
+  analytics: "Аналитика",
+  share: "Поделиться",
+  shareLink: "Поделиться ссылкой",
+  link: "Ссылка",
+  copy: "Копировать",
+  close: "Закрыть", 
+
+  // CreateTemplate.jsx
+  createTemplate: "Создать Шаблон",
+  editTemplate: "Редактировать Шаблон",
+  create: "Создать",
+  addQuestion: "Добавить вопрос",
+  update: "Обновить",
+  // AddQuestion.jsx
+  selectQuestionType: "Выберите тип вопроса",
+  selectOneQuestion: "Здесь вы можете выбрать только один тип вопроса",
+  select: "Выбрать",
+  header: "Заголовок",
+  paragraph: "Параграф",
+  number: "Число",
+  checkbox: "Чекбокс",
+  radio: "Радио",
+  textarea: "Текстовое поле",
+  image: "Изображение",
+  addQuestionType: "Добавить тип вопроса",
+  pleaseSelect : "Пожалуйста, выберите тип вопроса",
+
+  // TitleSheet.jsx
+  title: "Заголовок",
+  topic: "Тема",
+  description: "Описание",
+  image: "Изображение",
+  upload: "Загрузить изображение",
+  addTags: "Добавить теги",
+  tags: "Теги",
+  selectTags: "Выбрать теги",
+  select: "Выбрать",
+  save: "Сохранить",
+  cancel: "Отмена",
+  selectTopic: "Выберите тему",
+  selectImage: "Выберите изображение",
+  editTempEssent: "Редактировать основные данные шаблона.",
+  makeChanges: "Внесите изменения в шаблон. Выберите тему, загрузите изображение и добавьте теги.",
+
+  // SelectVisibility.jsx
+  selectVisibility: "Выберите видимость",
+  public: "Публичный",
+  private: "Приватный",
+
+  
 };
 
 export default ru;

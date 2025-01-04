@@ -42,9 +42,9 @@ const Comments = () => {
 
   return (
     <div className="my-4">
-      <h1 className="text-xl font-bold">Comments</h1>
+      <h1 className="text-xl font-bold">{d.comments}</h1>
       {comments.length === 0 ? (
-        <p className="text-center italic text-gray-500 mt-5">No comments yet</p>
+        <p className="text-center italic text-gray-500 mt-5">{d.noCommentsYet}</p>
       ) : (
         <div className="flex flex-col items-start justify-start gap-4 my-5 ">
           {comments.map((comment, index) => (

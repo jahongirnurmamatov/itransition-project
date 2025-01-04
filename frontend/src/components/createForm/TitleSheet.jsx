@@ -29,7 +29,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import SelectVisibilty from "./SelectVisibilty"
 import ShareWith from "./ShareWith"
-export function TitleSheet() {
+export function TitleSheet({d}) {
   const {title,setTitle, topic,setImage, setTopic,tags,setTags,image,
     uploadToCloudinary,description,setDescription,isLoading,visibility} = useTemplateStore()
   
@@ -48,15 +48,15 @@ export function TitleSheet() {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Edit Template Essentials</SheetTitle>
+          <SheetTitle>{d.editTempEssent}</SheetTitle>
           <SheetDescription>
-            Make changes to your profile here. Click save when you're done.
+            {d.makeChanges}
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Title
+              {d.title}
             </Label>
             <Input className="col-span-3" onChange={(e) => setTitle(e.target.value)}
             value={title}
@@ -64,11 +64,11 @@ export function TitleSheet() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="topic" className="text-right">
-              Topic
+              {d.topic}
             </Label>
             <Select  onValueChange={(e) => setTopic(e)} value={topic} id='topic'>
                 <SelectTrigger  className="col-span-3">
-                    <SelectValue placeholder="Select" />
+                    <SelectValue placeholder={d.select} />
                 </SelectTrigger>
                     <SelectContent>
                         <SelectGroup  >
@@ -84,27 +84,27 @@ export function TitleSheet() {
               </Select>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label>Description</Label>
+            <Label>{d.description}</Label>
             <Input onChange={(e) => setDescription(e.target.value)} value={description} id="description" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="topic" className="text-right">
-              Image
+              {d.image}
             </Label>
             <div className="col-span-3 flex flex-col">
               <Input onChange={(e) => setImage(e.target.files[0])} type="file" className='' />
-              <Button disabled={isLoading} onClick={()=>handleUpload()} className="mt-2 bg-green-600 hover:bg-green-500">Upload Image</Button>
+              <Button disabled={isLoading} onClick={()=>handleUpload()} className="mt-2 bg-green-600 hover:bg-green-500">{d.upload}</Button>
             </div>
           </div>
           <div className="grid grid-cols-4 w-full items-center gap-4">
-            <Label>Add Tags</Label>
+            <Label>{d.addTags}</Label>
             <Stack className="col-span-3" spacing={2} >
               <Autocomplete
                 multiple
                 id="tags-standard"
                 options={labeledTags}
                 getOptionLabel={(option) => option.title}
-                value={tags.map((tagTitle) => labeledTags.find((tag) => tag.title === tagTitle) || { title: tagTitle })} // Map back to full objects
+                value={tags.map((tagTitle) => labeledTags.find((tag) => tag.title === tagTitle) || { title: tagTitle })} 
                 onChange={(event, newValue) => {
                   setTags(newValue.map((option) => option.title)); 
                 }}
@@ -112,15 +112,15 @@ export function TitleSheet() {
                   <TextField
                     {...params}
                     variant="standard"
-                    label="Select Tags"
-                    placeholder="Tags"
+                    label={d.selectTags}
+                    placeholder={d.tags}
                     className="w-1/2"
                   />
                 )}
               />
             </Stack>
           </div>
-          <SelectVisibilty />
+          <SelectVisibilty d={d}/>
          {visibility==='PRIVATE' && <ShareWith  />}
         </div>
       </SheetContent>

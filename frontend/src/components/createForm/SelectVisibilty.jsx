@@ -11,21 +11,21 @@ import {
 import { Label } from "../ui/label"
 import { useTemplateStore } from "@/store/templateStore";
   
-  const SelectVisibilty = () => {
+  const SelectVisibilty = ({d}) => {
     const {visibility, setVisibility} = useTemplateStore();
     return (
         <div className="grid grid-cols-4 w-full items-center gap-4">
-        <Label>Select Visibility</Label>
+        <Label>{d.selectVisibility} </Label>
         <Select value={visibility} id="visibility"
           onValueChange={(value) => setVisibility(value)}
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="PUBLIC" />
+            <SelectValue placeholder={d.select} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="PUBLIC">Public</SelectItem>
-              <SelectItem value="PRIVATE">Private</SelectItem>
+              <SelectItem value="PUBLIC">{d.public}</SelectItem>
+              <SelectItem value="PRIVATE">{d.private}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

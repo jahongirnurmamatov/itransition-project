@@ -9,9 +9,11 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import FormComponent from '@/components/createForm/FormComponent';
+import { useLanguageStore } from '@/store/languageStore';
 const CreateTemplate = ({editingTemplate,templateId}) => {
   const {  image,setPreviewImg,previewImg,forms,setForms,
          updateTemplate,createTemplate,getMyTemplates,title,error } = useTemplateStore();
+  const {dictionary:d}=useLanguageStore();
   const [formType, setFormType] = useState('');
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -91,7 +93,7 @@ const CreateTemplate = ({editingTemplate,templateId}) => {
     <div className="w-full  min-h-screen flex items-start justify-center">
       <div className="mx-auto w-4/5 my-6">
         <h1 className="text-2xl  font-bold text-center text-primary">
-          {editingTemplate ? 'Edit Template' : 'Create Template'}        
+          {editingTemplate ? d?.editTemplate : d.createTemplate}        
         </h1>
         {previewImg && 
           <div className="flex items-center justify-center h-[300px] w-[100%] my-5">
@@ -100,7 +102,7 @@ const CreateTemplate = ({editingTemplate,templateId}) => {
         }
         <div className="flex gap-2 justify-end">
           <PreviewComponentModal  />
-          <TitleSheet  />
+          <TitleSheet d={d} />
         </div>
         <Droppable droppableId={dId}>
             {(provided) => (
@@ -122,12 +124,13 @@ const CreateTemplate = ({editingTemplate,templateId}) => {
           </Droppable>
         <div className="flex items-center justify-center gap-3">
           <DialogDemo
+            d={d}
             addForm={addForm}
             setFormType={setFormType}
             formType={formType}
             />
             <Button  className='bg-green-700 text-white hover:bg-green-600 px-5' onClick={handleSubmit}>
-              {editingTemplate ? 'Update Template' : 'Create Template'}
+              {editingTemplate ? d?.update : d?.create}
             </Button>
         </div>
       </div>
