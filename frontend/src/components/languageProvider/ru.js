@@ -37,6 +37,8 @@ const ru = {
   create: "Создать",
   addQuestion: "Добавить вопрос",
   update: "Обновить",
+  untitledLable: "Без названия",
+  writeSmallDescription: "Здесь напишите небольшое описание...",
   // AddQuestion.jsx
   selectQuestionType: "Выберите тип вопроса",
   selectOneQuestion: "Здесь вы можете выбрать только один тип вопроса",
@@ -72,8 +74,18 @@ const ru = {
   selectVisibility: "Выберите видимость",
   public: "Публичный",
   private: "Приватный",
-
   
+  //FormComponent.jsx
+  typeNumber: "Введите число здесь",
+  typeText: "Введите текст здесь",
+  addOption: "Добавить новый вариант",
+
+  //Preview.jsx
+  hereIsPreview: "Вот предварительный просмотр",
+  editFurther: "Вы можете дальше отредактировать, если хотите",
+
+  //AggregatedView.jsx
+  noSubmissionsYet: "Пока нет ответов",
 };
 
 export default ru;

@@ -24,12 +24,17 @@ import { ImSpinner } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import { useLanguageStore } from "@/store/languageStore";
 
-const PreviewComponent = ({ templateId, isSubmitted, response,setIsSubmitted }) => {
+const PreviewComponent = ({
+  templateId,
+  isSubmitted,
+  response,
+  setIsSubmitted,
+}) => {
   const { title, topic, imageUrl, forms, tags, description, previewImg } =
     useTemplateStore();
   const { addResponse, isAddingResponse } = useResponseStore();
   const { navigate } = useNavigate();
-  const {dictionary} = useLanguageStore();
+  const { dictionary } = useLanguageStore();
 
   const [selectValues, setSelectValues] = useState({});
 

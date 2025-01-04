@@ -1,3 +1,5 @@
+import { add } from "lodash";
+
 const en = {
   english: "English",
   russian: "Russian",
@@ -37,6 +39,8 @@ const en = {
   create: "Create",
   addQuestion: "Add Question",
   update: "Update",
+  untitledLable: "Untitled Label",
+  writeSmallDescription: "Write small description here...",
   // AddQuestion.jsx
   selectQuestionType: "Select Question Type",
   selectOneQuestion: "Here you can select one type of question only",
@@ -72,6 +76,18 @@ const en = {
   public: "Public",
   private: "Private",
   selectVisibility: "Select Visibility",
+
+  // FormComponent.jsx
+  typeNumber: "Enter number here",
+  typeText: "Enter text here",
+  addOption: "Add new option",
+
+  // PreviewComponentModal.jsx
+  hereIsPreview: "Here is the preview of the template",
+  editFurther: "You can edit further if you want",
+
+  // AggregatedView.jsx
+  noSubmissionsYet: "No Submissions Yet",
 
 
 };

@@ -30,10 +30,10 @@ const CreateTemplate = ({editingTemplate,templateId}) => {
     const newForm = {
       id: uuidv4(),
       type: formType,
-      label: 'Untitled label',
+      label: d?.untitledLable,
       options: [],
       required: false,
-      description: 'Write small description here...',
+      description: d?.writeSmallDescription,
       isNew: true,
     };
     setForms([...forms, newForm]);

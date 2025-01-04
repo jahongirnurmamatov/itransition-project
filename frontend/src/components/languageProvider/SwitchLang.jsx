@@ -1,5 +1,13 @@
 import { useLanguageStore } from "@/store/languageStore";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
 const flagMap = {
@@ -21,7 +29,6 @@ const SwitchLang = () => {
             className="rounded-full"
             style={{ aspectRatio: "24/24", objectFit: "cover" }}
           />
-          <span className="font-medium">{language==="en"?dictionary.english:dictionary.russian}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[200px]">

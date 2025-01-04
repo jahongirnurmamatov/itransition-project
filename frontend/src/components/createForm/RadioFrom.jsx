@@ -1,13 +1,19 @@
-import { useTemplateStore } from '@/store/templateStore';
-import { FormControl, FormControlLabel, IconButton, Radio, RadioGroup } from '@mui/material';
-import React, { useState } from 'react';
-import { IoAddCircleSharp } from 'react-icons/io5';
-import { MdDelete } from 'react-icons/md';
+import { useTemplateStore } from "@/store/templateStore";
+import {
+  FormControl,
+  FormControlLabel,
+  IconButton,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
+import React, { useState } from "react";
+import { IoAddCircleSharp } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
 
-const RadioForm = ({ id, editing, setEditing }) => {
-  const [newOption, setNewOption] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
-  const {forms,setForms} = useTemplateStore();
+const RadioForm = ({ id, editing, setEditing, d }) => {
+  const [newOption, setNewOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
+  const { forms, setForms } = useTemplateStore();
 
   const handleAddOption = () => {
     if (newOption.trim()) {
@@ -18,20 +24,23 @@ const RadioForm = ({ id, editing, setEditing }) => {
         return form;
       });
       setForms(updatedForms);
-      setNewOption('');
+      setNewOption("");
     }
   };
 
   const handleRemoveOption = (optionToRemove) => {
     const updatedForms = forms.map((form) => {
       if (form.id === id) {
-        return { ...form, options: form.options.filter((opt) => opt !== optionToRemove) };
+        return {
+          ...form,
+          options: form.options.filter((opt) => opt !== optionToRemove),
+        };
       }
       return form;
     });
     setForms(updatedForms);
     if (selectedOption === optionToRemove) {
-      setSelectedOption(''); 
+      setSelectedOption("");
     }
   };
 
@@ -48,9 +57,16 @@ const RadioForm = ({ id, editing, setEditing }) => {
         >
           {form.options.map((option, index) => (
             <div key={index} className="flex items-center gap-2">
-              <FormControlLabel value={option} control={<Radio />} label={option} />
+              <FormControlLabel
+                value={option}
+                control={<Radio />}
+                label={option}
+              />
               {editing && (
-                <IconButton size="small" onClick={() => handleRemoveOption(option)}>
+                <IconButton
+                  size="small"
+                  onClick={() => handleRemoveOption(option)}
+                >
                   <MdDelete className="text-red-500 size-5" />
                 </IconButton>
               )}
@@ -65,8 +81,8 @@ const RadioForm = ({ id, editing, setEditing }) => {
             type="text"
             value={newOption}
             onChange={(e) => setNewOption(e.target.value)}
-            placeholder="Add new option"
-            className="p-2 border border-gray-300 rounded-md  bg-inherit"
+            placeholder={d?.addOption}
+            className="p-2 border border-gray-300 rounded-md  bg-inherit  w-full sm:w-2/3"
           />
           <IconButton size="small" onClick={handleAddOption}>
             <IoAddCircleSharp className="text-primary size-7" />
