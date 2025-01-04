@@ -41,7 +41,7 @@ export const useUsersStore = create((set,get) => ({
 
     deleteUsers:async(userIds)=>{
         try {
-            const res = await axiosInstance.delete('/user/delete', {userIds});
+            const res = await axiosInstance.delete('/user/delete', {data:{userIds}});
             await get().getAllUsers()
             set({ isLoading: false});    
         } catch (error) {

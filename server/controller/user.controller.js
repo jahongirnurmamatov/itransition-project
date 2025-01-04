@@ -92,17 +92,21 @@ export const searchUsers = async (req, res) => {
     res.status(500).json({ error: 'Error fetching users' });
   }
 }
-export const deleteUsers = async(req,res)=>{
-    try {
-        const { userIds} = req.body;
-        await prisma.user.deleteMany({
-            where: { id: { in: userIds } },
-        });
-        res.status(200).json({ success: true, message: "Users deleted successfully." });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-}
+export const deleteUsers = async (req, res) => {
+  try {
+    const { userIds } = req.body;
+
+    await prisma.user.deleteMany({
+      where: { id: { in: userIds } },
+    });
+
+    res
+      .status(200)
+      .json({ success: true, message: "Users deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 export const blockUsers = async(req,res)=>{
     try {
         const {userIds} = req.body;
