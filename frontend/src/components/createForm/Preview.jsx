@@ -24,6 +24,7 @@ import { ImSpinner } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import { useLanguageStore } from "@/store/languageStore";
 import { useAuthStore } from "@/store/authStore";
+import HtmlContent from "../htmlparser/HtmlParser";
 
 const PreviewComponent = ({
   templateId,
@@ -108,7 +109,7 @@ const PreviewComponent = ({
         </div>
 
         {description && (
-          <p className="text-sm font-light text-gray-500">{description}</p>
+          <HtmlContent content={description} className="text-sm font-light text-gray-500"/>
         )}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 my-5">

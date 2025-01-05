@@ -7,12 +7,12 @@ function Tags({tags}) {
     <div>
             <div className="flex items-start justify-start gap-2">
               <IoMdPricetag className="size-5 text-gray-500" />
-              {tags.map((tag, index) => (
+              {tags?.map((tag, index) => (
                 <p
                   key={index}
                   className={`text-sm text-gray-700 px-2 py-1 rounded ${tagColors[index % tagColors.length]}`}
                 >
-                  {tag.tag.name}
+                  {tag?.tag?.name}
                 </p>
               ))}
             </div>

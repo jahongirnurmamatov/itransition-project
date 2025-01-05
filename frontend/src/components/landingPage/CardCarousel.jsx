@@ -4,6 +4,7 @@ import { useMediaQuery } from "react-responsive";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import HtmlContent from "../htmlparser/HtmlParser";
 
 const CardCarousel = ({ templates }) => {
 
@@ -40,7 +41,7 @@ const CardCarousel = ({ templates }) => {
                 {template.title}
               </h1>
               <p className="text-md font-light text-gray-200 mt-2">
-                {template.description}
+                <HtmlContent content={template.description}/>
               </p>
             </CardContent>
           </Card>

@@ -333,12 +333,14 @@ export const updateTemplate = async (req, res) => {
     const sharedWithData =
       visibility.toUpperCase() === 'PRIVATE' && sharedWith?.length
         ? {
-            set: sharedWith.map((user) => ({
-              userId: parseInt(user.id),
+            connectOrCreate: sharedWith.map((user) => ({
+              where: { userId_templateId: { userId: user.id, templateId: parseInt(id) } },
+              create: { userId: user.id, templateId: parseInt(id) },
             })),
           }
-        : undefined;
+        : { connectOrCreate: [] };
 
+    // Update the template
     const updatedTemplate = await prisma.template.update({
       where: { id: parseInt(id) },
       data: {
@@ -346,15 +348,26 @@ export const updateTemplate = async (req, res) => {
         topic,
         description,
         imageUrl,
-        tags,
         visibility: visibility.toUpperCase(),
-        sharedWith: sharedWithData,
+        sharedWith: sharedWithData, // Use correct relationship handling here
+        tags: {
+          deleteMany: {}, // Clear existing tags
+          create: tags.map((tag) => ({
+            tag: {
+              connectOrCreate: {
+                where: { name: tag.value },
+                create: { name: tag.value },
+              },
+            },
+          })),
+        },
       },
     });
 
+    // Update questions
     for (const [index, form] of forms.entries()) {
       if (!form.isNew) {
-        console.log(`Updating question with ID: ${form.id}`);
+        // Update existing question
         await prisma.question.update({
           where: { id: parseInt(form.id) },
           data: {
@@ -364,13 +377,13 @@ export const updateTemplate = async (req, res) => {
             required: form.required,
             orderIndex: index,
             options: {
-              deleteMany: {}, 
-              create: form.options.map((option) => ({ value: option })),
+              deleteMany: {}, // Clear existing options
+              create: form.options.map((option) => ({ value: option })), // Add new options
             },
           },
         });
       } else {
-        console.log(`Creating new question at index ${index}`);
+        // Create new question
         await prisma.question.create({
           data: {
             type: form.type,
@@ -390,9 +403,15 @@ export const updateTemplate = async (req, res) => {
     res.status(200).json({ success: true, template: updatedTemplate });
   } catch (error) {
     console.error('Error updating template:', error);
-    res.status(500).json({ success: false, message: 'Error updating template', error: error.message });
+    res.status(500).json({
+      success: false,
+      message: 'Error updating template',
+      error: error.message,
+    });
   }
 };
+
+
 
 
 

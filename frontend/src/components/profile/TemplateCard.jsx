@@ -6,6 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from 'react-router-dom';
 import { PiFolderSimplePlus } from "react-icons/pi";
 import { useSidebar } from '../ui/sidebar';
+import HtmlContent from '../htmlparser/HtmlParser';
 
 const TemplateCard = ({templates,userId,d}) => {
     const {open} = useSidebar();
@@ -19,7 +20,7 @@ const TemplateCard = ({templates,userId,d}) => {
                      <p className='font-bold'>{item.title}</p>
                  </CardHeader>
             <CardContent className='flex justify-between  flex-col'>
-                <p className="italic">{item.description}</p>
+                <HtmlContent content={item.description} />
                 <p className='text-gray-500 '>{formatDistanceToNow(item.createdAt)} ago</p>
             </CardContent>
             <CardFooter >

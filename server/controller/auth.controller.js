@@ -3,7 +3,6 @@ import { generatTokenAndSetCookie } from "../utils/generateToken.js";
 import prisma from "../db/prisma.js";
 
 export const signup = async (req, res) => {
-  console.log('here')
   try {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
@@ -46,6 +45,9 @@ export const login = async (req, res) => {
       return res
         .status(404)
         .json({ success: false, message: "User not found" });
+    }
+    if(user.status==='BLOCKED'){
+      return res.status(401).json({success:false,message:'User is blocked by Admins!'})
     }
     const isPasswordValid = bcrypt.compareSync(password, user.password);
     if (!isPasswordValid) {
