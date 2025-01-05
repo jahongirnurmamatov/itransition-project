@@ -12,7 +12,7 @@ function Tags({tags}) {
                   key={index}
                   className={`text-sm text-gray-700 px-2 py-1 rounded ${tagColors[index % tagColors.length]}`}
                 >
-                  {tag}
+                  {tag.tag.name}
                 </p>
               ))}
             </div>

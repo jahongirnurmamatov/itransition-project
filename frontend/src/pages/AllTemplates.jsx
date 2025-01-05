@@ -2,12 +2,11 @@ import TabelForms from '@/components/allForms/TableForms'
 import Loading from '@/components/loading/Loading'
 import { useLanguageStore } from '@/store/languageStore'
 import { useTemplateStore } from '@/store/templateStore'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const AllTemplates = () => {
   const {isLoading,error} = useTemplateStore();
   const {dictionary} = useLanguageStore();
-  console.log(dictionary)
   if(isLoading){
     <Loading />
   }

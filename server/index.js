@@ -7,6 +7,7 @@ import commentRoute from "./routes/comment.route.js";
 import userRoute from "./routes/user.route.js";
 import responseRoute from "./routes/responses.route.js";
 import activityRoute from "./routes/activity.route.js";
+import tagRoute from "./routes/tag.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { app, server } from "./socket/socket.io.js";
@@ -35,7 +36,7 @@ app.use("/api/comment", commentRoute);
 app.use("/api/user", userRoute);
 app.use("/api/response", responseRoute);
 app.use("/api/activity", activityRoute);
-
+app.use("/api/tag", tagRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello from the backend");

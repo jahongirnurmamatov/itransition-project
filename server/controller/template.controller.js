@@ -3,9 +3,9 @@ import prisma from "../db/prisma.js";
 
 export const createTemplate = async (req, res) => {
   try {
-    const { title, topic, description, imageUrl, forms, tags,sharedWith, visibility } = req.body;
+    const { title, topic, description, imageUrl, forms, tags, sharedWith, visibility } = req.body;
 
-    const sharedWithData = 
+    const sharedWithData =
       visibility.toUpperCase() === 'PRIVATE' && sharedWith?.length
         ? {
             create: sharedWith.map((user) => ({
@@ -13,8 +13,6 @@ export const createTemplate = async (req, res) => {
             })),
           }
         : undefined;
-     
-    
 
     const template = await prisma.template.create({
       data: {
@@ -22,24 +20,33 @@ export const createTemplate = async (req, res) => {
         topic,
         description,
         imageUrl,
-        tags,
-        visibility:visibility.toUpperCase(),
+        visibility: visibility.toUpperCase(),
         sharedWith: sharedWithData,
-        userId: req.userId, 
+        userId: req.userId,
         questions: {
           create: forms.map((form, index) => ({
-            type: form.type, 
+            type: form.type,
             label: form.label,
             description: form.description,
             required: form.required,
             orderIndex: index,
             options: form.options.length
               ? {
-                  create: form.options.map(option => ({
-                    value: option, 
-                  })),  
+                  create: form.options.map((option) => ({
+                    value: option,
+                  })),
                 }
               : undefined,
+          })),
+        },
+        tags: {
+          create: tags.map((tag) => ({
+            tag: {
+              connectOrCreate: {
+                where: { name: tag },
+                create: { name: tag },
+              },
+            },
           })),
         },
       },
@@ -47,12 +54,16 @@ export const createTemplate = async (req, res) => {
 
     res.status(201).json({ success: true, template });
   } catch (error) {
+    console.error('Error creating template:', error);
     res.status(500).json({ success: false, message: 'Error creating template' });
   }
 };
+
+
 export const getTemplateById = async (req, res) => {
   try {
     const { id } = req.params;
+
     const template = await prisma.template.findUnique({
       where: { id: parseInt(id) },
       include: {
@@ -68,8 +79,15 @@ export const getTemplateById = async (req, res) => {
         user: {
           select: {
             username: true,
-            id:true,
+            id: true,
             avatar: true,
+          },
+        },
+        tags: {
+          include: {
+            tag: {
+              select: { name: true },
+            },
           },
         },
       },
@@ -87,6 +105,7 @@ export const getTemplateById = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 export const deleteManyTemplates = async (req, res) => {
   try {
@@ -120,43 +139,58 @@ export const deleteManyTemplates = async (req, res) => {
 export const getTemplates = async (req, res) => {
   try {
     const {
-      userId =null,
+      userId = null,
       searchKey = "",
       titleOrder,
       topicOrder,
       createdAtOrder,
+      tags = "",
       page = 1,
       limit = 5,
-  } = req.query;
+    } = req.query;
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
     const where = {
       AND: [
         {
-            OR: [
-                { title: { contains: searchKey, mode: 'insensitive' } },
-                { topic: { contains: searchKey, mode: 'insensitive' } },
-            ],
+          OR: [
+            { title: { contains: searchKey, mode: 'insensitive' } },
+            { topic: { contains: searchKey, mode: 'insensitive' } },
+          ],
         },
-        
-    ],
-  };
-  if(userId){
-    where.AND.push({ userId: parseInt(userId) });
-  }
+      ],
+    };
 
-  const orderBy = [];
-  if (titleOrder) orderBy.push({ title: titleOrder });
-  if (topicOrder) orderBy.push({ topic: topicOrder });
-  if (createdAtOrder) orderBy.push({ createdAt: createdAtOrder });
-  const templates = await prisma.template.findMany({
+    if (userId) {
+      where.AND.push({ userId: parseInt(userId) });
+    }
+
+    if (tags) {
+      const tagArray = tags.split(',');
+      where.AND.push({
+        tags: {
+          some: {
+            tag: {
+              name: { in: tagArray },
+            },
+          },
+        },
+      });
+    }
+
+    const orderBy = [];
+    if (titleOrder) orderBy.push({ title: titleOrder });
+    if (topicOrder) orderBy.push({ topic: topicOrder });
+    if (createdAtOrder) orderBy.push({ createdAt: createdAtOrder });
+
+    const templates = await prisma.template.findMany({
       select: {
         id: true,
-        title: true, 
-        topic: true, 
-        description: true, 
-        imageUrl: true, 
+        title: true,
+        topic: true,
+        description: true,
+        imageUrl: true,
         user: {
           select: {
             username: true,
@@ -169,8 +203,17 @@ export const getTemplates = async (req, res) => {
             userId: true,
           },
         },
-        createdAt: true, 
-        updatedAt: true, 
+        createdAt: true,
+        updatedAt: true,
+        tags: {
+          select: {
+            tag: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
       },
       where,
       orderBy,
@@ -179,7 +222,7 @@ export const getTemplates = async (req, res) => {
     });
 
     const totalTemplates = await prisma.template.count({ where });
-    
+
     res.status(200).json({
       success: true,
       templates,
@@ -189,6 +232,7 @@ export const getTemplates = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 export const likeUnlike   = async (req, res) => {
   try {

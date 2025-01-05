@@ -22,6 +22,7 @@ import { useAuthStore } from "@/store/authStore";
 import SearchBox from "./SearchBox";
 import { useLanguageStore } from "@/store/languageStore";
 import { useMediaQuery } from "react-responsive";
+import TagCloud from "../tagCloud/TagCloud";
 
 export function Sidebar() {
   const { dictionary: d } = useLanguageStore();
@@ -100,7 +101,10 @@ export function Sidebar() {
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="flex items-center justify-end"></div>
+          <div className="flex gap-2 items-center justify-start ml-6">
+            <p className="font-bold text-gray-600 ">Search By Tags:</p>
+            <TagCloud />
+          </div>
           <Outlet />
         </div>
       </SidebarInset>

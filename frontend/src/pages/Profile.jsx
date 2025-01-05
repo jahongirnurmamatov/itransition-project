@@ -1,6 +1,7 @@
 import ActivityTimeline from "@/components/profile/ActivityTimeline";
 import TemplateCard from "@/components/profile/TemplateCard";
 import UserCard from "@/components/profile/UserCard";
+import TagCloud from "@/components/tagCloud/TagCloud";
 import { useLanguageStore } from "@/store/languageStore";
 import { useUsersStore } from "@/store/usersStore";
 import React, { useEffect } from "react";

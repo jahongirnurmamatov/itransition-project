@@ -231,10 +231,11 @@ const PreviewComponent = ({
           ))}
 
           <div className="flex items-center justify-center">
-            <Button
+            {
+              isAuthenticated && <Button
               type="submit"
               variant="contained"
-              className={`w-1/3 text-white bg-primary  ${isSubmitted ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`w-1/3 text-white bg-primary  ${isSubmitted  ? "opacity-50 cursor-not-allowed" : ""}`}
               disabled={isSubmitted || isAddingResponse}
             >
               {isAddingResponse ? (
@@ -245,9 +246,10 @@ const PreviewComponent = ({
                 dictionary.submit
               )}
             </Button>
+            }
           </div>
         </form>
-        {tags.length > 0 && <Tags tags={tags} />}
+        {tags?.length > 0 && <Tags tags={tags} />}
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import TemplateTableHeader from "./TemplateTableHeader";
 import { Search } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { useLanguageStore } from "@/store/languageStore";
+import Tags from "../createForm/Tags";
 
 const TabelForms = ({ userId }) => {
   const { templates, getMyTemplates, error, totalPages, deleteManyTemplates } =
@@ -25,6 +26,7 @@ const TabelForms = ({ userId }) => {
   const createdAtOrder = searchParams.get("createdAtOrder") || null;
   const [searchInput, setSearchInput] = useState(searchKey);
   const page = searchParams.get("page") || 1;
+  const tags = searchParams.get("tags") || "";
 
   const { authUser } = useAuthStore();
   const { dictionary } = useLanguageStore();
@@ -33,14 +35,17 @@ const TabelForms = ({ userId }) => {
   const [allSelected, setAllSelected] = useState(false);
 
   useEffect(() => {
-    getMyTemplates(
-      searchKey,
-      page,
-      titleOrder,
-      createdAtOrder,
-      topicOrder,
-      userId
-    );
+    if (searchKey || page || titleOrder || createdAtOrder || topicOrder || userId||Tags) {
+      getMyTemplates(
+        searchKey,
+        page,
+        titleOrder,
+        createdAtOrder,
+        topicOrder,
+        userId,
+        tags 
+      );
+    }
     if (error) {
       toast({
         title: "Error",
@@ -49,13 +54,14 @@ const TabelForms = ({ userId }) => {
       });
     }
   }, [
-    getMyTemplates,
     searchKey,
     titleOrder,
     page,
     topicOrder,
     createdAtOrder,
     userId,
+    error, 
+    tags,
   ]);
 
   const handleSortChange = (field, currentOrder) => {
