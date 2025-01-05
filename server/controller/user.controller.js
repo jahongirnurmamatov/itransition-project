@@ -4,7 +4,7 @@ export const userRoleChange = async (req, res) => {
     try {
         const { userId, role } = req.body;
         const user = await prisma.user.update({
-            where: { id: userId },
+            where: { id:parseInt(userId) },
             data: { role:role.toUpperCase() },
         });
         res.status(200).json({ success: true, message: "User role changed successfully.",user });

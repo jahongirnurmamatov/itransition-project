@@ -27,11 +27,13 @@ import {
 import { useAuthStore } from "@/store/authStore"
 import { FaCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom"
+import { useLanguageStore } from "@/store/languageStore"
 
 export function NavUser() {
   const {logout} = useAuthStore();
   const { isMobile } = useSidebar()
   const {authUser:user} = useAuthStore();
+  const {dictionary:d} = useLanguageStore();
   
   return (
     (<SidebarMenu>
@@ -79,18 +81,18 @@ export function NavUser() {
               <DropdownMenuItem>
                 <BadgeCheck />
                     <Link to={`/users/${user?.id}`}>
-                      Account
+                      {d.account}
                     </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />
-                Notifications
+                {d.notifications}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout}>
               <LogOut />
-              Log out
+              {d.logout}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

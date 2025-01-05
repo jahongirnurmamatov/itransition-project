@@ -1,3 +1,4 @@
+import { useLanguageStore } from "@/store/languageStore";
 import {
     Bot,
     UserRoundPen,
@@ -5,74 +6,48 @@ import {
     Folder
   } from "lucide-react"
   
+export const useNavData = () => {
+  const { dictionary: d } = useLanguageStore();
 
-export const data = {
-  
+  return {
     navMain: [
       {
-        title: "Templates",
+        title: d.myTemplates,
         url: "#",
         icon: Folder,
         isActive: true,
         items: [
-          {
-            title: "My Templates",
-            url: "/my-templates",
-          },
-          {
-            title: "All Templates",
-            url: "/all-templates",
-          },
+          { title: d.myTemplates, url: "/my-templates" },
+          { title: d.allTemplates, url: "/all-templates" },
         ],
       },
       {
-        title: "Create Forms",
+        title: d.create,
         url: "#",
         icon: Bot,
-        items: [
-          {
-            title: "Create New Form",
-            url: "/template/create",
-          },
-          {
-            title: "Edit Form",
-            url: "/template/edit",
-          },
-        ],
+        items: [{ title: d.createNewTemplate, url: "/template/create" }],
       },
       {
-        title: "Responses",
+        title: d.responses,
         url: "#",
         icon: ChartNoAxesCombined,
         items: [
-          {
-            title: "Statistics",
-            url: "#",
-          },
-          {
-            title: "All Responses",
-            url: "#",
-          },
+          { title: d.statistics, url: "#" },
+          { title: d.allresponses, url: "#" },
         ],
       },
       {
-        title: "Profile",
+        title: d.profile,
         url: "#",
         icon: UserRoundPen,
         items: [
-          {
-            title: "My Account",
-            url: "/my-profile",
-          },
-          {
-            title: "All users",
-            url: "/users",
-          },
+          { title: d.myAccount, url: "/my-profile" },
+          { title: d.allUsers, url: "/users" },
         ],
       },
     ],
-  }
-
+  };
+};
   export const tableData = 
     [
       {

@@ -29,7 +29,7 @@ const getIcon = (type) => {
   }
 };
 
-export default function ActivityTimeline({userId}) {
+export default function ActivityTimeline({userId,d}) {
   const {activities,getRecentActivities} = useActivityStore();
   
   useEffect(()=>{
@@ -39,7 +39,7 @@ export default function ActivityTimeline({userId}) {
   if(activities.length === 0) {
     return (
       <div className='h-full'>
-        <p className='text-center italic text-gray-500'>No activities found</p>
+        <p className='text-center italic text-gray-500 mt-10'>{d.noActivitiesYet}</p>
       </div>)
   }
 

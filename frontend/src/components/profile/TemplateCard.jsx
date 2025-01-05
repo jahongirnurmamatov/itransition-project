@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { PiFolderSimplePlus } from "react-icons/pi";
 import { useSidebar } from '../ui/sidebar';
 
-const TemplateCard = ({templates,userId}) => {
+const TemplateCard = ({templates,userId,d}) => {
     const {open} = useSidebar();
   return (
     <div className={`grid gap-4 ${open ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
@@ -23,7 +23,7 @@ const TemplateCard = ({templates,userId}) => {
                 <p className='text-gray-500 '>{formatDistanceToNow(item.createdAt)} ago</p>
             </CardContent>
             <CardFooter >
-                <p className='font-bold'>Responses: <span className='font-light'>{item.responses.length}</span> </p>
+                <p className='font-bold'>{d.responses} <span className='font-light'>{item.responses.length}</span> </p>
             </CardFooter>
           </Card>
           </Link>
@@ -33,7 +33,7 @@ const TemplateCard = ({templates,userId}) => {
             <Card className="w-[300px] h-[200px] bg-primary-foreground flex items-center justify-center">
             <CardContent className=''>
               <div className='flex gap-4 text-gray-500'>
-                <p className='font-bold'>Browse more ...</p>
+                <p className='font-bold'>{d.browseMore}</p>
                 <PiFolderSimplePlus className='text-2xl' />
               </div>
             </CardContent>

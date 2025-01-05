@@ -117,6 +117,37 @@ const ru = {
   error: "Ошибка",
   notAuthorized: "У вас нет прав для доступа к этой странице",
 
+  // UserCard.jsx
+  userRoleChanged: "Роль пользователя успешно изменена",
+  templates: "Шаблоны",
+
+  // Activity.jsx + Profile.jsx
+  recentActivities: "Последние активности",
+  noActivitiesYet: "Пока нет активностей",
+  recentTemplates: "Последние шаблоны",
+  browseMore: "Просмотреть еще ...",
+
+  // UserTemplates.jsx
+  noTemplatesYet: "Пока нет шаблонов",
+  templatesOf: "Шаблоны",
+
+  // Sidebar data
+  create: "Создать",
+  createNewTemplate: "Создать новый шаблон",
+  myTemplates: "Мои шаблоны",
+  analytics: "Аналитика",
+  responses: "Ответы",
+  profile: "Профиль",
+  statistics: "Статистика",
+  allresponses: "Все ответы",
+  allTemplates: "Все шаблоны",
+  allUsers: "Все пользователи",
+  myAccount: "Мой аккаунт",
+  users: "Пользователи",
+  // nav-user
+  logout: "Выйти",
+  account: "Аккаунт",
+  notifications: "Уведомления",
 };
 
 export default ru;

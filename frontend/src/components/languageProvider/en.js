@@ -1,4 +1,4 @@
-import { add } from "lodash";
+import { add, create } from "lodash";
 
 const en = {
   english: "English",
@@ -117,6 +117,41 @@ const en = {
   success: "Success",
   error: "Error",
   notAuthorized: "You are not authorized to access this page",
+
+  // UserCard.jsx
+  userRoleChanged: "User Role Changed Successfully",
+  templates: "Templates",
+
+  // Activity.jsx
+  recentActivities: "Recent Activities",
+  noActivitiesYet: "No activities yet",
+  recentTemplates: "Recent Templates",	
+  browseMore: "Browse More ...",
+
+  // UserTemplates.jsx
+  noTemplatesYet: "No Templates Yet",
+  templatesOf: "Templates of",
+  // Sidebar data
+  create: "Create",
+  createNewTemplate: "Create New Template",
+  myTemplates: "My Templates",
+  analytics: "Analytics",
+  responses: "Responses",
+  profile: "Profile",
+  statistics: "Statistics",
+  allresponses: "All Responses",
+  allTemplates: "All Templates",
+  allUsers: "All Users",
+  myAccount: "My Account",
+
+  // nav-user
+  logout: "Logout",
+  account: "Account",
+  notifications: "Notifications", 
+
+
+
+
 };
 
 export default en;
