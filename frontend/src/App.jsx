@@ -35,16 +35,16 @@ const App = () => {
 
   return (
     <Routes>
-      <Route element={ isAuthenticated ? <Layout /> :  < Navigate to="/login" />}>
-        <Route path="/my-templates" element={<MyTemplates />} />
+      <Route element={  <Layout /> }>
+        <Route path="/my-templates" element={isAuthenticated ? <MyTemplates /> : <Navigate to="/login" />} />
         <Route path="/all-templates" element={<AllTemplates />} />
-        <Route path="/template/create" element={<CreateTemplate />} />
-        <Route path="/template/edit/:templateId" element={<EditTemplate/>} />
+        <Route path="/template/create"  element={isAuthenticated ? <CreateTemplate />: <Navigate to="/login" />} />
+        <Route path="/template/edit/:templateId" element={isAuthenticated ? <EditTemplate/> : <Navigate to="/login" />} />
         <Route path="/templates/:templateId" element={<Template />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<Profile />} />
         <Route path="/users/:id/user-templates" element={<UserTemplates />} />
-        <Route path="/my-profile" element={<Profile userId={authUser?.id} />} />
+        <Route path="/my-profile" element={isAuthenticated ? <Profile userId={authUser?.id} /> : <Navigate to="/login" />} />
       </Route>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />

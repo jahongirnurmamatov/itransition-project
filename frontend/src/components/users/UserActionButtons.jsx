@@ -9,8 +9,7 @@ import { toast } from '@/hooks/use-toast';
 
 const UserActionButtons = ({selectedUsers,d}) => {
   const {deleteUsers, blockUsers, unBlockUsers,getAllUsers} = useUsersStore();
-   
-  const handleBlock = async() => {
+ const handleBlock = async() => {
     if(selectedUsers.length === 0) {
       toast({
         title: d.error,

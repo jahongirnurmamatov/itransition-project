@@ -6,18 +6,28 @@ import { useParams } from 'react-router-dom';
 import { useCommentStore } from '@/store/commentStore';
 import { TbSend2 } from "react-icons/tb";
 import { useLanguageStore } from '@/store/languageStore';
+import { toast } from '@/hooks/use-toast';
 
 const CommentBox = () => {
-  const { user } = useAuthStore();
+  const { user, isAuthenticated } = useAuthStore();
   const { templateId } = useParams();
   const [content, setContent] = useState("");
   const { addComment,isCommentAdding } = useCommentStore();
 
   const handleCommentSubmit = (e) => {
+   if(!isAuthenticated){
+    toast({
+      variant: "destructive",
+      title: d.error,
+      description: d.pleaseLoginMessage,
+    })
+    return;
+   }else{
     e.preventDefault();
     if (content.trim() === "") return; 
     addComment(templateId, content);
     setContent("");
+   }
   };
   const {dictionary:d} = useLanguageStore();
 

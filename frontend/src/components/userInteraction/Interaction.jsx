@@ -9,16 +9,26 @@ import WhoLiked from './WhoLiked';
 import { useResponseStore } from '@/store/responseStore';
 import WhoResponded from './WhoResponded';
 import { useLanguageStore } from '@/store/languageStore';
+import { toast } from '@/hooks/use-toast';
 export const Interaction = ({templateId,setShowComments}) => {
     const {comments} = useCommentStore();
-    const {authUser:user} = useAuthStore();
+    const {authUser:user,isAuthenticated} = useAuthStore();
     const {likes,likeUnlike} = useTemplateStore();
     const {responders} = useResponseStore();
    const {dictionary:d} =useLanguageStore();
     const islikedTemplate = likes.some((like) => like?.userId === user?.id);
 
     const handleLikeUnlike =  () => {
-      likeUnlike(templateId);
+      if(!isAuthenticated) {
+        toast({
+          variant: "destructive",
+          title: d.error,
+          description: d.pleaseLoginMessage,
+        })
+        return 
+      }else{
+        likeUnlike(templateId);
+      }
     }
   return (
     <div className='flex justify-between items-center my-1'>

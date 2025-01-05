@@ -149,7 +149,7 @@ const en = {
   account: "Account",
   notifications: "Notifications", 
 
-
+  pleaseLoginMessage: "Please login to perform this action",
 
 
 };

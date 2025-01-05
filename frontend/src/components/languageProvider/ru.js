@@ -148,6 +148,8 @@ const ru = {
   logout: "Выйти",
   account: "Аккаунт",
   notifications: "Уведомления",
+
+  pleaseLoginMessage: "Пожалуйста, войдите в аккаунт",
 };
 
 export default ru;
