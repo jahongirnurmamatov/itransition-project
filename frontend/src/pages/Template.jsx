@@ -17,8 +17,14 @@ import EditButton from "@/components/template/EditButton";
 import { IoIosEyeOff } from "react-icons/io";
 
 const Template = () => {
-  const { getTemplateById, isLoading, error, templateOwner, sharedWith } =
-    useTemplateStore();
+  const {
+    getTemplateById,
+    isLoading,
+    error,
+    templateOwner,
+    sharedWith,
+    visibility,
+  } = useTemplateStore();
   const { templateId } = useParams();
   const [showComments, setShowComments] = useState(false);
   const { getComments } = useCommentStore();
@@ -28,17 +34,6 @@ const Template = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const url = window.location.href;
   const { authUser } = useAuthStore();
-
-  if (!sharedWith.includes(authUser.id)) {
-    return (
-      <div className="flex flex-col w-full h-2/3 gap-2 items-center justify-center">
-        <IoIosEyeOff className="text-gray-500 size-10" />
-        <h1 className="text-gray-500 text-2xl">
-          You don't have permision to view the Template!
-        </h1>
-      </div>
-    );
-  }
 
   useEffect(() => {
     if (templateId) {
@@ -60,6 +55,21 @@ const Template = () => {
       fetchData();
     }
   }, [templateId, getTemplateById, getComments, getResponders, getAggregates]);
+console.log(templateOwner)
+  if (
+    visibility !== "PUBLIC" &&
+    !sharedWith?.some((user) => user.userId === authUser?.id)&&
+    templateOwner.id!==authUser.id
+  ) {
+    return (
+      <div className="flex flex-col w-full h-2/3 gap-2 items-center justify-center">
+        <IoIosEyeOff className="text-gray-500 size-10" />
+        <h1 className="text-gray-500 text-2xl">
+          You don't have permission to view the Template!
+        </h1>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return <Loading />;
