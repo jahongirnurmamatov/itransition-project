@@ -1,15 +1,11 @@
 import express from 'express';
-import prisma from '../db/prisma.js';
+import { createTag, getTags, searchTags } from '../controller/tag.controller.js';
 
 const router = express.Router();
 
-router.get('/get-tags', async(req, res) => {
-    try {
-        const tags = await prisma.tag.findMany();
-        res.json({success: true, tags});
-    } catch (error) {
-        res.status(500).json({success: false, message: error.message});
-    }   
-})
+router.get('/get-tags', getTags);
+router.post('/create-tag', createTag);
+router.get('/search-tags', searchTags);
+
 
 export default router;

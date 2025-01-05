@@ -2,14 +2,20 @@ import TabelForms from '@/components/allForms/TableForms';
 import { useLanguageStore } from '@/store/languageStore';
 import { useTemplateStore } from '@/store/templateStore';
 import { useUsersStore } from '@/store/usersStore';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 const UserTemplates = () => {
   const {dictionary:d} = useLanguageStore();
   const [searchParams] = useSearchParams();
   const userId = searchParams.get('userId'); 
-  const {user}=useUsersStore();
-  const {templates} = useTemplateStore();
+  const {user,getUserById}=useUsersStore();
+  const {templates,getMyTemplates} = useTemplateStore();
+
+  useEffect(()=>{
+    getMyTemplates(null,null,null,null,null,userId);
+    getUserById(userId);
+  },[getMyTemplates,userId]);
   if(templates.length===0){
     return (
       <div className='w-full min-h-screen flex items-start justify-center'>

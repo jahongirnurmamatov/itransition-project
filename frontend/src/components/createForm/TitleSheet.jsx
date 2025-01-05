@@ -1,129 +1,138 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-import {labeledTags} from '@/assets/data.js'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+
 const topics = [
   "Survey",
   "Application Form",
   "Poll",
   "Quiz",
   "Registration",
-  "Contact Form" 
+  "Contact Form",
 ];
-import { MdOutlineEditCalendar } from "react-icons/md";
-import { useTemplateStore } from "@/store/templateStore"
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import SelectVisibilty from "./SelectVisibilty"
-import ShareWith from "./ShareWith"
-export function TitleSheet({d}) {
-  const {title,setTitle, topic,setImage, setTopic,tags,setTags,image,
-    uploadToCloudinary,description,setDescription,isLoading,visibility} = useTemplateStore()
-  
-    const handleUpload = async() => {
-      const form = new FormData();
-      form.append('file', image);
-      await uploadToCloudinary(form);
-    }
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { useTemplateStore } from "@/store/templateStore";
+import SelectVisibilty from "./SelectVisibilty";
+import ShareWith from "./ShareWith";
+import CustomAsyncSelect from "./CustomAsyncSelect";
+import { useState } from "react";
+
+export function TitleSheet({ d }) {
+  const {
+    title,
+    setTitle,
+    topic,
+    setImage,
+    setTopic,
+    tags,
+    setTags,
+    image,
+    uploadToCloudinary,
+    description,
+    setDescription,
+    isLoading,
+    visibility,
+  } = useTemplateStore();
+  const [uploaded,setUploaded] = useState(false)
+
+  const handleUpload = async () => {
+    const form = new FormData();
+    form.append("file", image);
+    await uploadToCloudinary(form);
+    setUploaded(true)
+  };
 
   return (
-    <Sheet className="w-full sm:w-1/2 lg:w-1/5">
-      <SheetTrigger asChild>
-        <Button variant="outline">
-          <MdOutlineEditCalendar className="size-6 hover:opacity-80 cursor-pointer"/>
-        </Button>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>{d.editTempEssent}</SheetTitle>
-          <SheetDescription>
-            {d.makeChanges}
-          </SheetDescription>
-        </SheetHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              {d.title}
-            </Label>
-            <Input className="col-span-3" onChange={(e) => setTitle(e.target.value)}
-            value={title}
-            id="title" defaultValue={`Title - ${Date.now()}`} />
+    <>
+      {d && (
+        <div className="w-full items-start mt-10 justify-start ">
+          <div className="flex items-center flex-col gap-5 space-x-5 mb-8">
+            <h1 className="text-2xl text-gray-700 font-semibold">{d?.editTempEssent}</h1>
+            <p className="text-gray-500 font-serif ">{d.makeChanges}</p>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="topic" className="text-right">
-              {d.topic}
-            </Label>
-            <Select  onValueChange={(e) => setTopic(e)} value={topic} id='topic'>
-                <SelectTrigger  className="col-span-3">
-                    <SelectValue placeholder={d.select} />
-                </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup  >
-                        {
-                            topics.map((topic) => (
-                              <SelectItem onChange={(e) => setTopic(e.target.value)} key={topic} value={topic} >
-                                {topic}
-                              </SelectItem>
-                            ))
-                          }
-                        </SelectGroup>
-                  </SelectContent>
-              </Select>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label>{d.description}</Label>
-            <Input onChange={(e) => setDescription(e.target.value)} value={description} id="description" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="topic" className="text-right">
-              {d.image}
-            </Label>
-            <div className="col-span-3 flex flex-col">
-              <Input onChange={(e) => setImage(e.target.files[0])} type="file" className='' />
-              <Button disabled={isLoading} onClick={()=>handleUpload()} className="mt-2 bg-green-600 hover:bg-green-500">{d.upload}</Button>
-            </div>
-          </div>
-          <div className="grid grid-cols-4 w-full items-center gap-4">
-            <Label>{d.addTags}</Label>
-            <Stack className="col-span-3" spacing={2} >
-              <Autocomplete
-                multiple
-                id="tags-standard"
-                options={labeledTags}
-                getOptionLabel={(option) => option.title}
-                value={tags.map((tagTitle) => labeledTags.find((tag) => tag.title === tagTitle) || { title: tagTitle })} 
-                onChange={(event, newValue) => {
-                  setTags(newValue.map((option) => option.title)); 
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="standard"
-                    label={d.selectTags}
-                    placeholder={d.tags}
-                    className="w-1/2"
-                  />
-                )}
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                {d.title}
+              </Label>
+              <Input
+                className="col-span-3"
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+                id="title"
+                defaultValue={`Title - ${Date.now()}`}
               />
-            </Stack>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="topic" className="text-right">
+                {d.topic}
+              </Label>
+              <Select
+                onValueChange={(e) => setTopic(e)}
+                value={topic}
+                id="topic"
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder={d?.select} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {topics.map((topic) => (
+                      <SelectItem
+                        onChange={(e) => setTopic(e.target.value)}
+                        key={topic}
+                        value={topic}
+                      >
+                        {topic}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right">{d?.description}</Label>
+              <ReactQuill className="col-span-3 h-[200px]"  theme="snow" value={description} onChange={setDescription} />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4 mt-12">
+              <Label htmlFor="topic" className="text-right">
+                {d.image}
+              </Label>
+              <div className="col-span-3 flex flex-col">
+                <Input
+                  onChange={(e) => setImage(e.target.files[0])}
+                  type="file"
+                  className=""
+                />
+                <Button
+                  variant="default"
+                  disabled={isLoading}
+                  onClick={() => handleUpload()}
+                  className="mt-2 hover:opacity-60 "
+                >
+                  {uploaded ? d.upload : d.uploaded}
+                </Button>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 w-full items-center gap-4">
+              <Label className="text-right">{d.addTags}</Label>
+              <CustomAsyncSelect tags={tags} setTags={setTags} />
+            </div>
+            <SelectVisibilty d={d} />
+            {visibility === "PRIVATE" && <ShareWith />}
           </div>
-          <SelectVisibilty d={d}/>
-         {visibility==='PRIVATE' && <ShareWith  />}
         </div>
-      </SheetContent>
-    </Sheet>
-  )
+      )}
+    </>
+  );
 }

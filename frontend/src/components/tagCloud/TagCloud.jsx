@@ -38,10 +38,10 @@ const TagCloud = () => {
       {isLoading ? (
         <p>Loading tags...</p>
       ) : (
-        existingTags.map((tag) => (
+        existingTags?.map((tag) => (
           <Button
             key={tag.id || tag}
-            onClick={() => handleTagClick(tag.name || tag)}
+            onClick={() => handleTagClick(tag.name )}
             className={`tag-button px-4 py-2 rounded ${
               tags.includes(tag.name || tag)
                 ? "bg-blue-500 text-white"

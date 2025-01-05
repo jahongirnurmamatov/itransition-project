@@ -24,9 +24,9 @@ const Template = () => {
   const {getResponders,getAggregates,getMyresponse,response} = useResponseStore();
   const [showRight, setShowRight] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  // getting url 
   const url = window.location.href;
   const {authUser} = useAuthStore();
+
 
   useEffect(() => {
     if (templateId) {

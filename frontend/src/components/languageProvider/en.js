@@ -41,6 +41,8 @@ const en = {
   update: "Update",
   untitledLable: "Untitled Label",
   writeSmallDescription: "Write small description here...",
+  titleAndDescription: "Title and Description",
+  questions: "Questions",
   // AddQuestion.jsx
   selectQuestionType: "Select Question Type",
   selectOneQuestion: "Here you can select one type of question only",

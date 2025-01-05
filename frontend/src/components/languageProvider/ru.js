@@ -39,6 +39,8 @@ const ru = {
   update: "Обновить",
   untitledLable: "Без названия",
   writeSmallDescription: "Здесь напишите небольшое описание...",
+  titleAndDescription: "Заголовок и описание",
+  questions: "Вопросы",
   // AddQuestion.jsx
   selectQuestionType: "Выберите тип вопроса",
   selectOneQuestion: "Здесь вы можете выбрать только один тип вопроса",

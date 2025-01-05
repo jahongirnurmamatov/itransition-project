@@ -43,8 +43,8 @@ export const createTemplate = async (req, res) => {
           create: tags.map((tag) => ({
             tag: {
               connectOrCreate: {
-                where: { name: tag },
-                create: { name: tag },
+                where: { name: tag.value },
+                create: { name: tag.value },
               },
             },
           })),
@@ -310,6 +310,20 @@ export const getPopularTemplates = async (req, res) => {
     res.status(500).json({ error: 'Error fetching popular templates.' });
   }
 };
+export const getRecentTemplates = async (req, res) => {
+  try {
+    const templates = await prisma.template.findMany({
+      orderBy: {
+        createdAt: 'desc', 
+      },
+      take: 5, 
+    });
+
+    res.status(200).json({success: true, templates });
+  } catch (error) {
+    console.error('Error fetching recent templates:', error);
+    res.status(500).json({ error: 'Error fetching recent templates.' });}
+}
 
 export const updateTemplate = async (req, res) => {
   try {
