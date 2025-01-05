@@ -85,7 +85,7 @@ const en = {
   addOption: "Add new option",
 
   // PreviewComponentModal.jsx
-  hereIsPreview: "Here is the preview of the template",
+  hereIsPreview: "Preview of your template",
   editFurther: "You can edit further if you want",
 
   // AggregatedView.jsx
@@ -152,6 +152,9 @@ const en = {
   notifications: "Notifications", 
 
   pleaseLoginMessage: "Please login to perform this action",
+
+  upload:"Upload",
+  uploaded:"Uploaded"
 
 
 };

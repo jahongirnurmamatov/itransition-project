@@ -120,7 +120,7 @@ export function TitleSheet({ d }) {
                   onClick={() => handleUpload()}
                   className="mt-2 hover:opacity-60 "
                 >
-                  {uploaded ? d.upload : d.uploaded}
+                  {uploaded ? d.uploaded : d.upload}
                 </Button>
               </div>
             </div>

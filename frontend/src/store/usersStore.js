@@ -31,7 +31,6 @@ export const useUsersStore = create((set,get) => ({
         try {
             set({ isLoading: true, error: null });
             const res = await axiosInstance.get('/user/search-users',{params: { query: searchKey }});
-            await get().getAllUsers()
             set({ users: res.data.users, isLoading: false });
         } catch (error) {
             set({ error: error.response?.data?.message || 'Failed to fetch users.', isLoading: false });

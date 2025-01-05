@@ -83,7 +83,7 @@ const ru = {
   addOption: "Добавить новый вариант",
 
   //Preview.jsx
-  hereIsPreview: "Вот предварительный просмотр",
+  hereIsPreview: "Предварительный просмотр вашего шаблона",
   editFurther: "Вы можете дальше отредактировать, если хотите",
 
   //AggregatedView.jsx
@@ -152,6 +152,9 @@ const ru = {
   notifications: "Уведомления",
 
   pleaseLoginMessage: "Пожалуйста, войдите в аккаунт",
+
+  upload:"Загрузить",
+  uploaded:"Загружено"
 };
 
 export default ru;
