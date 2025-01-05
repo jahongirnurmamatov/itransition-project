@@ -12,23 +12,31 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
 import { ArrowDownNarrowWide, Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from "../ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+} from "../ui/select";
 import { useAuthStore } from "@/store/authStore";
 import { useUsersStore } from "@/store/usersStore";
 import { useToast } from "@/hooks/use-toast";
 import PaginationComponent from "./PaginationComponent";
 import { Checkbox } from "../ui/checkbox";
 import UserActionButtons from "./UserActionButtons";
+import SearchBox from "../sidebar/SearchBox";
 
-const UsersTable = ({d}) => {
-  const { users, getAllUsers, error,totalPages,userRoleChange } = useUsersStore();
+const UsersTable = ({ d }) => {
+  const { users, getAllUsers, error, totalPages, userRoleChange } =
+    useUsersStore();
   const { toast } = useToast();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [allSelected, setAllSelected] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-
   const searchKey = searchParams.get("searchKey") || "";
+  
   const usernameOrder = searchParams.get("usernameOrder") || null;
   const emailOrder = searchParams.get("emailOrder") || null;
   const createdAtOrder = searchParams.get("createdAtOrder") || null;
@@ -36,14 +44,16 @@ const UsersTable = ({d}) => {
 
   const [searchInput, setSearchInput] = useState(searchKey);
 
-  const {authUser} = useAuthStore();
+  const { authUser } = useAuthStore();
 
-  if(authUser?.role !== "ADMIN") {
+  if (authUser?.role !== "ADMIN") {
     return (
       <div className="flex justify-center h-screen">
-        <h1 className="text-xl font-semibold text-gray-500">{d.notAuthorized}</h1>
+        <h1 className="text-xl font-semibold text-gray-500">
+          {d.notAuthorized}
+        </h1>
       </div>
-    )
+    );
   }
 
   useEffect(() => {
@@ -55,7 +65,7 @@ const UsersTable = ({d}) => {
         status: "error",
       });
     }
-  }, [getAllUsers,searchKey, page, usernameOrder, emailOrder, createdAtOrder]);
+  }, [getAllUsers, searchKey, page, usernameOrder, emailOrder, createdAtOrder]);
 
   const handleRoleChange = async (userId, role) => {
     const result = await userRoleChange(userId, role);
@@ -84,23 +94,21 @@ const UsersTable = ({d}) => {
     const newOrder = currentOrder === "asc" ? "desc" : "asc";
     const newParams = new URLSearchParams(searchParams.toString());
     if (field === "username") {
-        newParams.set("usernameOrder", newOrder);
-        newParams.delete("emailOrder");
-        newParams.delete("createdAtOrder");
+      newParams.set("usernameOrder", newOrder);
+      newParams.delete("emailOrder");
+      newParams.delete("createdAtOrder");
     } else if (field === "email") {
-        newParams.delete("usernameOrder");
-        newParams.set("emailOrder", newOrder);
-        newParams.delete("createdAtOrder");
+      newParams.delete("usernameOrder");
+      newParams.set("emailOrder", newOrder);
+      newParams.delete("createdAtOrder");
     } else if (field === "createdAt") {
-        newParams.delete("usernameOrder");
-        newParams.delete("emailOrder");
-        newParams.set("createdAtOrder", newOrder);
+      newParams.delete("usernameOrder");
+      newParams.delete("emailOrder");
+      newParams.set("createdAtOrder", newOrder);
     }
-    newParams.set("page", "1"); 
+    newParams.set("page", "1");
     setSearchParams(newParams);
-};
-;
-
+  };
   const handleSearchSubmit = () => {
     const newParams = new URLSearchParams(searchParams.toString());
     newParams.set("searchKey", searchInput);
@@ -126,29 +134,28 @@ const UsersTable = ({d}) => {
 
   return (
     <div className="w-full bg-primary-foreground rounded-lg px-5 py-3 shadow-md">
-      <form onSubmit={(e) => e.preventDefault()} className="flex items-center justify-between">
-        <div className="relative">
-          <Input
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={d.search}
-            className="flex-1 pl-5 mx-2 my-4 px-10 outline-none"
-            />
-          <Search
-            onClick={handleSearchSubmit}
-            className="absolute top-6 left-4 size-5 text-gray-400 cursor-pointer hover:scale-110"
-          />
-        </div>
-        <UserActionButtons selectedUsers={selectedUsers} d={d}/>
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="flex items-center justify-between"
+      >
+       <SearchBox
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
+          handleSearchSubmit={handleSearchSubmit}
+          handleKeyDown={handleKeyDown}
+          d={d}
+        />
+        <UserActionButtons selectedUsers={selectedUsers} d={d} />
       </form>
       <Table>
         <TableCaption>{d.listUser}</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>
-              <Checkbox  checked={allSelected}
-                        onCheckedChange={handleSelectAll } />
+              <Checkbox
+                checked={allSelected}
+                onCheckedChange={handleSelectAll}
+              />
             </TableHead>
             <TableHead>
               <div
@@ -172,17 +179,17 @@ const UsersTable = ({d}) => {
                 />
               </div>
             </TableHead>
-            <TableHead>{d.status}</TableHead> 
+            <TableHead>{d.status}</TableHead>
             <TableHead>
               <div
                 onClick={() => handleSortChange("createdAt", createdAtOrder)}
                 className="flex gap-3 items-center justify-start cursor-pointer"
-                >
+              >
                 {d.registered}
                 <ArrowDownNarrowWide
                   className={`size-4 text-gray-500 ${createdAtOrder === "desc" ? "rotate-180" : ""}`}
                 />
-                </div>
+              </div>
             </TableHead>
             <TableHead>{d.role}</TableHead>
           </TableRow>
@@ -191,9 +198,9 @@ const UsersTable = ({d}) => {
           {users.map((user, index) => (
             <TableRow key={user.id}>
               <TableCell className="font-medium cursor-pointer">
-                <Checkbox 
-                 checked={selectedUsers.includes(user.id)}
-                 onCheckedChange={() => handleSelectUser(user.id)}
+                <Checkbox
+                  checked={selectedUsers.includes(user.id)}
+                  onCheckedChange={() => handleSelectUser(user.id)}
                 />
               </TableCell>
               <TableCell className="font-medium cursor-pointer">
@@ -201,17 +208,31 @@ const UsersTable = ({d}) => {
                   to={`/users/${user.id}`}
                   className="hover:text-blue-500 hover:underline flex gap-2 items-center justify-start"
                 >
-                  <img src={user.avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                  <span className="font-semibold text-slate-700">{user.username}</span>
+                  <img
+                    src={user.avatar}
+                    alt="avatar"
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span className="font-semibold text-slate-700">
+                    {user.username}
+                  </span>
                 </Link>
               </TableCell>
               <TableCell>
-                <span className="font-semibold text-slate-700">{user.email}</span>
+                <span className="font-semibold text-slate-700">
+                  {user.email}
+                </span>
               </TableCell>
-              <TableCell >
-                <span className={` rounded-full px-3 py-1 ${user?.status === "ACTIVE" 
-                  ? "bg-green-200 text-green-600" : "bg-red-200 text-red-600"}`}>
-                    {user?.status === "ACTIVE" ? d.active : d.blocked	}</span>
+              <TableCell>
+                <span
+                  className={` rounded-full px-3 py-1 ${
+                    user?.status === "ACTIVE"
+                      ? "bg-green-200 text-green-600"
+                      : "bg-red-200 text-red-600"
+                  }`}
+                >
+                  {user?.status === "ACTIVE" ? d.active : d.blocked}
+                </span>
               </TableCell>
               <TableCell>
                 <span className="text-gray-500">
@@ -242,12 +263,13 @@ const UsersTable = ({d}) => {
           ))}
         </TableBody>
       </Table>
-      <PaginationComponent 
-      totalPages={totalPages} 
-      page={page} webkey={'users'}
-      searchParams={searchParams} 
-      setSearchParams={setSearchParams} />
-
+      <PaginationComponent
+        totalPages={totalPages}
+        page={page}
+        webkey={"users"}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+      />
     </div>
   );
 };

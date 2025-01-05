@@ -23,6 +23,7 @@ import { useResponseStore } from "@/store/responseStore";
 import { ImSpinner } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import { useLanguageStore } from "@/store/languageStore";
+import { useAuthStore } from "@/store/authStore";
 
 const PreviewComponent = ({
   templateId,
@@ -32,6 +33,7 @@ const PreviewComponent = ({
 }) => {
   const { title, topic, imageUrl, forms, tags, description, previewImg } =
     useTemplateStore();
+  const {isAuthenticated} = useAuthStore();
   const { addResponse, isAddingResponse } = useResponseStore();
   const { navigate } = useNavigate();
   const { dictionary } = useLanguageStore();
@@ -146,7 +148,7 @@ const PreviewComponent = ({
                         defaultValue={response?.[form.id] || null}
                         placeholder="Type a number here"
                         className="w-2/3 p-2"
-                        disabled={isSubmitted}
+                        disabled={isSubmitted||!isAuthenticated}
                       />
                     );
                   case "checkbox":
@@ -155,7 +157,7 @@ const PreviewComponent = ({
                         <Checkbox
                           id={`checkbox-${form.id}-${index}`}
                           defaultChecked={response?.[form.id]?.includes(option)}
-                          disabled={isSubmitted}
+                          disabled={isSubmitted||!isAuthenticated}
                         />
                         <label htmlFor={`checkbox-${form.id}-${index}`}>
                           {option}
@@ -172,7 +174,7 @@ const PreviewComponent = ({
                           <FormControlLabel
                             key={index}
                             value={option}
-                            control={<Radio disabled={isSubmitted} />}
+                            control={<Radio disabled={isSubmitted||!isAuthenticated} />}
                             label={option}
                           />
                         ))}
@@ -186,7 +188,7 @@ const PreviewComponent = ({
                         rows={4}
                         variant="standard"
                         defaultValue={response?.[form.id] || ""}
-                        disabled={isSubmitted}
+                        disabled={isSubmitted||!isAuthenticated}
                       />
                     );
                   case "select":
@@ -199,7 +201,7 @@ const PreviewComponent = ({
                         onValueChange={(value) =>
                           !isSubmitted && handleSelectChange(form.id, value)
                         }
-                        disabled={isSubmitted}
+                        disabled={isSubmitted||!isAuthenticated}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select" />

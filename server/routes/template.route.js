@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/create', verifyToken,createTemplate);
 router.put('/update/:id', verifyToken,updateTemplate);
-router.get('/get-templates', verifyToken,getTemplates);
+router.get('/get-templates',getTemplates);
 router.get('/popular',getPopularTemplates);
 router.get('/:id',  getTemplateById);
 router.delete('/delete-templates',verifyToken, verifyAdmin, deleteManyTemplates);
