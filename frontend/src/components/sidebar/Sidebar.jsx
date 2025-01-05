@@ -16,8 +16,11 @@ import {
 import { Outlet } from "react-router-dom"
 import { ThemeToggle } from "../themeprovider/ThemeToggle"
 import SwitchLang from "../languageProvider/SwitchLang"
+import { useBreadcrumbs } from "@/hooks/useBreadcrumbs"
+import React from "react"
 
 export function Sidebar() {
+  const breadcrumbs = useBreadcrumbs();
   return (
     <SidebarProvider className=''>
       <AppSidebar  className="fixed "/>
@@ -26,17 +29,18 @@ export function Sidebar() {
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb >
+            <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/my-templates">
-                    My Forms
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>All Forms</BreadcrumbPage>
-                </BreadcrumbItem>
+                {breadcrumbs.map((crumb, index) => (
+                  <React.Fragment key={index}>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href={crumb.url}>{crumb.title}</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    {index < breadcrumbs.length - 1 && (
+                      <BreadcrumbSeparator />
+                    )}
+                  </React.Fragment>
+                ))}
               </BreadcrumbList>
             </Breadcrumb>
           </div>

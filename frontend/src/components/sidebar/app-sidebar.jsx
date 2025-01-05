@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/sidebar"
 
 import { Label, Separator } from "@radix-ui/react-dropdown-menu"
-import { Search } from "lucide-react"
 import { NavUser } from "./nav-user";
 import { NavMain } from "./nav-main";
 import { useNavData } from "@/assets/data";

@@ -12,7 +12,7 @@ export const useNavData = () => {
   return {
     navMain: [
       {
-        title: d.myTemplates,
+        title: d.templates,
         url: "#",
         icon: Folder,
         isActive: true,
