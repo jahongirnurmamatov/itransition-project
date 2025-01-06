@@ -58,7 +58,7 @@ const Template = () => {
   if (
     visibility !== "PUBLIC" &&
     !sharedWith?.some((user) => user.userId === authUser?.id)&&
-    templateOwner.id!==authUser.id
+    templateOwner.id!==authUser?.id
   ) {
     return (
       <div className="flex flex-col w-full h-2/3 gap-2 items-center justify-center">
