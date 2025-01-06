@@ -1,7 +1,7 @@
 import axiosInstance from '@/lib/axiosInstance.js';
 import {create} from 'zustand';
 
-export const useResponseStore = create((set) => ({
+export const useResponseStore = create((set,get) => ({
     response: null,
     responses:[],
     isLoading: false,
@@ -11,15 +11,18 @@ export const useResponseStore = create((set) => ({
     responseError: null,
     addResponse: async (templateId, answers) => {
         try {
-            set({ isAddingResponse: true, responseError: null });
-            const res = await axiosInstance.post(`/response/${templateId}/submit`, { answers });
-            await get().getResponders(templateId);
-            set({ response: res.data.response, isAddingResponse: false });    
+          console.log("Submitting response..."); 
+          set({ isAddingResponse: true, responseError: null });
+          const res = await axiosInstance.post(`/response/${templateId}/submit`, { answers });
+          console.log("Response submitted successfully:", res.data);
+          await get().getResponders(templateId);
+          set({ response: res.data.response, isAddingResponse: false });
         } catch (error) {
-            set({ responseError: error.response.data.error, isAddingResponse: false });
-            throw Error(error);     
+          console.error("Error in addResponse:", error);
+          set({ responseError: error.response?.data?.error || "Unknown error", isAddingResponse: false });
+          throw error; 
         }
-    }, 
+      },      
     getResponders: async (templateId) => {
         try {
             set({ isLoading: true, error: null });

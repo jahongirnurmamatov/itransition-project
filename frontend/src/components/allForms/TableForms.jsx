@@ -115,7 +115,7 @@ const TabelForms = ({ userId }) => {
 
   const handleDeleteMany = () => {
     if (selectedTemplates.length > 0) {
-      deleteManyTemplates(selectedTemplates);
+      deleteManyTemplates(selectedTemplates,authUser.id);
       setSelectedTemplates([]);
     } else {
       toast({

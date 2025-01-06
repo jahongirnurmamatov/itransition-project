@@ -55,7 +55,6 @@ const Template = () => {
       fetchData();
     }
   }, [templateId, getTemplateById, getComments, getResponders, getAggregates]);
-console.log(templateOwner)
   if (
     visibility !== "PUBLIC" &&
     !sharedWith?.some((user) => user.userId === authUser?.id)&&

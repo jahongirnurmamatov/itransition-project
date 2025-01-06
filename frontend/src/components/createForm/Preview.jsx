@@ -26,6 +26,7 @@ import { useLanguageStore } from "@/store/languageStore";
 import { useAuthStore } from "@/store/authStore";
 import HtmlContent from "../htmlparser/HtmlParser";
 import { formatDistanceToNow } from "date-fns";
+import { toast } from "@/hooks/use-toast";
 
 const PreviewComponent = ({
   templateId,
@@ -46,7 +47,6 @@ const PreviewComponent = ({
   } = useTemplateStore();
   const { isAuthenticated } = useAuthStore();
   const { addResponse, isAddingResponse } = useResponseStore();
-  const { navigate } = useNavigate();
   const { dictionary } = useLanguageStore();
 
   const [selectValues, setSelectValues] = useState({});
@@ -90,9 +90,16 @@ const PreviewComponent = ({
         value,
       };
     });
-    addResponse(templateId, answers);
-    setIsSubmitted(true);
-    navigate(`/`, { replace: true });
+    try {
+      await addResponse(templateId, answers); 
+      setIsSubmitted(true); 
+    } catch (error) {
+      toast({
+        variant:"desctructive",
+        title:"Error",
+        description:"Error in responding to the Template"
+      })
+    }
   };
   return (
     <div className="w-full   flex flex-col items-start">

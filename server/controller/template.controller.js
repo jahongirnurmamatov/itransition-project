@@ -1,12 +1,20 @@
 import prisma from "../db/prisma.js";
 
-
 export const createTemplate = async (req, res) => {
   try {
-    const { title, topic, description, imageUrl, forms, tags, sharedWith, visibility } = req.body;
+    const {
+      title,
+      topic,
+      description,
+      imageUrl,
+      forms,
+      tags,
+      sharedWith,
+      visibility,
+    } = req.body;
 
     const sharedWithData =
-      visibility.toUpperCase() === 'PRIVATE' && sharedWith?.length
+      visibility.toUpperCase() === "PRIVATE" && sharedWith?.length
         ? {
             create: sharedWith.map((user) => ({
               userId: user.id,
@@ -54,11 +62,12 @@ export const createTemplate = async (req, res) => {
 
     res.status(201).json({ success: true, template });
   } catch (error) {
-    console.error('Error creating template:', error);
-    res.status(500).json({ success: false, message: 'Error creating template' });
+    console.error("Error creating template:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error creating template" });
   }
 };
-
 
 export const getTemplateById = async (req, res) => {
   try {
@@ -70,7 +79,7 @@ export const getTemplateById = async (req, res) => {
         questions: {
           include: { options: true },
         },
-        likes: { 
+        likes: {
           select: {
             userId: true,
             user: { select: { username: true } },
@@ -94,7 +103,9 @@ export const getTemplateById = async (req, res) => {
     });
 
     if (!template) {
-      return res.status(404).json({ success: false, message: 'Template not found.' });
+      return res
+        .status(404)
+        .json({ success: false, message: "Template not found." });
     }
 
     res.status(200).json({
@@ -106,7 +117,6 @@ export const getTemplateById = async (req, res) => {
   }
 };
 
-
 export const deleteManyTemplates = async (req, res) => {
   try {
     const { templateIds } = req.body;
@@ -114,7 +124,7 @@ export const deleteManyTemplates = async (req, res) => {
     if (!Array.isArray(templateIds) || templateIds.length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'templateIds must be a non-empty array.',
+        message: "templateIds must be a non-empty array.",
       });
     }
 
@@ -135,7 +145,6 @@ export const deleteManyTemplates = async (req, res) => {
   }
 };
 
-
 export const getTemplates = async (req, res) => {
   try {
     const {
@@ -143,7 +152,7 @@ export const getTemplates = async (req, res) => {
       searchKey = "",
       titleOrder,
       topicOrder,
-      createdAtOrder,
+      createdAtOrder = "desc",
       tags = "",
       page = 1,
       limit = 5,
@@ -155,8 +164,8 @@ export const getTemplates = async (req, res) => {
       AND: [
         {
           OR: [
-            { title: { contains: searchKey, mode: 'insensitive' } },
-            { topic: { contains: searchKey, mode: 'insensitive' } },
+            { title: { contains: searchKey, mode: "insensitive" } },
+            { topic: { contains: searchKey, mode: "insensitive" } },
           ],
         },
       ],
@@ -167,7 +176,7 @@ export const getTemplates = async (req, res) => {
     }
 
     if (tags) {
-      const tagArray = tags.split(',');
+      const tagArray = tags.split(",");
       where.AND.push({
         tags: {
           some: {
@@ -233,60 +242,62 @@ export const getTemplates = async (req, res) => {
   }
 };
 
-
-export const likeUnlike   = async (req, res) => {
+export const likeUnlike = async (req, res) => {
   try {
-      const { id } = req.params;
-      const userId = req.userId;
-      console.log(id)
-      const template = await prisma.template.findUnique({
-          where: { id: parseInt(id) },
-          include: { likes: true },            
+    const { id } = req.params;
+    const userId = req.userId;
+    console.log(id);
+    const template = await prisma.template.findUnique({
+      where: { id: parseInt(id) },
+      include: { likes: true },
+    });
+
+    if (!template) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Template not found." });
+    }
+
+    const isLiked = template.likes.some((like) => like.userId === userId);
+
+    if (isLiked) {
+      await prisma.like.delete({
+        where: {
+          userId_templateId: {
+            userId,
+            templateId: parseInt(id),
+          },
+        },
       });
-
-      if (!template) {
-          return res.status(404).json({success:false, message:'Template not found.'});
-      }
-
-      const isLiked = template.likes.some((like) => like.userId === userId);
-
-      if (isLiked) {            
-          await prisma.like.delete({
-            where: {
-              userId_templateId: { 
-                userId, 
-                templateId: parseInt(id),
-              },
-            },
-          });
-      } else {
-          await prisma.like.create({            
-              data: {
-                  userId,
-                  templateId: parseInt(id),
-              },
-          });
-      }
-
-      const updatedTemplate = await prisma.template.findUnique({
-          where: { id: parseInt(id) },
-          include: { likes: {
-              select: {
-                  userId: true,
-                  user: { select: { username: true } },
-              },
-          } },
+    } else {
+      await prisma.like.create({
+        data: {
+          userId,
+          templateId: parseInt(id),
+        },
       });
+    }
 
-      res.status(200).json({
-          success: true,
-          template: updatedTemplate,
-      })
+    const updatedTemplate = await prisma.template.findUnique({
+      where: { id: parseInt(id) },
+      include: {
+        likes: {
+          select: {
+            userId: true,
+            user: { select: { username: true } },
+          },
+        },
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      template: updatedTemplate,
+    });
   } catch (error) {
-      res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
-}
-
+};
 
 export const getPopularTemplates = async (req, res) => {
   try {
@@ -298,32 +309,33 @@ export const getPopularTemplates = async (req, res) => {
       },
       orderBy: {
         responses: {
-          _count: 'desc', // Order by response count in descending order
+          _count: "desc", // Order by response count in descending order
         },
       },
-      take: 5, 
+      take: 5,
     });
 
     res.status(200).json({ templates });
   } catch (error) {
-    console.error('Error fetching popular templates:', error);
-    res.status(500).json({ error: 'Error fetching popular templates.' });
+    console.error("Error fetching popular templates:", error);
+    res.status(500).json({ error: "Error fetching popular templates." });
   }
 };
 export const getRecentTemplates = async (req, res) => {
   try {
     const templates = await prisma.template.findMany({
       orderBy: {
-        createdAt: 'desc', 
+        createdAt: "desc",
       },
-      take: 5, 
+      take: 5,
     });
 
-    res.status(200).json({success: true, templates });
+    res.status(200).json({ success: true, templates });
   } catch (error) {
-    console.error('Error fetching recent templates:', error);
-    res.status(500).json({ error: 'Error fetching recent templates.' });}
-}
+    console.error("Error fetching recent templates:", error);
+    res.status(500).json({ error: "Error fetching recent templates." });
+  }
+};
 
 export const updateTemplate = async (req, res) => {
   try {
@@ -410,8 +422,3 @@ export const updateTemplate = async (req, res) => {
     });
   }
 };
-
-
-
-
-

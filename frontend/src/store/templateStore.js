@@ -31,7 +31,7 @@ export const useTemplateStore = create((set,get) => ({
     setTopic: (topic) => set({ topic }),
     setImage: (image) => set({ image }),
 
-    createTemplate: async () => {
+    createTemplate: async (userId) => {
         const { title, topic, description, imageUrl, forms, tags,visibility,sharedWith } = get();
         const template = {
             title,
@@ -46,7 +46,7 @@ export const useTemplateStore = create((set,get) => ({
         try {
             set({isLoading:true, error:null});
             const res = await axiosInstance.post('/template/create', template);
-            await get().getMyTemplates();
+            await get().getMyTemplates("", 1, "", "desc", "", userId, "");
             set({ isLoading:false});
         } catch (error) {
           set({ error: error.response?.data?.message || 'Failed to create template.', isLoading: false });
@@ -68,7 +68,7 @@ export const useTemplateStore = create((set,get) => ({
       try {
         set({ isLoading: true, error: null });
         const res = await axiosInstance.put(`/template/update/${id}`, updatedTemplate);
-        await get().getMyTemplates();
+        await get().getMyTemplates("", 1, "", "desc", "", userId, "");
         set({ isLoading: false });
       } catch (error) {
         set({ error: error.response?.data?.message || 'Failed to update template.', isLoading: false });
@@ -160,7 +160,7 @@ export const useTemplateStore = create((set,get) => ({
           throw error;
         }
       },
-    deleteManyTemplates: async (templateIds) => {
+    deleteManyTemplates: async (templateIds,userId) => {
         try {
           set({ isLoading: true, error: null });
           const res = await axiosInstance.delete('/template/delete-templates', { data: { templateIds } });
@@ -168,7 +168,7 @@ export const useTemplateStore = create((set,get) => ({
             title: 'Success',
             description: res.data.message,
           })
-          await get().getMyTemplates();
+          await get().getMyTemplates("", 1, "", "desc", "", userId, "");
           set({ isLoading: false });
         } catch (error) {
           set({ error: error.response?.data?.message || 'Failed to delete templates.', isLoading: false });

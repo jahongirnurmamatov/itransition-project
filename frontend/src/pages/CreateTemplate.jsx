@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import FormComponent from "@/components/createForm/FormComponent";
 import { useLanguageStore } from "@/store/languageStore";
 import ToggleCreateTitleTab from "@/components/createForm/ToggleCreateTitleTab";
+import { useAuthStore } from "@/store/authStore";
 const CreateTemplate = ({ editingTemplate, templateId }) => {
   const {
     image,
@@ -27,6 +28,7 @@ const CreateTemplate = ({ editingTemplate, templateId }) => {
   const { dictionary: d } = useLanguageStore();
   const [showRight, setShowRight] = useState(false);
   const [formType, setFormType] = useState("");
+  const {authUser} = useAuthStore();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -63,7 +65,7 @@ const CreateTemplate = ({ editingTemplate, templateId }) => {
     setForms(reorderedForms);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (forms.length > 0) {
       if (!title) {
         toast({
@@ -73,20 +75,20 @@ const CreateTemplate = ({ editingTemplate, templateId }) => {
         return;
       }
       if (editingTemplate) {
-        updateTemplate(templateId);
+        await updateTemplate(templateId);
         toast({
           variant: "default",
           title: "Template updated successfully.",
         });
       } else {
-        createTemplate();
+        await createTemplate(authUser.id);
         toast({
           variant: "default",
           title: "Template created successfully.",
         });
       }
       if (!error) {
-        getMyTemplates();
+        await getMyTemplates();
         navigate("/my-templates");
       }
     } else {
